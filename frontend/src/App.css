@@ -36,3 +36,58 @@
     transform: rotate(360deg);
   }
 }
+
+/* NavBar Styles for NavBar.js*/
+.nav-bar {
+  background-color: rebeccapurple;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.nav-ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.nav-li {
+  float: left;
+}
+
+.nav-link {
+  display: block;
+  position: relative;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease-in;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.active-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: white;
+}
