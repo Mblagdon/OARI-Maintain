@@ -1,11 +1,16 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const equipmentRoutes = require('./routes/equipmentRoutes');
 
-app.get('/', (req, res) => {
-    res.send('Hello Drone Maintenance Project!');
+// Middlewares
+app.use(express.json());
+
+// Routes
+app.use('/api', equipmentRoutes);
+
+// Start the server
+const PORT = process.env.PORT || 3006;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
