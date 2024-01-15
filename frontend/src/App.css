@@ -91,3 +91,38 @@
   height: 2px;
   background-color: white;
 }
+
+/* EquipmentList.css */
+.equipment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust the minmax values based on your preferred card size */
+  gap: 16px; /* Adjust the gap size as needed */
+  padding: 16px;
+}
+
+.equipment-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.equipment-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.equipment-name {
+  font-size: 1.2em;
+  color: #333; /* Text color for the equipment name */
+  margin-bottom: 0.5rem;
+}
+
+.details-container {
+  display: none; /* Keep details hidden initially */
+  font-size: 0.9em; /* Smaller text for details */
+  color: #666; /* Lighter text color for details */
+}
+
