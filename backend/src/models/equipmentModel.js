@@ -36,7 +36,6 @@ const EquipmentModel = {
             callback(err, results);
         });
     },
-    // Add additional CRUD operations as needed
 };
 
 module.exports = EquipmentModel;
