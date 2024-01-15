@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', equipmentRoutes);
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
