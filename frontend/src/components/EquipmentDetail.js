@@ -25,12 +25,17 @@ function EquipmentDetail() {
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
+    if (!equipmentDetails) return <div>Equipment not found</div>;
 
     return (
         <div>
             <h2>{equipmentDetails.equipment_name}</h2>
-            <p>Description: {equipmentDetails.description}</p>
-            {/* Display other details here */}
+            <p><strong>Equipment ID:</strong> {equipmentDetails.id}</p>
+            <p><strong>Description:</strong> {equipmentDetails.description}</p>
+            <p><strong>Location:</strong> {equipmentDetails.location}</p>
+            <p><strong>Basic Specifications:</strong> {equipmentDetails.basic_specifications}</p>
+            <p><strong>Storage Dimensions:</strong> {equipmentDetails.storage_dimensions}</p>
+            <p><strong>Use Case Examples:</strong> {equipmentDetails.use_case_examples}</p>
         </div>
     );
 }

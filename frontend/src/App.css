@@ -14,8 +14,8 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: rebeccapurple;
+  min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,6 +36,8 @@
     transform: rotate(360deg);
   }
 }
+
+
 
 /* NavBar Styles for NavBar.js*/
 .nav-bar {
@@ -92,6 +94,8 @@
   background-color: white;
 }
 
+
+
 /* EquipmentList.css */
 .equipment-grid {
   display: grid;
@@ -118,6 +122,7 @@
   font-size: 1.2em;
   color: #333; /* Text color for the equipment name */
   margin-bottom: 0.5rem;
+  text-decoration: underline;
 }
 
 .details-container {
@@ -126,3 +131,106 @@
   color: #666; /* Lighter text color for details */
 }
 
+
+
+/* AddEquipment.css */
+.form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+form {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 2fr; /* Adjust based on preferred width */
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+}
+
+.form-label {
+  margin-right: 10px; /* Adjust the spacing between label and input */
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+textarea {
+  height: 100px; /* Adjust based on preferred height */
+}
+
+.submit-button {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%; /* Make the button take full width of its container */
+}
+
+.submit-button:hover {
+  background-color: #4cae4c;
+}
+
+
+/* AddMaintenance.js */
+.form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 15px; /* Add some space between the form groups */
+}
+
+.form-label {
+  flex-basis: 100%; /* Make the label take full width on smaller screens */
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea,
+.submit-button {
+  flex: 1;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.submit-button {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px; /* Add some space above the button */
+}
+
+.submit-button:hover {
+  background-color: #4cae4c;
+}

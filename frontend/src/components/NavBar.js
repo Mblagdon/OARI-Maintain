@@ -28,12 +28,32 @@ function NavBar() {
                 </li>
                 <li className="nav-li">
                     <NavLink
+                        to="/add-equipment"
+                        className={({ isActive }) =>
+                            isActive ? 'nav-link active-link' : 'nav-link'
+                        }
+                    >
+                        Add Equipment
+                    </NavLink>
+                </li>
+                <li className="nav-li">
+                    <NavLink
                         to="/maintenance"
                         className={({ isActive }) =>
                             isActive ? 'nav-link active-link' : 'nav-link'
                         }
                     >
                         Maintenance Schedule
+                    </NavLink>
+                </li>
+                <li className="nav-li">
+                    <NavLink
+                        to="/add-maintenance"
+                        className={({ isActive }) =>
+                            isActive ? 'nav-link active-link' : 'nav-link'
+                        }
+                    >
+                        Add Maintenance
                     </NavLink>
                 </li>
             </ul>
