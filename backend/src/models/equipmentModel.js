@@ -36,6 +36,29 @@ const EquipmentModel = {
             callback(err, results);
         });
     },
+
+
+    createMaintenance: (maintenanceData, callback) => {
+        const query = `INSERT INTO equipment_management (equipment_id, status, last_maintenance_date, next_maintenance_date, maintenance_frequency) VALUES (?, ?, ?, ?, ?)`;
+        db.query(query, [
+            maintenanceData.equipment_id,
+            maintenanceData.status,
+            maintenanceData.last_maintenance_date,
+            maintenanceData.next_maintenance_date,
+            maintenanceData.maintenance_frequency
+        ], (err, results) => {
+            callback(err, results);
+        });
+    },
+
+    getAllMaintenance: (callback) => {
+        const query = 'SELECT * FROM equipment_management';
+        db.query(query, (err, results) => {
+            callback(err, results);
+        });
+    },
+    //additional methods to update/delete
+
 };
 
 module.exports = EquipmentModel;

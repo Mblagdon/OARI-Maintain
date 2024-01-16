@@ -17,5 +17,14 @@ router.put('/equipment/:id', EquipmentController.updateEquipment);
 // Delete an equipment description
 router.delete('/equipment/:id', EquipmentController.deleteEquipment);
 
+
+// Endpoint to create a new maintenance record
+router.post('/maintenance', EquipmentController.createMaintenance);
+
+// Endpoint to get all maintenance records
+router.get('/maintenance', EquipmentController.getAllMaintenance);
+
+//Add routes for updating and deleting maintenance records
+
 // Export the router
 module.exports = router;

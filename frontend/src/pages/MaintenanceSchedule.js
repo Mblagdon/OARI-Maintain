@@ -6,14 +6,14 @@ function MaintenanceSchedule() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch('/api/maintenance') // Adjust the endpoint as needed
+        fetch('/api/maintenance')
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json
                 ();
             })
             .then(data => {
-                setMaintenanceTasks(data); // Assuming your API returns an array of tasks
+                setMaintenanceTasks(data);
                 setLoading(false);
             })
             .catch(err => {

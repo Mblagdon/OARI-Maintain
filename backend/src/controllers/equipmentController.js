@@ -60,6 +60,30 @@ const EquipmentController = {
             }
         });
     },
+
+
+    createMaintenance: (req, res) => {
+        EquipmentModel.createMaintenance(req.body, (err, results) => {
+            if (err)
+            {
+                res.status(500).json({ message: 'Error creating maintenance record', error: err });
+            } else {
+                res.status(201).json({ message: 'Maintenance record created successfully', data: results });
+            }
+        });
+    },
+
+    getAllMaintenance: (req, res) => {
+        EquipmentModel.getAllMaintenance((err, results) => {
+            if (err) {
+                res.status(500).json({ message: 'Error fetching maintenance records', error: err });
+            } else {
+                res.status(200).json(results);
+            }
+        });
+    },
+    // additonal methods for updating and deleting maintenance records
+
 };
 
 module.exports = EquipmentController;
