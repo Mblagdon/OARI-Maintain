@@ -22,6 +22,13 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  width: 100%;
+}
+
+.site-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .App-link {
@@ -233,4 +240,30 @@ textarea {
 
 .submit-button:hover {
   background-color: #4cae4c;
+}
+
+
+/* Footer */
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#root { /* assuming #root is your main app div */
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.content { /* wrapper for the content */
+  flex: 1;  /* This will make the content expand to fill the space */
+}
+
+.footer {
+  background-color: rebeccapurple;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: auto; /* Push footer to the bottom */
 }

@@ -1,3 +1,12 @@
+/**
+ * EquipmentDetail.js
+ *
+ * This React component is responsible for displaying the details of a single piece of equipment.
+ * It fetches and presents detailed information from the equipment record selected by the user.
+ * It is typically rendered when a user navigates to the details page of an individual equipment item,
+ * showing all relevant data such as name, description, and other attributes.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 

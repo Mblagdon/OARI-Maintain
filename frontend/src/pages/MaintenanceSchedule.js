@@ -1,3 +1,11 @@
+/**
+ * MaintenanceSchedule.js
+ *
+ * Renders a comprehensive view of all scheduled maintenance activities. It fetches data from the server
+ * and displays it in a list or table format, showing upcoming maintenance tasks. This component helps
+ * users keep track of maintenance operations and their schedules.
+ */
+
 import React, { useState, useEffect } from 'react';
 
 function MaintenanceSchedule() {

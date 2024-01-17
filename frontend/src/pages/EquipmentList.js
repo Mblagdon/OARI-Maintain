@@ -1,3 +1,11 @@
+/**
+ * EquipmentList.js
+ *
+ * This component fetches and displays a list of all equipment from the server. Each item in the list
+ * is represented by an EquipmentItem component, allowing users to view basic information and select
+ * an item to see more details. It is the main view for browsing through the catalog of equipment.
+ */
+
 import React, { useState, useEffect } from 'react';
 import EquipmentItem from '../components/EquipmentItem';
 import '../App.css';

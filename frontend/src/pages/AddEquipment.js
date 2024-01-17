@@ -1,3 +1,11 @@
+/**
+ * AddEquipment.js
+ *
+ * This React component renders a form for adding new equipment to the database. It collects
+ * user input for various equipment attributes such as name, description, and location, among others.
+ * On form submission, it sends this data to the server to create a new equipment record.
+ */
+
 import React, {useEffect, useState} from 'react';
 import '../App.css';
 

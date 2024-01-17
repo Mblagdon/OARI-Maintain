@@ -1,7 +1,17 @@
+/**
+ * EquipmentRoutes.js
+ *
+ * This file defines the routes for equipment operations. It imports the EquipmentController
+ * and assigns controller methods to specific HTTP request routes. This is where URL paths
+ * are mapped to the controller logic, organizing how the server responds to clients'
+ * requests for equipment data management.
+ */
+
 const express = require('express');
 const router = express.Router();
 const EquipmentController = require('../controllers/equipmentController');
 
+// Routes for equipment
 // Create new equipment description
 router.post('/equipment', EquipmentController.createEquipment);
 
@@ -17,14 +27,18 @@ router.put('/equipment/:id', EquipmentController.updateEquipment);
 // Delete an equipment description
 router.delete('/equipment/:id', EquipmentController.deleteEquipment);
 
-
-// Endpoint to create a new maintenance record
+// Routes for maintenance
+// Create a new maintenance record
 router.post('/maintenance', EquipmentController.createMaintenance);
 
-// Endpoint to get all maintenance records
+// Get all maintenance records
 router.get('/maintenance', EquipmentController.getAllMaintenance);
 
-//Add routes for updating and deleting maintenance records
+// Update maintenance record
+router.put('/maintenance/:id', EquipmentController.updateMaintenance);
+
+// Deleting maintenance record
+router.delete('/maintenance/:id', EquipmentController.deleteMaintenance);
 
 // Export the router
 module.exports = router;

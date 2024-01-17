@@ -1,6 +1,16 @@
+/**
+ * EquipmentModel.js
+ *
+ * This model represents the structure and methods used to interact with the database
+ * regarding equipment data. It provides a set of functions to perform CRUD operations
+ * on the 'equipment_descriptions' and 'equipment_management' tables. It uses the mysql2
+ * library to execute SQL queries.
+ */
+
 const db = require('../database');
 
 const EquipmentModel = {
+    // Equipment Description
     // Create a new equipment description
     createEquipment: (data, callback) => {
         const query = "INSERT INTO equipment_descriptions (equipment_name, description, category, location, basic_specifications, storage_dimensions) VALUES (?, ?, ?, ?, ?, ?)";
@@ -8,6 +18,7 @@ const EquipmentModel = {
             callback(err, results);
         });
     },
+
     // Get all equipment descriptions
     getAllEquipment: (callback) => {
         db.query('SELECT * FROM equipment_descriptions', (err, results) => {
@@ -37,7 +48,8 @@ const EquipmentModel = {
         });
     },
 
-
+    // Maintenance schedule
+    // Create maintenance schedule
     createMaintenance: (maintenanceData, callback) => {
         const query = `INSERT INTO equipment_management (equipment_id, status, last_maintenance_date, next_maintenance_date, maintenance_frequency) VALUES (?, ?, ?, ?, ?)`;
         db.query(query, [
@@ -51,13 +63,46 @@ const EquipmentModel = {
         });
     },
 
+    // Get maintenance schedule
     getAllMaintenance: (callback) => {
         const query = 'SELECT * FROM equipment_management';
         db.query(query, (err, results) => {
             callback(err, results);
         });
     },
-    //additional methods to update/delete
+
+    // Update maintenance schedule
+    updateMaintenance: (id, maintenanceData, callback) => {
+        const query = `
+        UPDATE equipment_management 
+        SET 
+            status = ?, 
+            last_maintenance_date = ?, 
+            next_maintenance_date = ?, 
+            maintenance_frequency = ?
+        WHERE id = ?`;
+        db.query(
+            query,
+            [
+                maintenanceData.status,
+                maintenanceData.last_maintenance_date,
+                maintenanceData.next_maintenance_date,
+                maintenanceData.maintenance_frequency,
+                id
+            ],
+            (err, results) => {
+                callback(err, results);
+            }
+        );
+    },
+
+    // Delete maintenance schedule
+    deleteMaintenance: (id, callback) => {
+        const query = 'DELETE FROM equipment_management WHERE id = ?';
+        db.query(query, [id], (err, results) => {
+            callback(err, results);
+        });
+    },
 
 };
 

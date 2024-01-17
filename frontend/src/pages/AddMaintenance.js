@@ -1,3 +1,11 @@
+/**
+ * AddMaintenance.js
+ *
+ * A component that provides a form for scheduling maintenance for equipment. Users can enter
+ * maintenance details including dates, frequency, and status. When submitted, this information
+ * is posted to the server and recorded in the maintenance management system.
+ */
+
 import React, { useState } from 'react';
 import '../App.css';
 

@@ -6,24 +6,30 @@ import MaintenanceSchedule from './pages/MaintenanceSchedule';
 import NavBar from './components/NavBar';
 import EquipmentDetail from './components/EquipmentDetail';
 import AddEquipment from './pages/AddEquipment';
-import AddMaintenance from "./pages/AddMaintenance";
+import AddMaintenance from './pages/AddMaintenance';
+import Footer from './components/Footer';
 import './App.css';
 
 
 function App() {
     return (
         <Router>
-            <div>
-                <h1 className="App-header">Drone Maintenance Web Application</h1>
+            <div className="site-container"> {/* Use a class that will be styled to handle layout */}
+                <header className="App-header">
+                    <h1>Drone Maintenance Web Application</h1>
+                </header>
                 <NavBar />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/equipment" element={<EquipmentList />} />
-                    <Route path="/equipment/:equipmentId" element={<EquipmentDetail />} />
-                    <Route path="/maintenance" element={<MaintenanceSchedule />} />
-                    <Route path="/add-equipment" element={<AddEquipment />} />
-                    <Route path="/add-maintenance" element={<AddMaintenance />} />
-                </Routes>
+                <main className="content"> {/* Main content wrapper */}
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/equipment" element={<EquipmentList />} />
+                        <Route path="/equipment/:equipmentId" element={<EquipmentDetail />} />
+                        <Route path="/maintenance" element={<MaintenanceSchedule />} />
+                        <Route path="/add-equipment" element={<AddEquipment />} />
+                        <Route path="/add-maintenance" element={<AddMaintenance />} />
+                    </Routes>
+                </main>
+                <Footer />
             </div>
         </Router>
     );
