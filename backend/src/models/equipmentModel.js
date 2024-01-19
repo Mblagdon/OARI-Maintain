@@ -83,7 +83,11 @@ const EquipmentModel = {
 
     // Get maintenance schedule
     getAllMaintenance: (callback) => {
-        const query = 'SELECT * FROM equipment_management';
+        const query = `
+        SELECT em.*, eq.equipment_name
+        FROM equipment_management em
+        JOIN equipment_descriptions eq ON em.equipment_id = eq.id
+    `;
         db.query(query, (err, results) => {
             callback(err, results);
         });

@@ -28,7 +28,7 @@ function AddMaintenance() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add front-end validation if needed
+
 
         fetch('/api/maintenance', { // Adjust the endpoint as needed
             method: 'POST',
@@ -44,6 +44,14 @@ function AddMaintenance() {
             .then(data => {
                 console.log('Success:', data);
                 // Handle success, such as showing a message or redirecting
+                // Reset the form here
+                setMaintenanceData({
+                    equipment_id: '',
+                    status: '',
+                    last_maintenance_date: '',
+                    next_maintenance_date: '',
+                    maintenance_frequency: ''
+                });
             })
             .catch((error) => {
                 console.error('Error:', error);
