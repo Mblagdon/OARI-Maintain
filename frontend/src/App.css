@@ -103,7 +103,7 @@
 
 
 
-/* EquipmentList.css */
+/* EquipmentList.js */
 .equipment-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust the minmax values based on your preferred card size */
@@ -140,7 +140,7 @@
 
 
 
-/* AddEquipment.css */
+/* AddEquipment.js */
 .form-container {
   max-width: 600px;
   margin: 20px auto;
@@ -242,6 +242,78 @@ textarea {
   background-color: #4cae4c;
 }
 
+/* EquipmentDetail.js */
+.equipment-detail-container {
+  max-width: 800px; /* Adjust based on your layout */
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.equipment-header {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.equipment-section {
+  margin-bottom: 1rem;
+}
+
+.equipment-section-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.equipment-section-content {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+}
+
+/* MaintenanceSchedule.js */
+.maintenance-schedule-container {
+  margin: 20px;
+  padding: 20px;
+}
+
+.maintenance-schedule-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.maintenance-schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.maintenance-schedule-table th,
+.maintenance-schedule-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.maintenance-schedule-table th {
+  background-color: #f2f2f2;
+}
+
+/* Style for alternate row coloring */
+.maintenance-schedule-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.maintenance-schedule-table tr:hover {
+  background-color: #eaeaea;
+}
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
 
 /* Footer */
 

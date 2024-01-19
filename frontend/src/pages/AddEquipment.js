@@ -16,7 +16,11 @@ function AddEquipment() {
         location: '',
         basic_specifications: '',
         storage_dimensions: '',
-        use_case_examples: ''
+        use_case_examples: '',
+        min_temp: '',
+        max_temp: '',
+        max_wind_resistance: '',
+        min_lighting: ''
     });
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -132,6 +136,34 @@ function AddEquipment() {
                     value={formData.use_case_examples}
                     onChange={handleChange}
                     className="form-input"
+                />
+                <input
+                    type="number"
+                    name="min_temp"
+                    value={formData.min_temp}
+                    onChange={handleChange}
+                    placeholder="Minimum Temperature"
+                />
+                <input
+                    type="number"
+                    name="max_temp"
+                    value={formData.max_temp}
+                    onChange={handleChange}
+                    placeholder="Maximum Temperature"
+                />
+                <input
+                    type="number"
+                    name="max_wind_resistance"
+                    value={formData.max_wind_resistance}
+                    onChange={handleChange}
+                    placeholder="Max Wind Resistance"
+                />
+                <input
+                    type="text"
+                    name="min_lighting"
+                    value={formData.min_lighting}
+                    onChange={handleChange}
+                    placeholder="Minimum Lighting"
                 />
                 <button type="submit" className="submit-button">Add Equipment</button>
             </form>

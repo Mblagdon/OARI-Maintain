@@ -34,6 +34,9 @@ router.post('/maintenance', EquipmentController.createMaintenance);
 // Get all maintenance records
 router.get('/maintenance', EquipmentController.getAllMaintenance);
 
+// Route to get a single maintenance record by ID
+router.get('/maintenance/:id', EquipmentController.getMaintenanceById);
+
 // Update maintenance record
 router.put('/maintenance/:id', EquipmentController.updateMaintenance);
 

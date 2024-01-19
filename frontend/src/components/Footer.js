@@ -1,3 +1,13 @@
+/**
+ * Footer.js
+ *
+ * This file defines the Footer component for the React application.
+ * The Footer is a presentational component that renders the bottom section of the web page.
+ * It typically contains copyright information, contact details, or any other common information
+ * that should be visible on all pages. In this project, the Footer component includes a linked image
+ * that directs users to the CNA Applied Research website when clicked.
+ */
+
 import React from 'react';
 import footerLogo from 'C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\components\\CNAResearch.png';
 

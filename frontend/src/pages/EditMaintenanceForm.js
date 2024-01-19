@@ -1,37 +1,44 @@
-/**
- * AddMaintenance.js
- *
- * A component that provides a form for scheduling maintenance for equipment. Users can enter
- * maintenance details including dates, frequency, and status. When submitted, this information
- * is posted to the server and recorded in the maintenance management system.
- */
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-import React, { useState } from 'react';
-import '../App.css';
+function EditMaintenanceForm() {
+    const [maintenanceData, setMaintenanceData] = useState({});
+    const [error, setError] = useState('');
+    const { taskId } = useParams();
+    const navigate = useNavigate();
 
-function AddMaintenance() {
-    const [maintenanceData, setMaintenanceData] = useState({
-        equipment_id: '',
-        status: '',
-        last_maintenance_date: '',
-        next_maintenance_date: '',
-        maintenance_frequency: ''
-    });
+    useEffect(() => {
+        const fetchMaintenanceData = async () => {
+            try {
+                const response = await fetch(`/api/maintenance/${taskId}`); // Use taskId
+                if (!response.ok) throw new Error('Failed to fetch data');
+                const data = await response.json();
+                setMaintenanceData({
+                    ...data,
+                    last_maintenance_date: data.last_maintenance_date.split('T')[0], // assuming the date comes in ISO format
+                    next_maintenance_date: data.next_maintenance_date.split('T')[0],
+                });
+            } catch (error) {
+                console.error('Error fetching maintenance data:', error);
+                setError(error.message);
+            }
+        };
+
+        fetchMaintenanceData();
+    }, [taskId]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setMaintenanceData(prevData => ({
-            ...prevData,
+        setMaintenanceData(prevFormData => ({
+            ...prevFormData,
             [name]: value
         }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add front-end validation if needed
-
-        fetch('/api/maintenance', { // Adjust the endpoint as needed
-            method: 'POST',
+        fetch(`/api/maintenance/${taskId}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -39,36 +46,34 @@ function AddMaintenance() {
         })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
+                navigate('/maintenance');
             })
-            .then(data => {
-                console.log('Success:', data);
-                // Handle success, such as showing a message or redirecting
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                // Handle errors, such as displaying a message to the user
-            });
+            .catch(error => setError(error.message));
     };
 
     return (
         <div className="form-container">
+            {error && <div className="error-message">{error}</div>}
             <form onSubmit={handleSubmit} className="form-style">
+                {/* Equipment ID */}
                 <div className="form-group">
                     <label className="form-label">Equipment ID:</label>
                     <input
                         type="number"
                         name="equipment_id"
-                        value={maintenanceData.equipment_id}
+                        value={maintenanceData.equipment_id || ''}
                         onChange={handleChange}
                         className="form-input"
+                        readOnly // Assuming equipment ID should not be editable
                     />
                 </div>
+
+                {/* Status */}
                 <div className="form-group">
                     <label className="form-label">Status:</label>
                     <select
                         name="status"
-                        value={maintenanceData.status}
+                        value={maintenanceData.status || ''}
                         onChange={handleChange}
                         className="form-select"
                     >
@@ -80,28 +85,33 @@ function AddMaintenance() {
                         <option value="Cancelled">Cancelled</option>
                     </select>
                 </div>
+
+                {/* Last Maintenance Date */}
                 <div className="form-group">
                     <label className="form-label">Last Maintenance Date:</label>
                     <input
                         type="date"
                         name="last_maintenance_date"
-                        value={maintenanceData.last_maintenance_date}
+                        value={maintenanceData.last_maintenance_date || ''}
                         onChange={handleChange}
                         className="form-input"
                     />
                 </div>
+
+                {/* Next Maintenance Date */}
                 <div className="form-group">
                     <label className="form-label">Next Maintenance Date:</label>
                     <input
                         type="date"
                         name="next_maintenance_date"
-                        value={maintenanceData.next_maintenance_date}
+                        value={maintenanceData.next_maintenance_date || ''}
                         onChange={handleChange}
                         className="form-input"
                     />
                 </div>
-                <div className="form-group
-">
+
+                {/* Maintenance Frequency */}
+                <div className="form-group">
                     <label className="form-label">Maintenance Frequency:</label>
                     <input
                         type="text"
@@ -111,12 +121,14 @@ function AddMaintenance() {
                         className="form-input"
                     />
                 </div>
+
+                {/* Submit Button */}
                 <div className="form-group">
-                    <button type="submit" className="submit-button">Add Maintenance</button>
+                    <button type="submit" className="submit-button">Update Maintenance</button>
                 </div>
             </form>
         </div>
     );
 }
 
-export default AddMaintenance;
+export default EditMaintenanceForm;

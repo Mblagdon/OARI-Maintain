@@ -20,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api', equipmentRoutes);
+const weatherRoutes = require('./routes/weatherRoutes'); // Import weather routes
+app.use('/api', weatherRoutes); // Use weather routes
 
 // Start the server
 const PORT = process.env.PORT || 3006;

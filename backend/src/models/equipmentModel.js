@@ -13,8 +13,17 @@ const EquipmentModel = {
     // Equipment Description
     // Create a new equipment description
     createEquipment: (data, callback) => {
-        const query = "INSERT INTO equipment_descriptions (equipment_name, description, category, location, basic_specifications, storage_dimensions) VALUES (?, ?, ?, ?, ?, ?)";
-        db.query(query, [data.equipment_name, data.description, data.category, data.location, data.basic_specifications, data.storage_dimensions], (err, results) => {
+        const query = `INSERT INTO equipment_descriptions (
+            equipment_name, description, category, location,
+            basic_specifications, storage_dimensions,
+            min_temp, max_temp, max_wind_resistance, min_lighting
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        db.query(query, [
+            data.equipment_name, data.description, data.category,
+            data.location, data.basic_specifications, data.storage_dimensions,
+            data.min_temp, data.max_temp, data.max_wind_resistance, data.min_lighting
+        ], (err, results) => {
             callback(err, results);
         });
     },
@@ -35,8 +44,17 @@ const EquipmentModel = {
 
     // Update an equipment description
     updateEquipment: (id, data, callback) => {
-        const query = "UPDATE equipment_descriptions SET equipment_name = ?, description = ?, category = ?, location = ?, basic_specifications = ?, storage_dimensions = ? WHERE id = ?";
-        db.query(query, [data.equipment_name, data.description, data.category, data.location, data.basic_specifications, data.storage_dimensions, id], (err, results) => {
+        const query = `UPDATE equipment_descriptions SET 
+        equipment_name = ?, description = ?, category = ?, 
+        location = ?, basic_specifications = ?, storage_dimensions = ?, 
+        min_temp = ?, max_temp = ?, max_wind_resistance = ?, 
+        min_lighting = ? WHERE id = ?`;
+
+        db.query(query, [
+            data.equipment_name, data.description, data.category,
+            data.location, data.basic_specifications, data.storage_dimensions,
+            data.min_temp, data.max_temp, data.max_wind_resistance,
+            data.min_lighting, id], (err, results) => {
             callback(err, results);
         });
     },
@@ -67,6 +85,14 @@ const EquipmentModel = {
     getAllMaintenance: (callback) => {
         const query = 'SELECT * FROM equipment_management';
         db.query(query, (err, results) => {
+            callback(err, results);
+        });
+    },
+
+    // Get single maintenance schedule
+    getMaintenanceById: (id, callback) => {
+        const query = 'SELECT * FROM equipment_management WHERE id = ?';
+        db.query(query, [id], (err, results) => {
             callback(err, results);
         });
     },

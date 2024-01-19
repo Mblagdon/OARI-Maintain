@@ -37,14 +37,59 @@ function EquipmentDetail() {
     if (!equipmentDetails) return <div>Equipment not found</div>;
 
     return (
-        <div>
-            <h2>{equipmentDetails.equipment_name}</h2>
-            <p><strong>Equipment ID:</strong> {equipmentDetails.id}</p>
-            <p><strong>Description:</strong> {equipmentDetails.description}</p>
-            <p><strong>Location:</strong> {equipmentDetails.location}</p>
-            <p><strong>Basic Specifications:</strong> {equipmentDetails.basic_specifications}</p>
-            <p><strong>Storage Dimensions:</strong> {equipmentDetails.storage_dimensions}</p>
-            <p><strong>Use Case Examples:</strong> {equipmentDetails.use_case_examples}</p>
+        <div className="equipment-detail-container">
+            <div className="equipment-header">{equipmentDetails.equipment_name}</div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Equipment ID:</div>
+                <div className="equipment-section-content">{equipmentDetails.id}</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Description:</div>
+                <div className="equipment-section-content">{equipmentDetails.description}</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Location:</div>
+                <div className="equipment-section-content">{equipmentDetails.location}</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Basic Specifications:</div>
+                <div className="equipment-section-content">{equipmentDetails.basic_specifications}</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Storage Dimensions:</div>
+                <div className="equipment-section-content">{equipmentDetails.storage_dimensions}</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Use Case Examples:</div>
+                <div className="equipment-section-content">{equipmentDetails.use_case_examples}</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Minimum Temperature:</div>
+                <div className="equipment-section-content">{equipmentDetails.min_temp}°C</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Maximum Temperature:</div>
+                <div className="equipment-section-content">{equipmentDetails.max_temp}°C</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Max Wind Resistance:</div>
+                <div className="equipment-section-content">{equipmentDetails.max_wind_resistance} km/h</div>
+            </div>
+
+            <div className="equipment-section">
+                <div className="equipment-section-title">Minimum Lighting:</div>
+                <div className="equipment-section-content">{equipmentDetails.min_lighting}</div>
+            </div>
+
         </div>
     );
 }

@@ -65,6 +65,16 @@ function NavBar() {
                         Add Maintenance
                     </NavLink>
                 </li>
+                <li className="nav-li">
+                    <NavLink
+                        to="/weather"
+                        className={({ isActive }) =>
+                            isActive ? 'nav-link active-link' : 'nav-link'
+                        }
+                    >
+                        Weather
+                    </NavLink>
+                </li>
             </ul>
         </nav>
     );

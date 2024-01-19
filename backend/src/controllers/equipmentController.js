@@ -13,12 +13,12 @@ const EquipmentController = {
     // Equipment Description
     // Create a new equipment description
     createEquipment: (req, res) => {
-        EquipmentModel.createEquipment(req.body, (err, results) => {
+        const data = req.body;
+        EquipmentModel.createEquipment(data, (err, results) => {
             if (err) {
-                res.status(500).json({ message: 'Error creating new equipment description', error: err });
-            } else {
-                res.status(201).json({ message: 'New equipment description created', data: results });
+                return res.status(500).json({ message: 'Error creating new equipment description', error: err });
             }
+            res.status(201).json({ message: 'New equipment description created', data: results });
         });
     },
 
@@ -51,14 +51,16 @@ const EquipmentController = {
 
     // Update an equipment description
     updateEquipment: (req, res) => {
-        EquipmentModel.updateEquipment(req.params.id, req.body, (err, results) => {
+        const id = req.params.id;
+        const data = req.body;
+        EquipmentModel.updateEquipment(id, data, (err, results) => {
             if (err) {
-                res.status(500).json({ message: 'Error updating equipment description', error: err });
-            } else if (results.affectedRows === 0) {
-                res.status(404).json({ message: 'Equipment description not found' });
-            } else {
-                res.status(200).json({ message: 'Equipment description updated successfully', id: req.params.id });
+                return res.status(500).json({ message: 'Error updating equipment description', error: err });
             }
+            if (results.affectedRows === 0) {
+                return res.status(404).json({ message: 'Equipment description not found' });
+            }
+            res.status(200).json({ message: 'Equipment description updated successfully', data: results });
         });
     },
 
@@ -95,6 +97,20 @@ const EquipmentController = {
                 res.status(500).json({ message: 'Error fetching maintenance records', error: err });
             } else {
                 res.status(200).json(results);
+            }
+        });
+    },
+
+    // Get single maintenance schedule by id
+    getMaintenanceById: (req, res) => {
+        const { id } = req.params;
+        EquipmentModel.getMaintenanceById(id, (err, results) => {
+            if (err) {
+                res.status(500).json({ message: 'Error fetching maintenance record', error: err });
+            } else if (results.length === 0) {
+                res.status(404).json({ message: 'Maintenance record not found' });
+            } else {
+                res.status(200).json(results[0]);
             }
         });
     },

@@ -7,7 +7,9 @@ import NavBar from './components/NavBar';
 import EquipmentDetail from './components/EquipmentDetail';
 import AddEquipment from './pages/AddEquipment';
 import AddMaintenance from './pages/AddMaintenance';
+import EditMaintenanceForm from "./pages/EditMaintenanceForm";
 import Footer from './components/Footer';
+import Weather from "./pages/Weather";
 import './App.css';
 
 
@@ -27,6 +29,8 @@ function App() {
                         <Route path="/maintenance" element={<MaintenanceSchedule />} />
                         <Route path="/add-equipment" element={<AddEquipment />} />
                         <Route path="/add-maintenance" element={<AddMaintenance />} />
+                        <Route path="/weather" element={<Weather />} />
+                        <Route path="/edit-maintenance/:taskId" element={<EditMaintenanceForm />} />
                     </Routes>
                 </main>
                 <Footer />
