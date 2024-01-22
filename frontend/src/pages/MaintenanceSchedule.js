@@ -65,6 +65,7 @@ function MaintenanceSchedule() {
                     <th>Last Maintenance Date</th>
                     <th>Next Maintenance Date</th>
                     <th>Maintenance Frequency</th>
+                    <th>Maintenance To Be Performed</th>
                     <th>Modify</th>
                 </tr>
                 </thead>
@@ -77,6 +78,7 @@ function MaintenanceSchedule() {
                         <td>{new Date(task.last_maintenance_date).toLocaleDateString()}</td>
                         <td>{new Date(task.next_maintenance_date).toLocaleDateString()}</td>
                         <td>{task.maintenance_frequency}</td>
+                        <td>{task.maintenance_to_be_performed}</td>
                         <td>
                             <button onClick={() => handleEdit(task.id)}>Edit</button>
                             <button onClick={() => handleDelete(task.id)}>Delete</button>

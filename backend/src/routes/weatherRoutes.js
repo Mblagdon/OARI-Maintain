@@ -10,24 +10,22 @@
 
 const express = require('express');
 const axios = require('axios');
-require('dotenv').config();
-
 const router = express.Router();
 
-router.get('/weather', async (req, res) => {
-    const { location } = req.query;
-
+// Endpoint to get current weather
+router.get('/', async (req, res) => {
     try {
-        const weatherResponse = await axios.get(`http://api.weatherstack.com/current`, {
-            params: {
-                access_key: process.env.WEATHER_API_KEY, // Access key stored in .env
-                query: location // Location from the frontend
-            }
-        });
+        const { query } = req.query; // Get location from query parameter
+        const weatherApiUrl = `http://api.weatherstack.com/current?access_key=${process.env.WEATHER_API_KEY}&query=${query}`;
+
+        const weatherResponse = await axios.get(weatherApiUrl);
         res.json(weatherResponse.data);
     } catch (error) {
-        res.status(500).send('Error retrieving weather data');
+        console.error('Error in fetching weather:', error);
+        res.status(500).json({ message: 'Error fetching weather data', error: error.message });
     }
 });
 
 module.exports = router;
+
+

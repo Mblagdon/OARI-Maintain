@@ -10,13 +10,14 @@ function EditMaintenanceForm() {
     useEffect(() => {
         const fetchMaintenanceData = async () => {
             try {
-                const response = await fetch(`/api/maintenance/${taskId}`); // Use taskId
+                const response = await fetch(`/api/maintenance/${taskId}`);
                 if (!response.ok) throw new Error('Failed to fetch data');
                 const data = await response.json();
                 setMaintenanceData({
                     ...data,
-                    last_maintenance_date: data.last_maintenance_date.split('T')[0], // assuming the date comes in ISO format
+                    last_maintenance_date: data.last_maintenance_date.split('T')[0],
                     next_maintenance_date: data.next_maintenance_date.split('T')[0],
+                    maintenance_to_be_performed: data.maintenance_to_be_performed || ''
                 });
             } catch (error) {
                 console.error('Error fetching maintenance data:', error);
@@ -119,6 +120,17 @@ function EditMaintenanceForm() {
                         value={maintenanceData.maintenance_frequency}
                         onChange={handleChange}
                         className="form-input"
+                    />
+                </div>
+
+                {/* Maintenance to be performed */}
+                <div className="form-group">
+                    <label className="form-label">Maintenance to be Performed:</label>
+                    <textarea
+                        name="maintenance_to_be_performed"
+                        value={maintenanceData.maintenance_to_be_performed}
+                        onChange={handleChange}
+                        className="form-textarea"
                     />
                 </div>
 

@@ -15,7 +15,8 @@ function AddMaintenance() {
         status: '',
         last_maintenance_date: '',
         next_maintenance_date: '',
-        maintenance_frequency: ''
+        maintenance_frequency: '',
+        maintenance_to_be_performed: '',
     });
 
     const handleChange = (e) => {
@@ -30,7 +31,7 @@ function AddMaintenance() {
         e.preventDefault();
 
 
-        fetch('/api/maintenance', { // Adjust the endpoint as needed
+        fetch('/api/maintenance', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,7 +51,8 @@ function AddMaintenance() {
                     status: '',
                     last_maintenance_date: '',
                     next_maintenance_date: '',
-                    maintenance_frequency: ''
+                    maintenance_frequency: '',
+                    maintenance_to_be_performed: '',
                 });
             })
             .catch((error) => {
@@ -115,6 +117,15 @@ function AddMaintenance() {
                         type="text"
                         name="maintenance_frequency"
                         value={maintenanceData.maintenance_frequency}
+                        onChange={handleChange}
+                        className="form-input"
+                    />
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Maintenance to be Performed:</label>
+                    <textarea
+                        name="maintenance_to_be_performed"
+                        value={maintenanceData.maintenance_to_be_performed}
                         onChange={handleChange}
                         className="form-input"
                     />

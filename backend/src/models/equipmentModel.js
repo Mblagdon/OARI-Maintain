@@ -69,16 +69,27 @@ const EquipmentModel = {
     // Maintenance schedule
     // Create maintenance schedule
     createMaintenance: (maintenanceData, callback) => {
-        const query = `INSERT INTO equipment_management (equipment_id, status, last_maintenance_date, next_maintenance_date, maintenance_frequency) VALUES (?, ?, ?, ?, ?)`;
-        db.query(query, [
-            maintenanceData.equipment_id,
-            maintenanceData.status,
-            maintenanceData.last_maintenance_date,
-            maintenanceData.next_maintenance_date,
-            maintenanceData.maintenance_frequency
-        ], (err, results) => {
-            callback(err, results);
-        });
+        const query = `
+        INSERT INTO equipment_management (
+            equipment_id, 
+            status, 
+            last_maintenance_date, 
+            next_maintenance_date, 
+            maintenance_frequency,
+            maintenance_to_be_performed
+        ) VALUES (?, ?, ?, ?, ?, ?)`;
+        db.query(
+            query,
+            [
+                maintenanceData.equipment_id,
+                maintenanceData.status,
+                maintenanceData.last_maintenance_date,
+                maintenanceData.next_maintenance_date,
+                maintenanceData.maintenance_frequency,
+                maintenanceData.maintenance_to_be_performed
+            ],
+            callback
+        );
     },
 
     // Get maintenance schedule
@@ -109,7 +120,8 @@ const EquipmentModel = {
             status = ?, 
             last_maintenance_date = ?, 
             next_maintenance_date = ?, 
-            maintenance_frequency = ?
+            maintenance_frequency = ?,
+            maintenance_to_be_performed = ? 
         WHERE id = ?`;
         db.query(
             query,
@@ -118,11 +130,10 @@ const EquipmentModel = {
                 maintenanceData.last_maintenance_date,
                 maintenanceData.next_maintenance_date,
                 maintenanceData.maintenance_frequency,
+                maintenanceData.maintenance_to_be_performed,
                 id
             ],
-            (err, results) => {
-                callback(err, results);
-            }
+            callback
         );
     },
 
