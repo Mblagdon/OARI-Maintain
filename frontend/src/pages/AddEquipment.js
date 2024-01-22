@@ -74,7 +74,11 @@ function AddEquipment() {
                     location: '',
                     basic_specifications: '',
                     storage_dimensions: '',
-                    use_case_examples: ''
+                    use_case_examples: '',
+                    min_temp: '',
+                    max_temp: '',
+                    max_wind_resistance: '',
+                    min_lighting: ''
             });
             // Redirect or update state here if needed
             })
@@ -158,13 +162,22 @@ function AddEquipment() {
                     onChange={handleChange}
                     placeholder="Max Wind Resistance"
                 />
-                <input
-                    type="text"
-                    name="min_lighting"
-                    value={formData.min_lighting}
-                    onChange={handleChange}
-                    placeholder="Minimum Lighting"
-                />
+                <div className="form-group" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <label className="form-label" style={{ marginRight: '10px' }}>Minimum Lighting:</label>
+                    <select
+                        name="min_lighting"
+                        value={formData.min_lighting}
+                        onChange={handleChange}
+                        className="form-select"
+                        style={{ flexGrow: '1' }}
+                    >
+                        <option value="">Select Lighting Exposure</option>
+                        <option value="Low Exposure">Low Exposure</option>
+                        <option value="Moderate Exposure">Moderate Exposure</option>
+                        <option value="High Exposure">High Exposure</option>
+                        <option value="Consistent Exposure">Consistent Exposure</option>
+                    </select>
+                </div>
                 <button type="submit" className="submit-button">Add Equipment</button>
             </form>
         </div>

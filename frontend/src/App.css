@@ -339,3 +339,117 @@ html, body {
   padding: 10px 0;
   margin-top: auto; /* Push footer to the bottom */
 }
+
+
+/* Home Page css */
+.home-container {
+  color: #ffffff;
+  background-color: #1A1A1D; /* Dark background */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+.home-container h1 {
+  color: #F2EBE5;
+}
+
+.hero {
+  padding: 50px 20px;
+}
+
+.intended-users {
+  max-width: 800px; /* or any other max-width that fits your design */
+  margin: 0 auto; /* This centers the .intended-users div */
+  padding: 20px;
+}
+
+/* Additional styling for the .intended-users section if needed */
+.intended-users h2 {
+  color: #66FCF1; /* Adjust the color to fit your design */
+  margin-bottom: 20px; /* Space between the header and paragraph */
+}
+
+.intended-users p {
+  color: #C5C6C7; /* Lighter text color for readability */
+  line-height: 1.6; /* Adjust line height for better readability */
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.features-overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates three columns */
+  grid-gap: 20px; /* Spacing between grid items */
+  padding: 20px;
+}
+
+.feature-item {
+  padding: 20px;
+  background: #4E4E50; /* Slightly lighter than the background for contrast */
+  border-radius: 8px;
+}
+
+.feature-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.feature-item h3 {
+  margin-top: 20px;
+  color: #66FCF1; /* A bright color for headings */
+}
+
+.feature-item p {
+  margin-top: 10px;
+  color: #C5C6C7; /* Lighter text color for readability */
+}
+
+.btn-primary {
+  background-color: #66FCF1;
+  color: #1A1A1D;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0B0C10;
+  color: #66FCF1;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 1024px) {
+  .features-overview {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .features-overview {
+    grid-template-columns: 1fr; /* One column for mobile screens */
+  }
+}
+
+/* Default light theme styles */
+body {
+  background-color: #ffffff;
+  color: #000000;
+  /* ...other styles... */
+}
+
+/* Dark theme styles */
+body.dark-mode {
+  background-color: #000000;
+  color: #ffffff;
+  /* ...other styles... */
+}
