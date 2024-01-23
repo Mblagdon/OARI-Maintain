@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import EquipmentList from './pages/EquipmentList';
@@ -11,17 +11,20 @@ import EditMaintenanceForm from "./pages/EditMaintenanceForm";
 import Footer from './components/Footer';
 import Weather from "./pages/Weather";
 import './App.css';
+import EditEquipment from "./pages/EditEquipment";
+import CheckoutCheckinPage from "./pages/CheckoutCheckinPage";
+
 
 
 function App() {
     return (
         <Router>
-            <div className="site-container"> {/* Use a class that will be styled to handle layout */}
+            <div className="site-container">
                 <header className="App-header">
                     <h1>Drone Maintenance Web Application</h1>
                 </header>
                 <NavBar />
-                <main className="content"> {/* Main content wrapper */}
+                <main className="content">
                     <Routes>
                         <Route path="/" element={<Home />} />
                         <Route path="/equipment" element={<EquipmentList />} />
@@ -31,6 +34,8 @@ function App() {
                         <Route path="/add-maintenance" element={<AddMaintenance />} />
                         <Route path="/weather" element={<Weather />} />
                         <Route path="/edit-maintenance/:taskId" element={<EditMaintenanceForm />} />
+                        <Route path="/edit-equipment/:equipmentId" element={<EditEquipment />} />
+                        <Route path="/checkout-checkin" element={<CheckoutCheckinPage />} />
                     </Routes>
                 </main>
                 <Footer />

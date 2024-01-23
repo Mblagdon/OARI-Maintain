@@ -11,12 +11,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 
-function EquipmentItem({ equipment }) {
+function EquipmentItem({ equipment, onEdit, onDelete }) {
     return (
         <div className="equipment-card">
             <Link to={`/equipment/${equipment.id}`} className="equipment-name">
                 {equipment.equipment_name}
             </Link>
+            <button onClick={() => onEdit(equipment.id)}>Edit</button>
+            <button onClick={() => onDelete(equipment.id)}>Delete</button>
         </div>
     );
 }

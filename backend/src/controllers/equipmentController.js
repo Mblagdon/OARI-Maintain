@@ -53,8 +53,10 @@ const EquipmentController = {
     updateEquipment: (req, res) => {
         const id = req.params.id;
         const data = req.body;
+
         EquipmentModel.updateEquipment(id, data, (err, results) => {
             if (err) {
+
                 return res.status(500).json({ message: 'Error updating equipment description', error: err });
             }
             if (results.affectedRows === 0) {
@@ -143,6 +145,52 @@ const EquipmentController = {
         });
     },
 
+
+
+    // Checkin/Checkout
+
+    checkoutEquipment: async (req, res) => {
+        const { equipment_id, checkout_date } = req.body;
+
+        try {
+            // Here you would call a method to create a checkout record in the database
+            await EquipmentModel.checkoutEquipment(equipment_id, checkout_date);
+
+            // If successful, send a response back to the client
+            res.status(201).json({ message: 'Equipment checked out successfully' });
+        } catch (error) {
+            // If there's an error, respond with an error message
+            res.status(500).json({ message: 'Error checking out equipment', error: error.message });
+        }
+    },
+
+    checkinEquipment: async (req, res) => {
+        const { equipment_id, checkin_date, comments, usage_duration, weather_data } = req.body;
+
+        try {
+            // Here you would call a method to create a check-in record in the database
+            await EquipmentModel.checkinEquipment(equipment_id, checkin_date, comments, usage_duration, weather_data);
+
+            // If successful, send a response back to the client
+            res.status(200).json({ message: 'Equipment checked in successfully' });
+        } catch (error) {
+            // If there's an error, respond with an error message
+            res.status(500).json({ message: 'Error checking in equipment', error: error.message });
+        }
+    },
+
+    getCurrentlyCheckedOutEquipment: async (req, res) => {
+        try {
+            // Fetch equipment that has a checkout_date but no checkin_date
+            const checkedOutEquipment = await EquipmentModel.getCurrentlyCheckedOutEquipment();
+
+            // Respond with the currently checked out equipment
+            res.status(200).json(checkedOutEquipment);
+        } catch (error) {
+            res.status(500).json({ message: 'Error fetching checked out equipment', error: error.message });
+        }
+    },
 };
+
 
 module.exports = EquipmentController;

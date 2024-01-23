@@ -43,5 +43,17 @@ router.put('/maintenance/:id', EquipmentController.updateMaintenance);
 // Deleting maintenance record
 router.delete('/maintenance/:id', EquipmentController.deleteMaintenance);
 
+
+// Routes for checkin/checkout
+// Checkout equipment
+router.post('/checkout', EquipmentController.checkoutEquipment);
+
+// Check-in equipment
+router.post('/checkin', EquipmentController.checkinEquipment);
+
+// Get currently checked-out equipment
+router.get('/checkedout-equipment', EquipmentController.getCurrentlyCheckedOutEquipment);
+
+
 // Export the router
 module.exports = router;

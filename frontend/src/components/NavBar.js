@@ -75,6 +75,16 @@ function NavBar() {
                         Weather
                     </NavLink>
                 </li>
+                <li className="nav-li">
+                    <NavLink
+                        to="/checkout-checkin"
+                        className={({ isActive }) =>
+                            isActive ? 'nav-link active-link' : 'nav-link'
+                        }
+                    >
+                        Checkin/Checkout
+                    </NavLink>
+                </li>
             </ul>
         </nav>
     );

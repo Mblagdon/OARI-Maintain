@@ -42,8 +42,12 @@ const EquipmentModel = {
         });
     },
 
+
     // Update an equipment description
     updateEquipment: (id, data, callback) => {
+        // Convert empty string to null for nullable integer columns
+        const maxWindResistance = data.max_wind_resistance !== '' ? data.max_wind_resistance : null;
+
         const query = `UPDATE equipment_descriptions SET 
         equipment_name = ?, description = ?, category = ?, 
         location = ?, basic_specifications = ?, storage_dimensions = ?, 
@@ -51,10 +55,18 @@ const EquipmentModel = {
         min_lighting = ? WHERE id = ?`;
 
         db.query(query, [
-            data.equipment_name, data.description, data.category,
-            data.location, data.basic_specifications, data.storage_dimensions,
-            data.min_temp, data.max_temp, data.max_wind_resistance,
-            data.min_lighting, id], (err, results) => {
+            data.equipment_name,
+            data.description,
+            data.category,
+            data.location,
+            data.basic_specifications,
+            data.storage_dimensions,
+            data.min_temp,
+            data.max_temp,
+            maxWindResistance,
+            data.min_lighting,
+            id
+        ], (err, results) => {
             callback(err, results);
         });
     },
@@ -141,6 +153,31 @@ const EquipmentModel = {
     deleteMaintenance: (id, callback) => {
         const query = 'DELETE FROM equipment_management WHERE id = ?';
         db.query(query, [id], (err, results) => {
+            callback(err, results);
+        });
+    },
+
+    // Checkin/Checkout
+    // Check out equipment
+    checkoutEquipment: (equipmentId, checkoutDate, callback) => {
+        const query = `INSERT INTO equipment_checkout (equipment_id, checkout_date) VALUES (?, ?)`;
+        db.query(query, [equipmentId, checkoutDate], (err, results) => {
+            callback(err, results);
+        });
+    },
+
+    // Check in equipment
+    checkinEquipment: (equipmentId, checkinDate, comments, callback) => {
+        const query = `UPDATE equipment_checkout SET checkin_date = ?, comments = ? WHERE equipment_id = ? AND checkin_date IS NULL`;
+        db.query(query, [checkinDate, comments, equipmentId], (err, results) => {
+            callback(err, results);
+        });
+    },
+
+    // Get the checked out equipment
+    getCurrentlyCheckedOutEquipment: (callback) => {
+        const query = `SELECT * FROM equipment_checkout WHERE checkin_date IS NULL`;
+        db.query(query, (err, results) => {
             callback(err, results);
         });
     },

@@ -193,6 +193,22 @@ textarea {
   background-color: #4cae4c;
 }
 
+.edit-button, .delete-button {
+  padding: 5px 10px;
+  margin-right: 5px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+}
+
+.edit-button {
+  background-color: #4CAF50; /* Green */
+}
+
+.delete-button {
+  background-color: #F44336; /* Red */
+}
 
 /* AddMaintenance.js */
 .form-container {
@@ -427,6 +443,50 @@ html, body {
   color: #66FCF1;
 }
 
+
+/* CheckoutCheckinPage.js */
+.checkout-checkin-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.forms-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.form-section {
+  flex-basis: 48%; /* Adjust the width of form sections */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.currently-checked-out {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.currently-checked-out h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
 /* Responsive design adjustments */
 @media (max-width: 1024px) {
   .features-overview {
@@ -438,18 +498,4 @@ html, body {
   .features-overview {
     grid-template-columns: 1fr; /* One column for mobile screens */
   }
-}
-
-/* Default light theme styles */
-body {
-  background-color: #ffffff;
-  color: #000000;
-  /* ...other styles... */
-}
-
-/* Dark theme styles */
-body.dark-mode {
-  background-color: #000000;
-  color: #ffffff;
-  /* ...other styles... */
 }
