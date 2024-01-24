@@ -11,12 +11,21 @@ function CheckoutForm() {
         const fetchEquipment = async () => {
             setIsLoading(true);
             try {
+                // Fetch all equipment
                 const response = await fetch('/api/equipment');
-                if (!response.ok) {
-                    throw new Error('Could not fetch equipment list');
-                }
-                const data = await response.json();
-                setEquipmentList(data);
+                const equipmentData = await response.json();
+
+                // Fetch checked-out equipment
+                const checkedOutResponse = await fetch('/api/checkedout-equipment');
+                const checkedOutData = await checkedOutResponse.json();
+
+                // Map over all equipment and disable those that are checked out
+                const equipmentWithDisabledState = equipmentData.map(equipment => ({
+                    ...equipment,
+                    isDisabled: checkedOutData.some(checkedOutItem => checkedOutItem.equipment_id === equipment.id),
+                }));
+                console.log(equipmentWithDisabledState);
+                setEquipmentList(equipmentWithDisabledState);
                 setIsLoading(false);
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -76,8 +85,8 @@ function CheckoutForm() {
                 >
                     <option value="">Select Equipment</option>
                     {equipmentList.map(equipment => (
-                        <option key={equipment.id} value={equipment.id}>
-                            {equipment.name}
+                        <option key={equipment.id} value={equipment.id} disabled={equipment.isDisabled}>
+                            {equipment.equipment_name}
                         </option>
                     ))}
                 </select>

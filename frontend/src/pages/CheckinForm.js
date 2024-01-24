@@ -1,15 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function CheckinForm({ equipmentId, onCheckin }) {
+function CheckinForm() {
+    const [checkedOutEquipment, setCheckedOutEquipment] = useState([]);
+    const [selectedEquipment, setSelectedEquipment] = useState('');
     const [checkinDate, setCheckinDate] = useState('');
+    const [usageDuration, setUsageDuration] = useState('');
     const [comments, setComments] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    useEffect(() => {
+        const fetchCheckedOutEquipment = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch('/api/checkedout-equipment');
+                if (!response.ok) {
+                    throw new Error('Could not fetch checked out equipment');
+                }
+                const data = await response.json();
+                setCheckedOutEquipment(data);
+                setIsLoading(false);
+            } catch (error) {
+                console.error('Error:', error);
+                setError(error.message);
+                setIsLoading(false);
+            }
+        };
+
+        fetchCheckedOutEquipment();
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!checkinDate) {
-            alert('Please select a check-in date.');
+        if (!selectedEquipment || !checkinDate) {
+            alert('Please select equipment and a check-in date.');
             return;
         }
 
@@ -21,8 +45,9 @@ function CheckinForm({ equipmentId, onCheckin }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    equipment_id: equipmentId, // Assuming you pass the equipment ID when calling this form
+                    equipment_id: selectedEquipment,
                     checkin_date: checkinDate,
+                    usage_duration: usageDuration,
                     comments: comments,
                 }),
             });
@@ -31,15 +56,12 @@ function CheckinForm({ equipmentId, onCheckin }) {
                 throw new Error('Check-in failed');
             }
 
-            // Perform any additional actions on successful check-in
-            onCheckin(); // Callback to update the parent state
             alert('Equipment checked in successfully');
             setIsLoading(false);
         } catch (error) {
             console.error('Check-in error:', error);
             alert('Failed to check in equipment');
             setIsLoading(false);
-            setError(error.message);
         }
     };
 
@@ -48,6 +70,35 @@ function CheckinForm({ equipmentId, onCheckin }) {
 
     return (
         <form onSubmit={handleSubmit}>
+            {/* Select Equipment Dropdown */}
+            <label>
+                Equipment:
+                <select
+                    value={selectedEquipment}
+                    onChange={e => setSelectedEquipment(e.target.value)}
+                    disabled={isLoading}
+                >
+                    <option value="">Select Equipment</option>
+                    {checkedOutEquipment.map(item => (
+                        <option key={item.id} value={item.equipment_id}>
+                            {item.equipment_name}
+                        </option>
+                    ))}
+                </select>
+            </label>
+
+            {/* Usage Duration Input */}
+            <label>
+                Usage Duration (minutes):
+                <input
+                    type="number"
+                    value={usageDuration}
+                    onChange={e => setUsageDuration(e.target.value)}
+                    disabled={isLoading}
+                />
+            </label>
+
+            {/* Check-in Date Input */}
             <label>
                 Check-in Date:
                 <input
@@ -57,6 +108,8 @@ function CheckinForm({ equipmentId, onCheckin }) {
                     disabled={isLoading}
                 />
             </label>
+
+            {/* Comments Input */}
             <label>
                 Comments:
                 <textarea
@@ -65,8 +118,9 @@ function CheckinForm({ equipmentId, onCheckin }) {
                     disabled={isLoading}
                 />
             </label>
+
             <button type="submit" disabled={isLoading}>
-                {isLoading ? 'Checking In...' : 'Check In'}
+                Check In
             </button>
         </form>
     );
