@@ -487,6 +487,72 @@ html, body {
 }
 
 
+/* Weather.js */
+.weather-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+}
+
+.weather-section,
+.equipment-section {
+  margin: 0 10px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.weather-section {
+  flex-grow: 2;
+}
+
+.equipment-section {
+  flex-grow: 1;
+}
+
+.weather-container input[type='text'],
+.weather-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.weather-container button {
+  padding: 10px 15px;
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.weather-container button:hover {
+  background-color: #3949ab;
+}
+
+.error-message {
+  color: #e53935;
+  margin-top: 10px;
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+  .weather-container {
+    flex-direction: column;
+  }
+  .weather-section,
+  .equipment-section {
+    margin: 10px 0;
+  }
+}
+
+
 /* Responsive design adjustments */
 @media (max-width: 1024px) {
   .features-overview {

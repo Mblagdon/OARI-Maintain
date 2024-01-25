@@ -8,11 +8,15 @@
  * error states and provides appropriate user feedback.
  */
 
-import React, { useState } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
+import '../App.css';
 
 function Weather() {
     const [location, setLocation] = useState('');
     const [weatherData, setWeatherData] = useState(null);
+    const [equipmentList, setEquipmentList] = useState([]);
+    const [selectedEquipmentId, setSelectedEquipmentId] = useState('');
+    const [equipmentUsageMessage, setEquipmentUsageMessage] = useState('');
     const [error, setError] = useState('');
 
     const fetchWeather = async () => {
@@ -30,17 +34,60 @@ function Weather() {
         }
     };
 
+    const fetchEquipment = async () => {
+        try {
+            const response = await fetch('/api/equipment');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            setEquipmentList(data);
+        } catch (error) {
+            console.error('Error fetching equipment:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchEquipment();
+    }, []);
+
+    const checkEquipmentUsage = useCallback((equipmentId) => {
+        const selectedEquipment = equipmentList.find(eq => eq.id.toString() === equipmentId);
+        if (!weatherData || !selectedEquipment) {
+            setEquipmentUsageMessage('');
+            return;
+        }
+
+        const { max_temp, min_temp, max_wind_resistance } = selectedEquipment;
+        const { temperature, wind_speed } = weatherData.current;
+
+        if (temperature > max_temp || temperature < min_temp) {
+            setEquipmentUsageMessage('Temperature is out of operational range for this equipment.');
+        } else if (wind_speed > max_wind_resistance) {
+            setEquipmentUsageMessage('Wind speed is too high for this equipment.');
+        } else {
+            setEquipmentUsageMessage('Equipment can be used in current conditions.');
+        }
+    }, [weatherData, equipmentList]);
+
+    useEffect(() => {
+        if (selectedEquipmentId) {
+            checkEquipmentUsage(selectedEquipmentId);
+        }
+    }, [selectedEquipmentId, checkEquipmentUsage]);
+
     return (
-        <div>
-            <input
-                type="text"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-                placeholder="Enter Location"
-            />
-            <button onClick={fetchWeather}>Get Weather</button>
-            {weatherData && (
-                <div>
+        <div className="weather-container">
+            <div className="weather-section">
+                <input
+                    type="text"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="Enter Location"
+                />
+                <button onClick={fetchWeather}>Get Weather</button>
+                {weatherData && (
+                    <div>
                     <h2>Weather in {weatherData.location.name}</h2>
                     <p><strong>Temperature:</strong> {weatherData.current.temperature}°C</p>
                     <p><strong>Weather Conditions:</strong> {weatherData.current.weather_descriptions.join(', ')}</p>
@@ -58,11 +105,22 @@ function Weather() {
                     ))}
                 </div>
             )}
-            {error && <div>Error: {error}</div>}
+            </div>
+            <div className="equipment-section">
+                <select value={selectedEquipmentId} onChange={e => setSelectedEquipmentId(e.target.value)}>
+                    <option value="">Select Equipment</option>
+                    {equipmentList.map(equipment => (
+                        <option key={equipment.id} value={equipment.id}>
+                            {equipment.equipment_name}
+                        </option>
+                    ))}
+                </select>
+                <button onClick={() => checkEquipmentUsage(selectedEquipmentId)}>Check Equipment Usage</button>
+                {equipmentUsageMessage && <p>{equipmentUsageMessage}</p>}
+            </div>
+            {error && <div className="error-message">{error}</div>}
         </div>
     );
 }
 
 export default Weather;
-
-
