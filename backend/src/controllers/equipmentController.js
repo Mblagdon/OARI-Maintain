@@ -153,10 +153,17 @@ const EquipmentController = {
     },
 
     checkinEquipment: async (req, res) => {
-        const { equipment_id, checkin_date, comments, usage_duration } = req.body;
+        const { equipment_id, checkin_date, comments, usage_duration, weather, location } = req.body;
 
         try {
-            const result = await EquipmentModel.checkinEquipment(equipment_id, checkin_date, comments, usage_duration);
+            const result = await EquipmentModel.checkinEquipment(
+                equipment_id,
+                checkin_date,
+                comments,
+                usage_duration,
+                weather,
+                location
+            );
             res.status(200).json({ message: 'Equipment checked in successfully', data: result });
         } catch (error) {
             res.status(500).json({ message: 'Error checking in equipment', error: error.message });

@@ -250,13 +250,28 @@ const EquipmentModel = {
     },
 
     // Check in equipment
-    checkinEquipment: (equipmentId, checkinDate, comments, usageDuration) => {
+    checkinEquipment: (equipmentId, checkinDate, comments, usageDuration, weatherData, location) => {
         return new Promise((resolve, reject) => {
-            // Assuming 'usage_duration' column is in minutes and you have such a column in your database
-            const query = `UPDATE equipment_checkout 
-                       SET checkin_date = ?, comments = ?, usage_duration = ?
-                       WHERE equipment_id = ? AND checkin_date IS NULL`;
-            db.query(query, [checkinDate, comments, usageDuration, equipmentId], (err, results) => {
+            const query = `
+            UPDATE equipment_checkout 
+            SET 
+                checkin_date = ?, 
+                comments = ?, 
+                usage_duration = ?, 
+                weather_data = ?, 
+                location = ?
+            WHERE 
+                equipment_id = ? AND 
+                checkin_date IS NULL
+        `;
+            db.query(query, [
+                checkinDate,
+                comments,
+                usageDuration,
+                JSON.stringify(weatherData), // Serialize the weather data to a JSON string
+                location,
+                equipmentId
+            ], (err, results) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -265,6 +280,7 @@ const EquipmentModel = {
             });
         });
     },
+
 
     // Get the checked out equipment
     getCurrentlyCheckedOutEquipment: () => {

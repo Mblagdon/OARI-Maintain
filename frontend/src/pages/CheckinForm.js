@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function CheckinForm() {
     const [checkedOutEquipment, setCheckedOutEquipment] = useState([]);
@@ -8,6 +9,26 @@ function CheckinForm() {
     const [comments, setComments] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [weatherData, setWeatherData] = useState(null);
+    const [location, setLocation] = useState('');
+
+
+    // Function to fetch weather data
+    const fetchWeatherData = async (location) => {
+        if (!location) {
+            setError('Please enter a valid location.'); // Provide feedback if location is empty
+            return;
+        }
+
+        try {
+            const response = await axios.get(`/api/weather?query=${encodeURIComponent(location)}`);
+            setWeatherData(response.data);
+            setError(''); // Clear any previous errors
+        } catch (error) {
+            console.error('Failed to fetch weather data:', error);
+            setError('Failed to fetch weather data. Please try again.'); // Provide user feedback on error
+        }
+    };
 
     useEffect(() => {
         const fetchCheckedOutEquipment = async () => {
@@ -32,6 +53,18 @@ function CheckinForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Call fetchWeatherData with the user-entered location during form submission
+        await fetchWeatherData(location);
+
+        // Proceed with the rest of the submit logic only if weather data is available
+        if (!weatherData) {
+            setError('Cannot check in without valid weather data.');
+            setIsLoading(false);
+            return;
+        }
+
+
         if (!selectedEquipment || !checkinDate) {
             alert('Please select equipment and a check-in date.');
             return;
@@ -49,6 +82,8 @@ function CheckinForm() {
                     checkin_date: checkinDate,
                     usage_duration: usageDuration,
                     comments: comments,
+                    weather: weatherData,
+                    location: location,
                 }),
             });
 
@@ -119,7 +154,20 @@ function CheckinForm() {
                 />
             </label>
 
-            <button type="submit" disabled={isLoading}>
+            {/* New Location Input */}
+            <label>
+                Location:
+                <input
+                    type="text"
+                    value={location}
+                    onChange={e => setLocation(e.target.value)}
+                    disabled={isLoading}
+                    placeholder="Enter the location"
+                />
+            </label>
+
+            {error && <p className="error-message">{error}</p>}
+            <button type="submit" disabled={isLoading || !location}>
                 Check In
             </button>
         </form>
