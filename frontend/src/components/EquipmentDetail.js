@@ -36,6 +36,9 @@ function EquipmentDetail() {
     if (error) return <div>Error: {error}</div>;
     if (!equipmentDetails) return <div>Equipment not found</div>;
 
+    // Determine if the equipment is of type 'software' to conditionally render the new fields
+    const isSoftware = equipmentDetails.type === 'software';
+
     return (
         <div className="equipment-detail-container">
             <div className="equipment-header">{equipmentDetails.equipment_name}</div>
@@ -89,6 +92,25 @@ function EquipmentDetail() {
                 <div className="equipment-section-title">Minimum Lighting:</div>
                 <div className="equipment-section-content">{equipmentDetails.min_lighting}</div>
             </div>
+            {/* Conditional rendering for software specific fields */}
+            {isSoftware && (
+                <>
+                    <div className="equipment-section">
+                        <div className="equipment-section-title">Date Bought:</div>
+                        <div className="equipment-section-content">{equipmentDetails.date_bought}</div>
+                    </div>
+
+                    <div className="equipment-section">
+                        <div className="equipment-section-title">Renewal Date:</div>
+                        <div className="equipment-section-content">{equipmentDetails.renewal_date}</div>
+                    </div>
+
+                    <div className="equipment-section">
+                        <div className="equipment-section-title">Price:</div>
+                        <div className="equipment-section-content">{equipmentDetails.price}</div>
+                    </div>
+                </>
+            )}
 
         </div>
     );

@@ -17,18 +17,20 @@ const EquipmentModel = {
             const query = `INSERT INTO equipment_descriptions (
                 equipment_name, description, category, location,
                 basic_specifications, storage_dimensions,
-                min_temp, max_temp, max_wind_resistance, min_lighting
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                min_temp, max_temp, max_wind_resistance, min_lighting,
+                date_bought, renewal_date, price
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
             db.query(query, [
                 data.equipment_name, data.description, data.category,
                 data.location, data.basic_specifications, data.storage_dimensions,
-                data.min_temp, data.max_temp, data.max_wind_resistance, data.min_lighting
+                data.min_temp, data.max_temp, data.max_wind_resistance, data.min_lighting,
+                data.date_bought, data.renewal_date, data.price
             ], (err, results) => {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(results);
+                    resolve(results.insertId); // Assuming you want to return the ID of the inserted row
                 }
             });
         });
@@ -51,7 +53,8 @@ const EquipmentModel = {
     // Get a single equipment description by ID
     getEquipmentById: (id) => {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM equipment_descriptions WHERE id = ?', [id], (err, results) => {
+            const query = 'SELECT * FROM equipment_descriptions WHERE id = ?';
+            db.query(query, [id], (err, results) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -65,12 +68,12 @@ const EquipmentModel = {
     // Update an equipment description
     updateEquipment: (id, data) => {
         return new Promise((resolve, reject) => {
-            const maxWindResistance = data.max_wind_resistance !== '' ? data.max_wind_resistance : null;
             const query = `UPDATE equipment_descriptions SET 
                 equipment_name = ?, description = ?, category = ?, 
                 location = ?, basic_specifications = ?, storage_dimensions = ?, 
                 min_temp = ?, max_temp = ?, max_wind_resistance = ?, 
-                min_lighting = ? WHERE id = ?`;
+                min_lighting = ?, date_bought = ?, renewal_date = ?, price = ?
+                WHERE id = ?`;
 
             db.query(query, [
                 data.equipment_name,
@@ -81,8 +84,11 @@ const EquipmentModel = {
                 data.storage_dimensions,
                 data.min_temp,
                 data.max_temp,
-                maxWindResistance,
+                data.max_wind_resistance,
                 data.min_lighting,
+                data.date_bought,
+                data.renewal_date,
+                data.price,
                 id
             ], (err, results) => {
                 if (err) {

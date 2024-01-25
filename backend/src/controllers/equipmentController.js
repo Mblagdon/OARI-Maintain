@@ -49,14 +49,19 @@ const EquipmentController = {
     // Update an equipment description
     updateEquipment: async (req, res) => {
         try {
-            const results = await EquipmentModel.updateEquipment(req.params.id, req.body);
+            const equipmentId = req.params.id;
+            const equipmentData = req.body;
+
+            const results = await EquipmentModel.updateEquipment(equipmentId, equipmentData);
+
             if (results.affectedRows === 0) {
                 res.status(404).json({ message: 'Equipment description not found' });
             } else {
                 res.status(200).json({ message: 'Equipment description updated successfully', data: results });
             }
-        } catch (err) {
-            res.status(500).json({ message: 'Error updating equipment description', error: err });
+        } catch (error) {
+            console.error('Update error:', error);
+            res.status(500).json({ message: 'Error updating equipment description', error: error.message });
         }
     },
 

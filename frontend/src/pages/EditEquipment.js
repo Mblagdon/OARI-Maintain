@@ -4,6 +4,7 @@ import '../App.css';
 
 function EditEquipment() {
     const [formData, setFormData] = useState({
+        type: 'equipment',
         equipment_name: '',
         description: '',
         location: '',
@@ -13,7 +14,10 @@ function EditEquipment() {
         min_temp: '',
         max_temp: '',
         max_wind_resistance: '',
-        min_lighting: ''
+        min_lighting: '',
+        date_bought: '',
+        renewal_date: '',
+        price: ''
     });
     const { equipmentId } = useParams();
     const navigate = useNavigate();
@@ -36,7 +40,10 @@ function EditEquipment() {
                     min_temp: data.min_temp || '',
                     max_temp: data.max_temp || '',
                     max_wind_resistance: data.max_wind_resistance || '',
-                    min_lighting: data.min_lighting || ''
+                    min_lighting: data.min_lighting || '',
+                    date_bought: data.date_bought || '',
+                    renewal_date: data.renewal_date || '',
+                    price: data.price || '',
                 });
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -68,7 +75,7 @@ function EditEquipment() {
             if (!response.ok) {
                 throw new Error('Could not update equipment details');
             }
-            navigate('/equipment'); // Redirect to the equipment list or details page
+            navigate('/equipment');
         } catch (error) {
             console.error('Update error:', error);
         }
@@ -78,6 +85,19 @@ function EditEquipment() {
         <div className="form-container">
             <h2>Edit Equipment</h2>
             <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label className="form-label">Type:</label>
+                    <select
+                        name="type"
+                        value={formData.type}
+                        onChange={handleChange}
+                        className="form-select"
+                    >
+                        <option value="equipment">Equipment</option>
+                        <option value="drone">Drone</option>
+                        <option value="software">Software</option>
+                    </select>
+                </div>
                 <div className="form-group">
                     <label className="form-label">Equipment Name:</label>
                     <input
@@ -181,6 +201,41 @@ function EditEquipment() {
                         <option value="Consistent Exposure">Consistent Exposure</option>
                     </select>
                 </div>
+                {/* Conditional form fields for software */}
+                {formData.type === 'software' && (
+                    <>
+                        <div className="form-group">
+                            <label className="form-label">Date Bought:</label>
+                            <input
+                                type="date"
+                                name="date_bought"
+                                value={formData.date_bought}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">Renewal Date:</label>
+                            <input
+                                type="date"
+                                name="renewal_date"
+                                value={formData.renewal_date}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">Price:</label>
+                            <input
+                                type="number"
+                                name="price"
+                                value={formData.price}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                    </>
+                )}
                 <button type="submit" className="submit-button">Save Changes</button>
             </form>
         </div>
