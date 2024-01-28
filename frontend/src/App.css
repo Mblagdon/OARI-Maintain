@@ -1,3 +1,4 @@
+/* Main App Styles */
 .App {
   text-align: center;
 }
@@ -14,7 +15,7 @@
 }
 
 .App-header {
-  background-color: rebeccapurple;
+  background-color: #B19CD9; /* Light Purple */
   min-height: 10vh;
   display: flex;
   flex-direction: column;
@@ -32,7 +33,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #75B9BE; /* Teal */
 }
 
 @keyframes App-logo-spin {
@@ -45,10 +46,9 @@
 }
 
 
-
-/* NavBar Styles for NavBar.js*/
+/* NavBar Styles for NavBar.js */
 .nav-bar {
-  background-color: rebeccapurple;
+  background-color: #B19CD9; /* Light Purple */
   color: white;
   padding: 10px;
   text-align: center;
@@ -83,7 +83,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background-color: white;
+  background-color: #FAD0C4; /* Soft Pink */
   transition: width 0.3s ease-in;
 }
 
@@ -92,27 +92,20 @@
 }
 
 .active-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
   background-color: white;
 }
-
 
 
 /* EquipmentList.js */
 .equipment-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust the minmax values based on your preferred card size */
-  gap: 16px; /* Adjust the gap size as needed */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
   padding: 16px;
 }
 
 .equipment-card {
-  border: 1px solid #ddd;
+  border: 1px solid #E6E6E6; /* Light Gray */
   border-radius: 8px;
   padding: 16px;
   background: #fff;
@@ -127,21 +120,21 @@
 
 .equipment-name {
   font-size: 1.2em;
-  color: #333; /* Text color for the equipment name */
+  color: #505050; /* Dark Gray */
   margin-bottom: 0.5rem;
   text-decoration: underline;
 }
 
 .details-container {
-  display: none; /* Keep details hidden initially */
-  font-size: 0.9em; /* Smaller text for details */
-  color: #666; /* Lighter text color for details */
+  display: none;
+  font-size: 0.9em;
+  color: #666;
 }
 
 
 
-/* AddEquipment.js */
-.form-container {
+/* AddEquipment.js and AddMaintenance.js */
+.form-container, .equipment-detail-container, .maintenance-schedule-container {
   max-width: 600px;
   margin: 20px auto;
   padding: 20px;
@@ -149,7 +142,6 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-
 form {
   display: grid;
   grid-gap: 10px;
@@ -178,85 +170,32 @@ textarea {
   height: 100px; /* Adjust based on preferred height */
 }
 
-.submit-button {
+.submit-button, .edit-button, .delete-button {
   padding: 10px 20px;
   margin-top: 20px;
-  background-color: #5cb85c;
-  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  width: 100%; /* Make the button take full width of its container */
+  width: 100%;
+}
+
+.submit-button {
+  background-color: #FFD580; /* Creamy Yellow */
+  color: #505050; /* Dark Gray */
 }
 
 .submit-button:hover {
-  background-color: #4cae4c;
-}
-
-.edit-button, .delete-button {
-  padding: 5px 10px;
-  margin-right: 5px;
-  border: none;
-  cursor: pointer;
-  color: white;
-  font-weight: bold;
+  background-color: #E6B800; /* Darker Yellow */
 }
 
 .edit-button {
-  background-color: #4CAF50; /* Green */
+  background-color: #75B9BE; /* Teal */
 }
 
 .delete-button {
-  background-color: #F44336; /* Red */
+  background-color: #FF6E6E; /* Light Coral */
 }
 
-/* AddMaintenance.js */
-.form-container {
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.form-group {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 15px; /* Add some space between the form groups */
-}
-
-.form-label {
-  flex-basis: 100%; /* Make the label take full width on smaller screens */
-  margin-bottom: 5px;
-}
-
-input[type="text"],
-input[type="number"],
-input[type="date"],
-textarea,
-.submit-button {
-  flex: 1;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-}
-
-textarea {
-  resize: vertical;
-}
-
-.submit-button {
-  background-color: #5cb85c;
-  color: white;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px; /* Add some space above the button */
-}
-
-.submit-button:hover {
-  background-color: #4cae4c;
-}
 
 /* EquipmentDetail.js */
 .equipment-detail-container {
@@ -291,31 +230,28 @@ textarea {
 }
 
 /* MaintenanceSchedule.js */
-.maintenance-schedule-container {
-  margin: 20px;
-  padding: 20px;
-}
-
 .maintenance-schedule-header {
   text-align: center;
   margin-bottom: 20px;
 }
 
-
-.maintenance-schedule-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.maintenance-schedule-table th,
-.maintenance-schedule-table td {
+.maintenance-schedule-table th, .maintenance-schedule-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
 }
 
 .maintenance-schedule-table th {
-  background-color: #f2f2f2;
+  background-color: #75B9BE; /* Teal */
+  color: white;
+}
+
+.maintenance-schedule-table tr:nth-child(even) {
+  background-color: #F9F9F9; /* Very light gray */
+}
+
+.maintenance-schedule-table tr:hover {
+  background-color: #eaeaea;
 }
 
 /* Style for alternate row coloring */
@@ -332,42 +268,26 @@ textarea {
 }
 
 /* Footer */
-
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-#root { /* assuming #root is your main app div */
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
-
-.content { /* wrapper for the content */
-  flex: 1;  /* This will make the content expand to fill the space */
-}
-
 .footer {
-  background-color: rebeccapurple;
+  background-color: #B19CD9; /* Light Purple */
   color: white;
   text-align: center;
   padding: 10px 0;
-  margin-top: auto; /* Push footer to the bottom */
+  margin-top: auto;
 }
 
 
 /* Home Page css */
 .home-container {
-  color: #ffffff;
-  background-color: #1A1A1D; /* Dark background */
+  color: #FFFFFF; /* White text for contrast */
+  background-color: #B19CD9; /* Light Purple */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
   padding: 20px;
 }
 
 .home-container h1 {
-  color: #F2EBE5;
+  color: #FAD0C4; /* Soft Pink */
 }
 
 .hero {
@@ -375,20 +295,19 @@ html, body {
 }
 
 .intended-users {
-  max-width: 800px; /* or any other max-width that fits your design */
-  margin: 0 auto; /* This centers the .intended-users div */
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
 }
 
-/* Additional styling for the .intended-users section if needed */
 .intended-users h2 {
-  color: #66FCF1; /* Adjust the color to fit your design */
-  margin-bottom: 20px; /* Space between the header and paragraph */
+  color: #75B9BE; /* Teal */
+  margin-bottom: 20px;
 }
 
 .intended-users p {
-  color: #C5C6C7; /* Lighter text color for readability */
-  line-height: 1.6; /* Adjust line height for better readability */
+  color: #C5C6C7; /* Light Gray for readability */
+  line-height: 1.6;
 }
 
 .features {
@@ -399,14 +318,14 @@ html, body {
 
 .features-overview {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Creates three columns */
-  grid-gap: 20px; /* Spacing between grid items */
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
   padding: 20px;
 }
 
 .feature-item {
   padding: 20px;
-  background: #4E4E50; /* Slightly lighter than the background for contrast */
+  background: #E6E6E6; /* Light Gray */
   border-radius: 8px;
 }
 
@@ -418,17 +337,17 @@ html, body {
 
 .feature-item h3 {
   margin-top: 20px;
-  color: #66FCF1; /* A bright color for headings */
+  color: #505050; /* Dark Gray */
 }
 
 .feature-item p {
   margin-top: 10px;
-  color: #C5C6C7; /* Lighter text color for readability */
+  color: #666666; /* Darker Gray */
 }
 
 .btn-primary {
-  background-color: #66FCF1;
-  color: #1A1A1D;
+  background-color: #FFD580; /* Creamy Yellow */
+  color: #1A1A1D; /* Dark Text */
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -439,9 +358,9 @@ html, body {
 }
 
 .btn-primary:hover {
-  background-color: #0B0C10;
-  color: #66FCF1;
+  background-color: #E6B800; /* Darker Yellow */
 }
+
 
 
 /* CheckoutCheckinPage.js */
@@ -450,6 +369,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   margin: 20px;
+  color: #505050; /* Dark Gray for text */
 }
 
 .forms-container {
@@ -460,30 +380,34 @@ html, body {
 }
 
 .form-section {
-  flex-basis: 48%; /* Adjust the width of form sections */
-  border: 1px solid #ddd;
+  flex-basis: 48%;
+  border: 1px solid #E6E6E6; /* Light Gray for borders */
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background: #FFFFFF; /* White background for clarity */
 }
 
 .form-section h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #75B9BE; /* Teal for headings */
 }
 
 .currently-checked-out {
   width: 100%;
-  border: 1px solid #ddd;
+  border: 1px solid #E6E6E6;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background: #FFFFFF;
   margin-top: 20px;
 }
 
 .currently-checked-out h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #75B9BE;
 }
 
 
