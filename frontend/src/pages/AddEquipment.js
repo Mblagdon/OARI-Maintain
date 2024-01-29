@@ -73,6 +73,7 @@ function AddEquipment() {
         }
         // Prepare the payload for the API call
         let payload = {
+            type: formData.type,
             equipment_name: formData.equipment_name,
             description: formData.description,
             use_case_examples: formData.use_case_examples,

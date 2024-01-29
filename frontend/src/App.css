@@ -98,6 +98,7 @@
 
 /* EquipmentList.js */
 .equipment-grid {
+  background-color: #B19CD9; /* Light Purple */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 16px;
@@ -135,7 +136,7 @@
 
 /* AddEquipment.js and AddMaintenance.js */
 .form-container, .equipment-detail-container, .maintenance-schedule-container {
-  max-width: 600px;
+  max-width: 800px;
   margin: 20px auto;
   padding: 20px;
   background: #fff;
@@ -159,7 +160,7 @@ form {
 
 input[type="text"],
 textarea {
-  width: 100%;
+  width: 96%;
   padding: 10px;
   margin: 5px 0;
   border-radius: 4px;
@@ -254,14 +255,6 @@ textarea {
   background-color: #eaeaea;
 }
 
-/* Style for alternate row coloring */
-.maintenance-schedule-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.maintenance-schedule-table tr:hover {
-  background-color: #eaeaea;
-}
 .error-message {
   color: red;
   margin-bottom: 10px;
@@ -301,12 +294,12 @@ textarea {
 }
 
 .intended-users h2 {
-  color: #75B9BE; /* Teal */
+  color: #FAD0C4;
   margin-bottom: 20px;
 }
 
 .intended-users p {
-  color: #C5C6C7; /* Light Gray for readability */
+  color: #FFFFFF;
   line-height: 1.6;
 }
 
@@ -439,7 +432,7 @@ textarea {
 
 .weather-container input[type='text'],
 .weather-container select {
-  width: 100%;
+  width: 95%;
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ddd;

@@ -22,6 +22,8 @@ function EditEquipment() {
     const { equipmentId } = useParams();
     const navigate = useNavigate();
 
+    const isSoftware = formData.type === 'software';
+
     useEffect(() => {
         const fetchEquipmentDetails = async () => {
             try {
@@ -31,6 +33,7 @@ function EditEquipment() {
                 }
                 const data = await response.json();
                 setFormData({
+                    type: data.type || 'equipment',
                     equipment_name: data.equipment_name || '',
                     description: data.description || '',
                     location: data.location || '',
@@ -64,6 +67,10 @@ function EditEquipment() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.type === 'software' && (!formData.date_bought || !formData.renewal_date || formData.price === '')) {
+            console.error('For software, date_bought, renewal_date, and price cannot be empty');
+            return;
+        }
         try {
             const response = await fetch(`/api/equipment/${equipmentId}`, {
                 method: 'PUT',
@@ -85,155 +92,146 @@ function EditEquipment() {
         <div className="form-container">
             <h2>Edit Equipment</h2>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label className="form-label">Type:</label>
-                    <select
-                        name="type"
-                        value={formData.type}
-                        onChange={handleChange}
-                        className="form-select"
-                    >
-                        <option value="equipment">Equipment</option>
-                        <option value="drone">Drone</option>
-                        <option value="software">Software</option>
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Equipment Name:</label>
-                    <input
-                        type="text"
-                        name="equipment_name"
-                        value={formData.equipment_name || ''}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Description:</label>
-                    <input
-                        type="text"
-                        name="description"
-                        value={formData.description || ''}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Location:</label>
-                    <input
-                        type="text"
-                        name="location"
-                        value={formData.location || ''}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Basic Specifications:</label>
-                    <input
-                        type="text"
-                        name="basic_specifications"
-                        value={formData.basic_specifications || ''}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Storage Dimensions:</label>
-                    <input
-                        type="text"
-                        name="storage_dimensions"
-                        value={formData.storage_dimensions || ''}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Use Case Examples:</label>
-                    <input
-                        type="text"
-                        name="use_case_examples"
-                        value={formData.use_case_examples || ''}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="number"
-                        name="min_temp"
-                        value={formData.min_temp || ''}
-                        onChange={handleChange}
-                        placeholder="Minimum Temperature"
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="number"
-                        name="max_temp"
-                        value={formData.max_temp || ''}
-                        onChange={handleChange}
-                        placeholder="Maximum Temperature"
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="number"
-                        name="max_wind_resistance"
-                        value={formData.max_wind_resistance || ''}
-                        onChange={handleChange}
-                        placeholder="Max Wind Resistance"
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label" style={{ marginRight: '10px' }}>Minimum Lighting:</label>
-                    <select
-                        name="min_lighting"
-                        value={formData.min_lighting || ''}
-                        onChange={handleChange}
-                        className="form-select"
-                        style={{ flexGrow: '1' }}
-                    >
-                        <option value="">Select Lighting Exposure</option>
-                        <option value="Low Exposure">Low Exposure</option>
-                        <option value="Moderate Exposure">Moderate Exposure</option>
-                        <option value="High Exposure">High Exposure</option>
-                        <option value="Consistent Exposure">Consistent Exposure</option>
-                    </select>
-                </div>
-                {/* Conditional form fields for software */}
-                {formData.type === 'software' && (
+                <label className="form-label">Type:</label>
+                <select
+                    name="type"
+                    value={formData.type}
+                    onChange={handleChange}
+                    className="form-input"
+                >
+                    <option value="equipment">Equipment</option>
+                    <option value="drone">Drone</option>
+                    <option value="software">Software</option>
+                </select>
+
+                <label className="form-label">Equipment Name:</label>
+                <input
+                    type="text"
+                    name="equipment_name"
+                    value={formData.equipment_name}
+                    onChange={handleChange}
+                    className="form-input"
+                />
+
+                <label className="form-label">Description:</label>
+                <input
+                    type="text"
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    className="form-input"
+                />
+
+                <label className="form-label">Use Case Examples:</label>
+                <input
+                    type="text"
+                    name="use_case_examples"
+                    value={formData.use_case_examples}
+                    onChange={handleChange}
+                    className="form-input"
+                />
+
+                {/* Conditional fields for drones and equipment */}
+                {!isSoftware && (
                     <>
-                        <div className="form-group">
-                            <label className="form-label">Date Bought:</label>
-                            <input
-                                type="date"
-                                name="date_bought"
-                                value={formData.date_bought}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label className="form-label">Renewal Date:</label>
-                            <input
-                                type="date"
-                                name="renewal_date"
-                                value={formData.renewal_date}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label className="form-label">Price:</label>
-                            <input
-                                type="number"
-                                name="price"
-                                value={formData.price}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                        <label className="form-label">Location:</label>
+                        <input
+                            type="text"
+                            name="location"
+                            value={formData.location}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+
+                        <label className="form-label">Basic Specifications:</label>
+                        <input
+                            type="text"
+                            name="basic_specifications"
+                            value={formData.basic_specifications}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+
+                        <label className="form-label">Storage Dimensions:</label>
+                        <input
+                            type="text"
+                            name="storage_dimensions"
+                            value={formData.storage_dimensions}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+
+                        <input
+                            type="number"
+                            name="min_temp"
+                            value={formData.min_temp}
+                            onChange={handleChange}
+                            placeholder="Minimum Temperature"
+                            className="form-input"
+                        />
+
+                        <input
+                            type="number"
+                            name="max_temp"
+                            value={formData.max_temp}
+                            onChange={handleChange}
+                            placeholder="Maximum Temperature"
+                            className="form-input"
+                        />
+
+                        <input
+                            type="number"
+                            name="max_wind_resistance"
+                            value={formData.max_wind_resistance}
+                            onChange={handleChange}
+                            placeholder="Max Wind Resistance"
+                            className="form-input"
+                        />
+
+                        <label className="form-label">Minimum Lighting:</label>
+                        <select
+                            name="min_lighting"
+                            value={formData.min_lighting}
+                            onChange={handleChange}
+                            className="form-select"
+                        >
+                            <option value="">Select Lighting Exposure</option>
+                            <option value="Low Exposure">Low Exposure</option>
+                            <option value="Moderate Exposure">Moderate Exposure</option>
+                            <option value="High Exposure">High Exposure</option>
+                            <option value="Consistent Exposure">Consistent Exposure</option>
+                        </select>
+                    </>
+                )}
+                {/* Conditional form fields for software */}
+                {isSoftware && (
+                    <>
+                        <label className="form-label">Date Bought:</label>
+                        <input
+                            type="date"
+                            name="date_bought"
+                            value={formData.date_bought}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+
+                        <label className="form-label">Renewal Date:</label>
+                        <input
+                            type="date"
+                            name="renewal_date"
+                            value={formData.renewal_date}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
+
+                        <label className="form-label">Price:</label>
+                        <input
+                            type="number"
+                            name="price"
+                            value={formData.price}
+                            onChange={handleChange}
+                            className="form-input"
+                        />
                     </>
                 )}
                 <button type="submit" className="submit-button">Save Changes</button>

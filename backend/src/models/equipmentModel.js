@@ -15,13 +15,14 @@ const EquipmentModel = {
     createEquipment: (data) => {
         return new Promise((resolve, reject) => {
             const query = `INSERT INTO equipment_descriptions (
-                equipment_name, description, category, location,
+                type,equipment_name, description, category, location,
                 basic_specifications, storage_dimensions,
                 min_temp, max_temp, max_wind_resistance, min_lighting,
                 date_bought, renewal_date, price
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`;
 
             db.query(query, [
+                data.type,
                 data.equipment_name, data.description, data.category,
                 data.location, data.basic_specifications, data.storage_dimensions,
                 data.min_temp, data.max_temp, data.max_wind_resistance, data.min_lighting,
@@ -30,8 +31,7 @@ const EquipmentModel = {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(results.insertId); // Assuming you want to return the ID of the inserted row
-                }
+                    resolve(results.insertId);                 }
             });
         });
     },
@@ -39,7 +39,14 @@ const EquipmentModel = {
     // Get all equipment descriptions
     getAllEquipment: () => {
         return new Promise((resolve, reject) => {
-            db.query('SELECT * FROM equipment_descriptions', (err, results) => {
+            const query = `SELECT * FROM equipment_descriptions
+                       ORDER BY CASE type
+                         WHEN 'drone' THEN 1
+                         WHEN 'equipment' THEN 2
+                         WHEN 'software' THEN 3
+                         END`;
+
+            db.query(query, (err, results) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -68,14 +75,22 @@ const EquipmentModel = {
     // Update an equipment description
     updateEquipment: (id, data) => {
         return new Promise((resolve, reject) => {
+            // Preprocess data for non-software types
+            if (data.type !== 'software') {
+                data.date_bought = data.date_bought ? data.date_bought : null;
+                data.renewal_date = data.renewal_date ? data.renewal_date : null;
+                data.price = data.price ? data.price : null;
+            }
+
             const query = `UPDATE equipment_descriptions SET 
-                equipment_name = ?, description = ?, category = ?, 
-                location = ?, basic_specifications = ?, storage_dimensions = ?, 
-                min_temp = ?, max_temp = ?, max_wind_resistance = ?, 
-                min_lighting = ?, date_bought = ?, renewal_date = ?, price = ?
-                WHERE id = ?`;
+            type = ?, equipment_name = ?, description = ?, category = ?, 
+            location = ?, basic_specifications = ?, storage_dimensions = ?, 
+            min_temp = ?, max_temp = ?, max_wind_resistance = ?, 
+            min_lighting = ?, date_bought = ?, renewal_date = ?, price = ?
+            WHERE id = ?`;
 
             db.query(query, [
+                data.type,
                 data.equipment_name,
                 data.description,
                 data.category,

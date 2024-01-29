@@ -11,6 +11,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
 import addIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\add.png"
+import checkIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\check.png"
+import checkinIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\checkin.png"
+import weatherIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\weather.png"
+import calenderIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\calender.png"
 
 const HomePage = () => {
     return (
@@ -32,6 +36,7 @@ const HomePage = () => {
 
             <section className="features-overview">
                 <div className="feature-item">
+                    <img src={checkIcon} alt="Equipment List" className="feature-icon" />
                     <h3>Equipment List</h3>
                     <p>Manage your drones and drone equipment on the Equipment List page, where you can view all added items and their specifications.</p>
                 </div>
@@ -41,16 +46,24 @@ const HomePage = () => {
                     <p>Add new drones or equipment easily through a form, and manage them all in one convenient location.</p>
                 </div>
                 <div className="feature-item">
+                    <img src={calenderIcon} alt="Maintenance Schedule" className="feature-icon" />
                     <h3>Maintenance Schedule</h3>
                     <p>Automate your maintenance schedules to keep track of all upcoming services, with options to edit or delete as needed.</p>
                 </div>
                 <div className="feature-item">
+                    <img src={addIcon} alt="Add Equipment" className="feature-icon" />
                     <h3>Add Maintenance</h3>
                     <p>Quickly add upcoming maintenance tasks and be notified as the date approaches, ensuring you never miss a service.</p>
                 </div>
                 <div className="feature-item">
+                    <img src={weatherIcon} alt="Weather" className="feature-icon" />
                     <h3>Weather</h3>
                     <p>Check the weather for the location you'll be in, and compare if the equipment being used is within range!</p>
+                </div>
+                <div className="feature-item">
+                    <img src={checkinIcon} alt="Checkin/Checkout" className="feature-icon" />
+                    <h3>Checkin/Checkout</h3>
+                    <p>Check-in and check-out a piece of equipment that you use!</p>
                 </div>
             </section>
 
