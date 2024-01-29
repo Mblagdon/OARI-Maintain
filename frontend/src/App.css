@@ -135,7 +135,23 @@
 
 
 /* AddEquipment.js and AddMaintenance.js */
-.form-container, .equipment-detail-container, .maintenance-schedule-container {
+body {
+  font-family: 'Arial', sans-serif; /* Use a font-family that you prefer */
+  line-height: 1.6;
+  color: #333;
+  background: #f4f4f4; /* A light grey background for the overall page */
+}
+
+.form-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.equipment-detail-container, .maintenance-schedule-container {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
@@ -143,32 +159,39 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
 form {
   display: grid;
-  grid-gap: 10px;
-  grid-template-columns: 1fr 2fr; /* Adjust based on preferred width */
+  grid-gap: 25px; /* Increased gap for better spacing */
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid layout */
   align-items: center;
 }
 
 .form-group {
   display: flex;
+  flex-direction: column; /* Stack label and input */
+  margin-bottom: 1rem; /* Space out groups */
 }
 
 .form-label {
-  margin-right: 10px; /* Adjust the spacing between label and input */
+  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
 
 input[type="text"],
-textarea {
-  width: 96%;
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  width: 100%; /* Full width */
   padding: 10px;
-  margin: 5px 0;
   border-radius: 4px;
   border: 1px solid #ddd;
+  font-size: 1rem; /* Larger font size for readability */
 }
 
 textarea {
-  height: 100px; /* Adjust based on preferred height */
+  height: 120px; /* Provide enough space for text */
 }
 
 .submit-button, .edit-button, .delete-button {
@@ -181,8 +204,10 @@ textarea {
 }
 
 .submit-button {
-  background-color: #FFD580; /* Creamy Yellow */
-  color: #505050; /* Dark Gray */
+  background-color: #FFD580;
+  color: #505050;
+  font-size: 1rem;
+  font-weight: bold;
 }
 
 .submit-button:hover {

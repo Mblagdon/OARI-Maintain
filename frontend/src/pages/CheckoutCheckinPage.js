@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CheckoutForm from "./CheckoutForm";
 import CheckinForm from './CheckinForm';
 import '../App.css';
+import {Link} from "react-router-dom";
 
 function CheckoutCheckinPage() {
     // This state will hold the equipment that is currently checked out
@@ -41,6 +42,8 @@ function CheckoutCheckinPage() {
             </div>
             <div className="currently-checked-out">
                 <h2>Currently Checked Out Equipment</h2>
+                {/* Add a link to the CheckedOutHistory page */}
+                <Link to="/checkedout-history">View Previously Checked Out Equipment</Link>
                 <ul>
                     {checkedOutEquipment.map(item => (
                         <li key={item.id}>

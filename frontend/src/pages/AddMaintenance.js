@@ -11,6 +11,7 @@ import '../App.css';
 
 function AddMaintenance() {
     const [maintenanceData, setMaintenanceData] = useState({
+        type: '',
         equipment_id: '',
         status: '',
         last_maintenance_date: '',
@@ -88,6 +89,20 @@ function AddMaintenance() {
                         <option value="Completed">Completed</option>
                         <option value="Overdue">Overdue</option>
                         <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Type:</label>
+                    <select
+                        name="type"
+                        value={maintenanceData.type}
+                        onChange={handleChange}
+                        className="form-select"
+                    >
+                        <option value="">Select Type</option>
+                        <option value="drone">Drone</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="software">Software</option>
                     </select>
                 </div>
                 <div className="form-group">

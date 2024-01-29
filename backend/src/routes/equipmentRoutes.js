@@ -54,6 +54,9 @@ router.post('/checkin', EquipmentController.checkinEquipment);
 // Get currently checked-out equipment
 router.get('/checkedout-equipment', EquipmentController.getCurrentlyCheckedOutEquipment);
 
+// Get historical checked-out equipment
+router.get('/checkedout-history', EquipmentController.getCheckedOutHistory);
+
 
 // Export the router
 module.exports = router;

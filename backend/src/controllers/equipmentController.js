@@ -183,6 +183,16 @@ const EquipmentController = {
             res.status(500).json({ message: 'Error fetching checked out equipment', error: error.message });
         }
     },
+
+    // Get historical checked out equipment
+    getCheckedOutHistory: async (req, res) => {
+        try {
+            const history = await EquipmentModel.getCheckedOutHistory();
+            res.status(200).json(history);
+        } catch (error) {
+            res.status(500).json({ message: 'Error fetching checked out history', error: error.message });
+        }
+    },
 };
 
 

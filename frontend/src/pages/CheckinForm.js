@@ -1,5 +1,9 @@
+/**
+ * Weather api plan needs to be upgraded in able to pull historic weather data(anything other than current data)
+ */
+
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 
 function CheckinForm() {
     const [checkedOutEquipment, setCheckedOutEquipment] = useState([]);
@@ -9,10 +13,13 @@ function CheckinForm() {
     const [comments, setComments] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [weatherData, setWeatherData] = useState(null);
+    //const [weatherData, setWeatherData] = useState(null);
     const [location, setLocation] = useState('');
+    const [minTemp, setMinTemp] = useState('');
+    const [maxTemp, setMaxTemp] = useState('');
+    const [maxWindResistance, setMaxWindResistance] = useState('');
 
-
+    /*
     // Function to fetch weather data
     const fetchWeatherData = async (location) => {
         if (!location) {
@@ -29,6 +36,7 @@ function CheckinForm() {
             setError('Failed to fetch weather data. Please try again.'); // Provide user feedback on error
         }
     };
+    */
 
     useEffect(() => {
         const fetchCheckedOutEquipment = async () => {
@@ -50,7 +58,7 @@ function CheckinForm() {
 
         fetchCheckedOutEquipment();
     }, []);
-
+    /* commented out as weather api cant currently pull historic data
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -83,6 +91,47 @@ function CheckinForm() {
                     usage_duration: usageDuration,
                     comments: comments,
                     weather: weatherData,
+                    location: location,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Check-in failed');
+            }
+
+            alert('Equipment checked in successfully');
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Check-in error:', error);
+            alert('Failed to check in equipment');
+            setIsLoading(false);
+        }
+    };
+    */
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!selectedEquipment || !checkinDate) {
+            alert('Please select equipment and a check-in date.');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const response = await fetch('/api/checkin', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    equipment_id: selectedEquipment,
+                    checkin_date: checkinDate,
+                    usage_duration: usageDuration,
+                    comments: comments,
+                    min_temp: minTemp,
+                    max_temp: maxTemp,
+                    max_wind_resistance: maxWindResistance,
                     location: location,
                 }),
             });

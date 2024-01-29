@@ -13,7 +13,7 @@ import Weather from "./pages/Weather";
 import './App.css';
 import EditEquipment from "./pages/EditEquipment";
 import CheckoutCheckinPage from "./pages/CheckoutCheckinPage";
-
+import CheckedOutHistory from './components/CheckedOutHistory';
 
 
 function App() {
@@ -36,6 +36,7 @@ function App() {
                         <Route path="/edit-maintenance/:taskId" element={<EditMaintenanceForm />} />
                         <Route path="/edit-equipment/:equipmentId" element={<EditEquipment />} />
                         <Route path="/checkout-checkin" element={<CheckoutCheckinPage />} />
+                        <Route path="/checkedout-history" component={CheckedOutHistory} />
                     </Routes>
                 </main>
                 <Footer />
