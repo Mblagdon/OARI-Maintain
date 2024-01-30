@@ -428,6 +428,68 @@ textarea {
   color: #75B9BE;
 }
 
+/* CheckedOutHistory.css */
+.checked-out-history-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.checked-out-history-table-container {
+  overflow-x: auto; /* Enables horizontal scrolling if table overflows */
+}
+
+.checked-out-history-table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: auto; /* Set width as auto to size according to content */
+  max-width: 100%; /* Ensure it doesn't overflow the viewport */
+}
+.checked-out-history-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.checked-out-history-table th, .checked-out-history-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.checked-out-history-table th {
+  background-color: #75B9BE; /* Teal */
+  color: white;
+}
+
+.checked-out-history-table tr:nth-child(even) {
+  background-color: #F9F9F9; /* Very light gray */
+}
+
+.checked-out-history-table tr:hover {
+  background-color: #eaeaea;
+}
+
+.checked-out-history-table .weather-cell {
+  text-align: left;
+  white-space: nowrap; /* Ensures the content is on a single line */
+}
+
+.checked-out-history-table .weather-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.checked-out-history-table .weather-icon {
+  width: 20px; /* Adjust as needed */
+  height: auto;
+  margin-top: 5px;
+}
+
+
 
 /* Weather.js */
 .weather-container {

@@ -400,27 +400,28 @@ const EquipmentModel = {
     getCheckedOutHistory: () => {
         return new Promise((resolve, reject) => {
             const query = `
-            SELECT 
-                ec.*, 
-                ed.equipment_name,
-                ec.checkout_date, 
-                ec.checkin_date, 
-                ec.usage_duration, 
-                ec.location, 
-                ec.comments, 
-                ec.weather_data
-            FROM equipment_checkout AS ec
-            JOIN equipment_descriptions AS ed ON ec.equipment_id = ed.id
-            WHERE ec.checkin_date IS NOT NULL
-            ORDER BY ec.checkin_date DESC
-        `;
+        SELECT 
+            ec.*, 
+            ed.equipment_name,
+            ec.checkout_date, 
+            ec.checkin_date, 
+            ec.usage_duration, 
+            ec.location, 
+            ec.comments, 
+            ec.weather_data
+        FROM equipment_checkout AS ec
+        JOIN equipment_descriptions AS ed ON ec.equipment_id = ed.id
+        WHERE ec.checkin_date IS NOT NULL
+        ORDER BY ec.checkin_date DESC
+    `;
             db.query(query, (err, results) => {
                 if (err) {
                     reject(err);
                 } else {
                     const history = results.map(record => ({
                         ...record,
-                        weather_data: JSON.parse(record.weather_data) // Assuming weather_data is stored as a JSON string
+                        // Check if weather_data is a string and parse it if necessary
+                        weather_data: typeof record.weather_data === 'string' ? JSON.parse(record.weather_data) : record.weather_data
                     }));
                     resolve(history);
                 }

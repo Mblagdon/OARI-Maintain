@@ -36,7 +36,7 @@ function App() {
                         <Route path="/edit-maintenance/:taskId" element={<EditMaintenanceForm />} />
                         <Route path="/edit-equipment/:equipmentId" element={<EditEquipment />} />
                         <Route path="/checkout-checkin" element={<CheckoutCheckinPage />} />
-                        <Route path="/checkedout-history" component={CheckedOutHistory} />
+                        <Route path="/checkedout-history" element={<CheckedOutHistory />} />
                     </Routes>
                 </main>
                 <Footer />
