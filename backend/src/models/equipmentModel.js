@@ -11,7 +11,7 @@ const db = require('../database');
 
 const EquipmentModel = {
     // Equipment Description
-    /// Create a new equipment description
+    // Create a new equipment description
     createEquipment: (data) => {
         return new Promise((resolve, reject) => {
             // Start a transaction
@@ -22,18 +22,18 @@ const EquipmentModel = {
                 }
 
                 const query = `INSERT INTO equipment_descriptions (
-                type, equipment_name, description, category, location,
-                basic_specifications, storage_dimensions,
-                min_temp, max_temp, max_wind_resistance, min_lighting,
-                date_bought, renewal_date, price
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                    type, equipment_name, description, category, location,
+                    basic_specifications, storage_dimensions,
+                    min_temp, max_temp, max_wind_resistance, min_lighting,
+                    date_bought, renewal_date, price, payload
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
                 db.query(query, [
                     data.type,
                     data.equipment_name, data.description, data.category,
                     data.location, data.basic_specifications, data.storage_dimensions,
                     data.min_temp, data.max_temp, data.max_wind_resistance, data.min_lighting,
-                    data.date_bought, data.renewal_date, data.price
+                    data.date_bought, data.renewal_date, data.price, data.payload || null
                 ], (err, results) => {
                     if (err) {
                         return db.rollback(() => {
@@ -153,12 +153,15 @@ const EquipmentModel = {
                 data.price = data.price ? data.price : null;
             }
 
-            const query = `UPDATE equipment_descriptions SET 
-            type = ?, equipment_name = ?, description = ?, category = ?, 
-            location = ?, basic_specifications = ?, storage_dimensions = ?, 
-            min_temp = ?, max_temp = ?, max_wind_resistance = ?, 
-            min_lighting = ?, date_bought = ?, renewal_date = ?, price = ?
-            WHERE id = ?`;
+            // Convert empty strings to null for integer fields
+            data.max_wind_resistance = data.max_wind_resistance !== '' ? data.max_wind_resistance : null;
+
+            const query = `UPDATE equipment_descriptions SET
+                type = ?, equipment_name = ?, description = ?, category = ?,
+                location = ?, basic_specifications = ?, storage_dimensions = ?,
+                min_temp = ?, max_temp = ?, max_wind_resistance = ?,
+                min_lighting = ?, date_bought = ?, renewal_date = ?, price = ?, payload = ?
+                WHERE id = ?`;
 
             db.query(query, [
                 data.type,
@@ -175,6 +178,7 @@ const EquipmentModel = {
                 data.date_bought,
                 data.renewal_date,
                 data.price,
+                data.payload || null,
                 id
             ], (err, results) => {
                 if (err) {

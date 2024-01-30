@@ -164,13 +164,34 @@ form {
   display: grid;
   grid-gap: 25px; /* Increased gap for better spacing */
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid layout */
-  align-items: center;
+  align-items: start; /* Aligns items to the start of the container */
 }
 
 .form-group {
   display: flex;
   flex-direction: column; /* Stack label and input */
   margin-bottom: 1rem; /* Space out groups */
+}
+
+.full-width-input {
+  grid-column: span 2; /* Span 2 columns, or full width */
+}
+
+/* Center the submit button */
+.submit-button {
+  grid-column: span 2; /* Span 2 columns, or full width */
+  margin: 0 auto; /* Center button */
+  display: block; /* Allows for margin auto to work */
+}
+
+.payload-capacity-container {
+  grid-column: span 2; /* Span 2 columns, or full width */
+  display: none; /* Initially hide the payload input */
+}
+
+
+.payload-capacity-container.active {
+  display: block; /* Show the payload input when active */
 }
 
 .form-label {
@@ -187,7 +208,6 @@ select {
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #ddd;
-  font-size: 1rem; /* Larger font size for readability */
 }
 
 textarea {
@@ -263,7 +283,7 @@ textarea {
 
 .maintenance-schedule-table th, .maintenance-schedule-table td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 6px;
   text-align: center;
 }
 
@@ -564,8 +584,18 @@ textarea {
   }
 }
 
+/* Styles that apply when the screen width is less than or equal to 768 pixels */
 @media (max-width: 768px) {
-  .features-overview {
-    grid-template-columns: 1fr; /* One column for mobile screens */
+  .form-container form {
+    grid-template-columns: 1fr; /* Stack form elements in one column on small screens */
+  }
+
+  .full-width-input,
+  .submit-button {
+    grid-column: 1 / -1; /* Make certain elements full width */
+  }
+
+  .form-group {
+    margin-bottom: 0.5rem; /* Less space between form elements on smaller screens */
   }
 }

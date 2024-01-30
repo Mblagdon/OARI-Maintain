@@ -17,7 +17,8 @@ function EditEquipment() {
         min_lighting: '',
         date_bought: '',
         renewal_date: '',
-        price: ''
+        price: '',
+        payload: '',
     });
     const { equipmentId } = useParams();
     const navigate = useNavigate();
@@ -47,6 +48,7 @@ function EditEquipment() {
                     date_bought: data.date_bought || '',
                     renewal_date: data.renewal_date || '',
                     price: data.price || '',
+                    payload: data.payload || '',
                 });
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -67,6 +69,12 @@ function EditEquipment() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const payload = { ...formData };
+        if (formData.type !== 'drone') {
+            delete payload.payload; // Remove payload if not a drone
+        }
+
         if (formData.type === 'software' && (!formData.date_bought || !formData.renewal_date || formData.price === '')) {
             console.error('For software, date_bought, renewal_date, and price cannot be empty');
             return;
@@ -131,6 +139,22 @@ function EditEquipment() {
                     className="form-input"
                 />
 
+                {/* Conditional input for payload capacity if type is drone */}
+                {formData.type === 'drone' && (
+                    <div className={`form-group payload-capacity-container ${formData.type === 'drone' ? 'active' : ''}`}>
+                        <label htmlFor="payload" className="form-label">Payload Capacity:</label>
+                        <input
+                            type="text"
+                            id="payload"
+                            name="payload"
+                            value={formData.payload || ''}
+                            onChange={handleChange}
+                            className="form-input"
+                            placeholder="Enter payload capacity"
+                        />
+                    </div>
+                )}
+
                 {/* Conditional fields for drones and equipment */}
                 {!isSoftware && (
                     <>
@@ -188,14 +212,14 @@ function EditEquipment() {
                             className="form-input"
                         />
 
-                        <label className="form-label">Minimum Lighting:</label>
+                        <label className="form-label"></label>
                         <select
                             name="min_lighting"
                             value={formData.min_lighting}
                             onChange={handleChange}
                             className="form-select"
                         >
-                            <option value="">Select Lighting Exposure</option>
+                            <option value="">Select Minimum Lighting Exposure</option>
                             <option value="Low Exposure">Low Exposure</option>
                             <option value="Moderate Exposure">Moderate Exposure</option>
                             <option value="High Exposure">High Exposure</option>
