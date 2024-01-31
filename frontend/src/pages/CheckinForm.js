@@ -5,7 +5,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function CheckinForm() {
+function CheckinForm({ onCheckinSuccess }) {
     const [checkedOutEquipment, setCheckedOutEquipment] = useState([]);
     const [selectedEquipment, setSelectedEquipment] = useState('');
     const [checkinDate, setCheckinDate] = useState('');
@@ -13,27 +13,8 @@ function CheckinForm() {
     const [comments, setComments] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [weatherData, setWeatherData] = useState(null);
     const [location, setLocation] = useState('');
-
-
-    // Function to fetch weather data
-    const fetchWeatherData = async (location) => {
-        if (!location) {
-            setError('Please enter a valid location.'); // Provide feedback if location is empty
-            return;
-        }
-
-        try {
-            const response = await axios.get(`/api/weather?query=${encodeURIComponent(location)}`);
-            const fetchedWeatherData = response.data;
-            setWeatherData(fetchedWeatherData);
-            setError(''); // Clear any previous errors
-        } catch (error) {
-            console.error('Failed to fetch weather data:', error);
-            setError('Failed to fetch weather data. Please try again.'); // Provide user feedback on error
-        }
-    };
+    const [weatherData, setWeatherData] = useState(null); // Use this state to store fetched weather data
 
     useEffect(() => {
         const fetchCheckedOutEquipment = async () => {
@@ -59,42 +40,34 @@ function CheckinForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Initialize fetchedWeatherData to null
-        let fetchedWeatherData = null;
-
-        // Fetch the weather data and store it in fetchedWeatherData
-        if (location) {
-            try {
-                const response = await axios.get(`/api/weather?query=${encodeURIComponent(location)}`);
-                fetchedWeatherData = response.data;
-                setWeatherData(fetchedWeatherData); // This will update the state for future use
-                setError(''); // Clear any previous errors
-            } catch (error) {
-                console.error('Failed to fetch weather data:', error);
-                setError('Failed to fetch weather data. Please try again.');
-                setIsLoading(false);
-                return; // Exit the function if there is an error
-            }
-        } else {
-            setError('Please enter a valid location.'); // Provide feedback if location is empty
-            return; // Exit the function if no location is provided
-        }
-
-        // Check if we have valid weather data after fetching
-        if (!fetchedWeatherData) {
-            setError('Cannot check in without valid weather data.');
-            setIsLoading(false);
-            return;
-        }
-
-        // Check if the equipment and check-in date are selected
         if (!selectedEquipment || !checkinDate) {
             alert('Please select equipment and a check-in date.');
             return;
         }
 
-        // Now proceed with the check-in process
-        setIsLoading(true);
+        // Fetch weather data only if location is provided
+        if (location) {
+            setIsLoading(true);
+            try {
+                const response = await axios.get(`/api/weather?query=${encodeURIComponent(location)}`);
+                const fetchedWeatherData = response.data;
+                setWeatherData(fetchedWeatherData); // Store fetched weather data in state
+                // Proceed with check-in process using fetched weather data
+                await checkInEquipment(fetchedWeatherData);
+            } catch (error) {
+                console.error('Failed to fetch weather data:', error);
+                setError('Failed to fetch weather data. Please try again.');
+                setIsLoading(false);
+                return;
+            }
+        } else {
+            setError('Location is required to fetch weather data.');
+            return;
+        }
+    };
+
+    // Function to perform check-in with weather data
+    const checkInEquipment = async (fetchedWeatherData) => {
         try {
             const response = await fetch('/api/checkin', {
                 method: 'POST',
@@ -106,7 +79,7 @@ function CheckinForm() {
                     checkin_date: checkinDate,
                     usage_duration: usageDuration,
                     comments: comments,
-                    weather: fetchedWeatherData, // Pass the fetched weather data directly
+                    weather: fetchedWeatherData, // Include fetched weather data in check-in submission
                     location: location,
                 }),
             });
@@ -116,12 +89,24 @@ function CheckinForm() {
             }
 
             alert('Equipment checked in successfully');
-            setIsLoading(false);
+            resetFormFields();
+            onCheckinSuccess(); // Refresh the currently checked out equipment list
         } catch (error) {
             console.error('Check-in error:', error);
             alert('Failed to check in equipment');
+        } finally {
             setIsLoading(false);
         }
+    };
+
+    // Function to reset form fields after successful check-in
+    const resetFormFields = () => {
+        setSelectedEquipment('');
+        setCheckinDate('');
+        setUsageDuration('');
+        setComments('');
+        setLocation('');
+        setWeatherData(null); // Reset weather data state
     };
 
     if (isLoading) return <p>Loading...</p>;

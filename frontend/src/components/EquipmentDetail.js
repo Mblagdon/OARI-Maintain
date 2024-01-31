@@ -36,8 +36,9 @@ function EquipmentDetail() {
     if (error) return <div>Error: {error}</div>;
     if (!equipmentDetails) return <div>Equipment not found</div>;
 
-    // Determine if the equipment is of type 'software' to conditionally render the new fields
+    // Determine if the equipment is of type 'software' or 'drone' to conditionally render the new fields
     const isSoftware = equipmentDetails.type === 'software';
+    const isDrone = equipmentDetails.type === 'drone';
 
     return (
         <div className="equipment-detail-container">
@@ -54,47 +55,83 @@ function EquipmentDetail() {
             </div>
 
             <div className="equipment-section">
-                <div className="equipment-section-title">Location:</div>
-                <div className="equipment-section-content">{equipmentDetails.location}</div>
-            </div>
-
-            <div className="equipment-section">
-                <div className="equipment-section-title">Basic Specifications:</div>
-                <div className="equipment-section-content">{equipmentDetails.basic_specifications}</div>
-            </div>
-
-            <div className="equipment-section">
-                <div className="equipment-section-title">Storage Dimensions:</div>
-                <div className="equipment-section-content">{equipmentDetails.storage_dimensions}</div>
-            </div>
-
-            <div className="equipment-section">
                 <div className="equipment-section-title">Use Case Examples:</div>
                 <div className="equipment-section-content">{equipmentDetails.use_case_examples}</div>
             </div>
 
-            <div className="equipment-section">
-                <div className="equipment-section-title">Minimum Temperature:</div>
-                <div className="equipment-section-content">{equipmentDetails.min_temp}°C</div>
-            </div>
+            {/* Render these fields only for non-software types */}
+            {!isSoftware && (
+                <>
+                <div className="equipment-section">
+                    <div className="equipment-section-title">Location:</div>
+                    <div className="equipment-section-content">{equipmentDetails.location}</div>
+                </div>
 
-            <div className="equipment-section">
-                <div className="equipment-section-title">Maximum Temperature:</div>
-                <div className="equipment-section-content">{equipmentDetails.max_temp}°C</div>
-            </div>
+                <div className="equipment-section">
+                    <div className="equipment-section-title">Basic Specifications:</div>
+                    <div className="equipment-section-content">{equipmentDetails.basic_specifications}</div>
+                </div>
+                <div className="equipment-section">
+                    <div className="equipment-section-title">Storage Dimensions:</div>
+                    <div className="equipment-section-content">{equipmentDetails.storage_dimensions}</div>
+                </div>
 
-            <div className="equipment-section">
-                <div className="equipment-section-title">Max Wind Resistance:</div>
-                <div className="equipment-section-content">{equipmentDetails.max_wind_resistance} km/h</div>
-            </div>
+                <div className="equipment-section">
+                    <div className="equipment-section-title">Minimum Temperature:</div>
+                    <div className="equipment-section-content">{equipmentDetails.min_temp}°C</div>
+                </div>
 
-            <div className="equipment-section">
-                <div className="equipment-section-title">Minimum Lighting:</div>
-                <div className="equipment-section-content">{equipmentDetails.min_lighting}</div>
-            </div>
-            {/* Conditional rendering for software specific fields */}
+                <div className="equipment-section">
+                    <div className="equipment-section-title">Maximum Temperature:</div>
+                    <div className="equipment-section-content">{equipmentDetails.max_temp}°C</div>
+                </div>
+
+                <div className="equipment-section">
+                    <div className="equipment-section-title">Max Wind Resistance:</div>
+                    <div className="equipment-section-content">{equipmentDetails.max_wind_resistance} km/h</div>
+                </div>
+
+                <div className="equipment-section">
+                    <div className="equipment-section-title">Minimum Lighting:</div>
+                    <div className="equipment-section-content">{equipmentDetails.min_lighting}</div>
+                </div>
+                </>
+            )}
+
+            {/* Conditional rendering for drone-specific fields */}
+            {isDrone && (
+                <>
+                    <div className="equipment-section">
+                        <div className="equipment-section-title">Weight (with batteries):</div>
+                        <div className="equipment-section-content">{equipmentDetails.weight_with_batteries} kg</div>
+                    </div>
+
+                    <div className="equipment-section">
+                        <div className="equipment-section-title">Frame Weight (no batteries):</div>
+                        <div className="equipment-section-content">{equipmentDetails.frame_weight} kg</div>
+                    </div>
+
+                    <div className="equipment-section">
+                        <div className="equipment-section-title">Max Take-Off Weight:</div>
+                        <div className="equipment-section-content">{equipmentDetails.max_take_off_weight} kg</div>
+                    </div>
+
+                    <div className="equipment-section">
+                        <div className="equipment-section-title">Max Payload Weight:</div>
+                        <div className="equipment-section-content">{equipmentDetails.max_payload_weight} kg</div>
+                    </div>
+
+                    <div className="equipment-section">
+                        <div className="equipment-section-title">IP Rating:</div>
+                        <div className="equipment-section-content">{equipmentDetails.ip_rating}</div>
+                    </div>
+                </>
+            )}
+
+            {/* Conditional rendering for software-specific fields */}
             {isSoftware && (
                 <>
+
                     <div className="equipment-section">
                         <div className="equipment-section-title">Date Bought:</div>
                         <div className="equipment-section-content">{equipmentDetails.date_bought}</div>

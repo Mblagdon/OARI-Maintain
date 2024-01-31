@@ -18,7 +18,11 @@ function EditEquipment() {
         date_bought: '',
         renewal_date: '',
         price: '',
-        payload: '',
+        weight_with_batteries: '',
+        frame_weight: '',
+        max_take_off_weight: '',
+        max_payload_weight: '',
+        ip_rating: '',
     });
     const { equipmentId } = useParams();
     const navigate = useNavigate();
@@ -48,7 +52,11 @@ function EditEquipment() {
                     date_bought: data.date_bought || '',
                     renewal_date: data.renewal_date || '',
                     price: data.price || '',
-                    payload: data.payload || '',
+                    weight_with_batteries: data.weight_with_batteries || '',
+                    frame_weight: data.frame_weight !== null ? data.frame_weight : '',
+                    max_take_off_weight: data.max_take_off_weight || '',
+                    max_payload_weight: data.max_payload_weight || '',
+                    ip_rating: data.ip_rating || '',
                 });
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -70,10 +78,14 @@ function EditEquipment() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const payload = { ...formData };
-        if (formData.type !== 'drone') {
-            delete payload.payload; // Remove payload if not a drone
-        }
+        const payload = {
+            ...formData,
+            weight_with_batteries: formData.type === 'drone' ? formData.weight_with_batteries : undefined,
+            frame_weight: formData.type === 'drone' ? formData.frame_weight : undefined,
+            max_take_off_weight: formData.type === 'drone' ? formData.max_take_off_weight : undefined,
+            max_payload_weight: formData.type === 'drone' ? formData.max_payload_weight : undefined,
+            ip_rating: formData.type === 'drone' ? formData.ip_rating : undefined,
+        };
 
         if (formData.type === 'software' && (!formData.date_bought || !formData.renewal_date || formData.price === '')) {
             console.error('For software, date_bought, renewal_date, and price cannot be empty');
@@ -85,7 +97,7 @@ function EditEquipment() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(payload),
             });
             if (!response.ok) {
                 throw new Error('Could not update equipment details');
@@ -139,20 +151,64 @@ function EditEquipment() {
                     className="form-input"
                 />
 
-                {/* Conditional input for payload capacity if type is drone */}
+                {/* Conditional input for payload info if type is drone */}
                 {formData.type === 'drone' && (
-                    <div className={`form-group payload-capacity-container ${formData.type === 'drone' ? 'active' : ''}`}>
-                        <label htmlFor="payload" className="form-label">Payload Capacity:</label>
-                        <input
-                            type="text"
-                            id="payload"
-                            name="payload"
-                            value={formData.payload || ''}
-                            onChange={handleChange}
-                            className="form-input"
-                            placeholder="Enter payload capacity"
-                        />
-                    </div>
+                    <>
+                        <div className="form-group">
+                            <label className="form-label">Weight (with batteries) (kg):</label>
+                            <input
+                                type="number"
+                                name="weight_with_batteries"
+                                value={formData.weight_with_batteries}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Frame Weight (no batteries) (kg):</label>
+                            <input
+                                type="number"
+                                name="frame_weight"
+                                value={formData.frame_weight}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Max Take-Off Weight (kg):</label>
+                            <input
+                                type="number"
+                                name="max_take_off_weight"
+                                value={formData.max_take_off_weight}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Max Payload Weight (kg):</label>
+                            <input
+                                type="number"
+                                name="max_payload_weight"
+                                value={formData.max_payload_weight}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">IP Rating:</label>
+                            <input
+                                type="text"
+                                name="ip_rating"
+                                value={formData.ip_rating}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                    </>
                 )}
 
                 {/* Conditional fields for drones and equipment */}

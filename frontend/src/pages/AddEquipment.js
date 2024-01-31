@@ -25,7 +25,11 @@ function AddEquipment() {
         date_bought: '',
         renewal_date: '',
         price: '',
-        payload: '',
+        weight_with_batteries: '',
+        frame_weight: '',
+        max_take_off_weight: '',
+        max_payload_weight: '',
+        ip_rating: '',
     });
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -63,7 +67,6 @@ function AddEquipment() {
             equipment_name: formData.equipment_name,
             description: formData.description,
             use_case_examples: formData.use_case_examples,
-            // Include other common fields...
         };
 
         // Add fields specific to the type
@@ -83,7 +86,11 @@ function AddEquipment() {
             payload.min_lighting = formData.min_lighting;
             // Add drone-specific property if it's a drone
             if (formData.type === 'drone') {
-                payload.payload = formData.payload;
+                payload.weight_with_batteries= formData.weight_with_batteries;
+                payload.frame_weight= formData.frame_weight;
+                payload.max_take_off_weight= formData.max_take_off_weight;
+                payload.max_payload_weight= formData.max_payload_weight;
+                payload.ip_rating= formData.ip_rating;
             }
         }
 
@@ -119,7 +126,11 @@ function AddEquipment() {
                     date_bought: '',
                     renewal_date: '',
                     price: '',
-                    payload: '',
+                    weight_with_batteries: '',
+                    frame_weight: '',
+                    max_take_off_weight: '',
+                    max_payload_weight: '',
+                    ip_rating: '',
                 });
                 // Optionally hide the confirmation message after some time
                 setTimeout(() => setShowConfirmation(false), 5000);
@@ -180,20 +191,64 @@ function AddEquipment() {
                     onChange={handleChange}
                     className="form-input"
                 />
-                {/* Conditional input for payload capacity if type is drone */}
+                {/* Conditional input for payload info if type is drone */}
                 {formData.type === 'drone' && (
-                    <div className="form-group full-width-input">
-                        <label className="form-label">Payload Capacity:</label>
-                        <input
-                            type="text"
-                            id="payload"
-                            name="payload"
-                            value={formData.payload || ''}
-                            onChange={handleChange}
-                            className="form-input"
-                            placeholder="Enter payload capacity"
-                        />
-                    </div>
+                    <>
+                        <div className="form-group">
+                            <label className="form-label">Weight (with batteries) (kg):</label>
+                            <input
+                                type="number"
+                                name="weight_with_batteries"
+                                value={formData.weight_with_batteries}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Frame Weight (no batteries) (kg):</label>
+                            <input
+                                type="number"
+                                name="frame_weight"
+                                value={formData.frame_weight}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Max Take-Off Weight (kg):</label>
+                            <input
+                                type="number"
+                                name="max_take_off_weight"
+                                value={formData.max_take_off_weight}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Max Payload Weight (kg):</label>
+                            <input
+                                type="number"
+                                name="max_payload_weight"
+                                value={formData.max_payload_weight}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">IP Rating:</label>
+                            <input
+                                type="text"
+                                name="ip_rating"
+                                value={formData.ip_rating}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                    </>
                 )}
                 {/* Conditional fields for drones and equipment */}
                 {!isSoftware && (

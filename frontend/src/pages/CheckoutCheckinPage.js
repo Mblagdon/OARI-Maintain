@@ -3,46 +3,45 @@ import React, { useState, useEffect } from 'react';
 import CheckoutForm from "./CheckoutForm";
 import CheckinForm from './CheckinForm';
 import '../App.css';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function CheckoutCheckinPage() {
-    // This state will hold the equipment that is currently checked out
+    // This state holds the currently checked-out equipment.
     const [checkedOutEquipment, setCheckedOutEquipment] = useState([]);
 
-    useEffect(() => {
-        // Fetch the currently checked-out equipment when the component mounts
-        const fetchCheckedOutEquipment = async () => {
-            try {
-                const response = await fetch('/api/checkedout-equipment');
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setCheckedOutEquipment(data);
-            } catch (error) {
-                console.error('There was a problem with the fetch operation:', error);
+    // Function to fetch the currently checked-out equipment.
+    const fetchCheckedOutEquipment = async () => {
+        try {
+            const response = await fetch('/api/checkedout-equipment');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        };
+            const data = await response.json();
+            setCheckedOutEquipment(data);
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    };
 
+    // Fetch the currently checked-out equipment when the component mounts or updates.
+    useEffect(() => {
         fetchCheckedOutEquipment();
     }, []);
 
-    // Render the checkout form, checkin form, and the list of currently checked-out equipment
     return (
         <div className="checkout-checkin-container">
             <div className="forms-container">
                 <div className="form-section">
                     <h1>Equipment Checkout</h1>
-                    <CheckoutForm />
+                    <CheckoutForm onCheckoutSuccess={fetchCheckedOutEquipment} />
                 </div>
                 <div className="form-section">
                     <h1>Equipment Checkin</h1>
-                    <CheckinForm />
+                    <CheckinForm onCheckinSuccess={fetchCheckedOutEquipment} />
                 </div>
             </div>
             <div className="currently-checked-out">
                 <h2>Currently Checked Out Equipment</h2>
-                {/* Add a link to the CheckedOutHistory page */}
                 <Link to="/checkedout-history">View Previously Checked Out Equipment</Link>
                 <ul>
                     {checkedOutEquipment.map(item => (
@@ -57,3 +56,4 @@ function CheckoutCheckinPage() {
 }
 
 export default CheckoutCheckinPage;
+

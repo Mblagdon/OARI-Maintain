@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function CheckoutForm() {
+function CheckoutForm({onCheckoutSuccess}) {
     const [equipmentList, setEquipmentList] = useState([]);
     const [selectedEquipment, setSelectedEquipment] = useState('');
     const [checkoutDate, setCheckoutDate] = useState('');
@@ -63,6 +63,9 @@ function CheckoutForm() {
 
             // Perform any additional actions on successful checkout
             alert('Equipment checked out successfully');
+            setSelectedEquipment(''); // Reset selected equipment
+            setCheckoutDate(''); // Reset checkout date
+            onCheckoutSuccess(); // Notify parent component to refresh list
             setIsLoading(false);
         } catch (error) {
             console.error('Checkout error:', error);
