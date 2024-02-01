@@ -161,37 +161,30 @@ body {
 }
 
 form {
-  display: grid;
-  grid-gap: 25px; /* Increased gap for better spacing */
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid layout */
-  align-items: start; /* Aligns items to the start of the container */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .form-group {
   display: flex;
-  flex-direction: column; /* Stack label and input */
-  margin-bottom: 1rem; /* Space out groups */
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
 
-.full-width-input {
-  grid-column: span 2; /* Span 2 columns, or full width */
+.form-group.half-width {
+  flex-basis: calc(50% - 10px);
 }
 
-/* Center the submit button */
-.submit-button {
-  grid-column: span 2; /* Span 2 columns, or full width */
-  margin: 0 auto; /* Center button */
-  display: block; /* Allows for margin auto to work */
+.form-group.full-width {
+  flex: 1;
 }
 
-.payload-capacity-container {
-  grid-column: span 2; /* Span 2 columns, or full width */
-  display: none; /* Initially hide the payload input */
-}
-
-
-.payload-capacity-container.active {
-  display: block; /* Show the payload input when active */
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .form-label {

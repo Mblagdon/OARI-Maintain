@@ -153,173 +153,115 @@ function AddEquipment() {
             )}
 
             <form onSubmit={handleSubmit}>
-                <label className="form-label">Type:</label>
-                <select
-                    name="type"
-                    value={formData.type}
-                    onChange={handleChange}
-                    className="form-input"
-                >
-                    <option value="equipment">Equipment</option>
-                    <option value="drone">Drone</option>
-                    <option value="software">Software</option>
-                </select>
+                <div className="form-row">
+                    <div className="form-group full-width">
+                        <label className="form-label">Type:</label>
+                        <select name="type" value={formData.type} onChange={handleChange} className="form-input">
+                            <option value="equipment">Equipment</option>
+                            <option value="drone">Drone</option>
+                            <option value="software">Software</option>
+                        </select>
+                    </div>
+                </div>
 
-                <label className="form-label">Equipment Name:</label>
-                <input
-                    type="text"
-                    name="equipment_name"
-                    value={formData.equipment_name}
-                    onChange={handleChange}
-                    className="form-input"
-                />
+                <div className="form-row">
+                    <div className="form-group full-width">
+                        <label className="form-label">Equipment Name:</label>
+                        <input type="text" name="equipment_name" value={formData.equipment_name} onChange={handleChange} className="form-input" />
+                    </div>
+                </div>
 
-                <label className="form-label">Description:</label>
-                <input
-                    type="text"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    className="form-input"
-                />
+                <div className="form-row">
+                    <div className="form-group full-width">
+                        <label className="form-label">Description:</label>
+                        <input type="text" name="description" value={formData.description} onChange={handleChange} className="form-input" />
+                    </div>
+                </div>
 
-                <label className="form-label">Use Case Examples:</label>
-                <input
-                    type="text"
-                    name="use_case_examples"
-                    value={formData.use_case_examples}
-                    onChange={handleChange}
-                    className="form-input"
-                />
+                <div className="form-row">
+                    <div className="form-group full-width">
+                        <label className="form-label">Use Case Examples:</label>
+                        <input type="text" name="use_case_examples" value={formData.use_case_examples} onChange={handleChange} className="form-input" />
+                    </div>
+                </div>
+
                 {/* Conditional input for payload info if type is drone */}
                 {formData.type === 'drone' && (
                     <>
-                        <div className="form-group">
-                            <label className="form-label">Weight (with batteries) (kg):</label>
-                            <input
-                                type="number"
-                                name="weight_with_batteries"
-                                value={formData.weight_with_batteries}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                        <div className="form-row">
+                            <div className="form-group half-width">
+                                <label className="form-label">Weight (with batteries) (kg):</label>
+                                <input type="number" name="weight_with_batteries" value={formData.weight_with_batteries} onChange={handleChange} className="form-input" />
+                            </div>
 
-                        <div className="form-group">
-                            <label className="form-label">Frame Weight (no batteries) (kg):</label>
-                            <input
-                                type="number"
-                                name="frame_weight"
-                                value={formData.frame_weight}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                            <div className="form-group half-width">
+                                <label className="form-label">Frame Weight (no batteries) (kg):</label>
+                                <input type="number" name="frame_weight" value={formData.frame_weight} onChange={handleChange} className="form-input" />
+                            </div>
 
-                        <div className="form-group">
-                            <label className="form-label">Max Take-Off Weight (kg):</label>
-                            <input
-                                type="number"
-                                name="max_take_off_weight"
-                                value={formData.max_take_off_weight}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                            <div className="form-group half-width">
+                                <label className="form-label">Max Take-Off Weight (kg):</label>
+                                <input type="number" name="max_take_off_weight" value={formData.max_take_off_weight} onChange={handleChange} className="form-input" />
+                            </div>
 
-                        <div className="form-group">
-                            <label className="form-label">Max Payload Weight (kg):</label>
-                            <input
-                                type="number"
-                                name="max_payload_weight"
-                                value={formData.max_payload_weight}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                            <div className="form-group half-width">
+                                <label className="form-label">Max Payload Weight (kg):</label>
+                                <input type="number" name="max_payload_weight" value={formData.max_payload_weight} onChange={handleChange} className="form-input" />
+                            </div>
 
-                        <div className="form-group">
-                            <label className="form-label">IP Rating:</label>
-                            <input
-                                type="text"
-                                name="ip_rating"
-                                value={formData.ip_rating}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
+                            <div className="form-group half-width">
+                                <label className="form-label">IP Rating:</label>
+                                <input type="text" name="ip_rating" value={formData.ip_rating} onChange={handleChange} className="form-input" />
+                            </div>
+
                         </div>
                     </>
                 )}
                 {/* Conditional fields for drones and equipment */}
                 {!isSoftware && (
                     <>
-                        <label className="form-label">Location:</label>
-                        <input
-                            type="text"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                        <div className="form-group half-width">
+                            <label className="form-label">Location:</label>
+                            <input type="text" name="location" value={formData.location} onChange={handleChange} className="form-input"/>
+                        </div>
 
-                        <label className="form-label">Basic Specifications:</label>
-                        <input
-                            type="text"
-                            name="basic_specifications"
-                            value={formData.basic_specifications}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                        <div className="form-group half-width">
+                            <label className="form-label">Basic Specifications:</label>
+                            <input type="text" name="basic_specifications" value={formData.basic_specifications} onChange={handleChange} className="form-input"/>
+                        </div>
 
-                        <label className="form-label">Storage Dimensions:</label>
-                        <input
-                            type="text"
-                            name="storage_dimensions"
-                            value={formData.storage_dimensions}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                        <div className="form-group half-width">
+                            <label className="form-label">Storage Dimensions:</label>
+                            <input type="text" name="storage_dimensions" value={formData.storage_dimensions} onChange={handleChange} className="form-input"/>
+                        </div>
 
-                        <input
-                            type="number"
-                            name="min_temp"
-                            value={formData.min_temp}
-                            onChange={handleChange}
-                            placeholder="Minimum Temperature"
-                            className="form-input"
-                        />
+                        <div className="form-group half-width">
+                            <input type="number" name="min_temp" value={formData.min_temp} onChange={handleChange} placeholder="Minimum Temperature" className="form-input"/>
+                        </div>
 
-                        <input
-                            type="number"
-                            name="max_temp"
-                            value={formData.max_temp}
-                            onChange={handleChange}
-                            placeholder="Maximum Temperature"
-                            className="form-input"
-                        />
+                        <div className="form-group half-width">
+                            <input type="number" name="max_temp" value={formData.max_temp} onChange={handleChange} placeholder="Maximum Temperature" className="form-input"/>
+                        </div>
 
-                        <input
-                            type="number"
-                            name="max_wind_resistance"
-                            value={formData.max_wind_resistance}
-                            onChange={handleChange}
-                            placeholder="Max Wind Resistance"
-                            className="form-input"
-                        />
+                        <div className="form-group half-width">
+                            <input type="number" name="max_wind_resistance" value={formData.max_wind_resistance} onChange={handleChange} placeholder="Max Wind Resistance" className="form-input" />
+                        </div>
 
-                        <label className="form-label"></label>
-                        <select
-                            name="min_lighting"
-                            value={formData.min_lighting}
-                            onChange={handleChange}
-                            className="form-select"
-                        >
-                            <option value="">Select Minimum Lighting Exposure</option>
-                            <option value="Low Exposure">Low Exposure</option>
-                            <option value="Moderate Exposure">Moderate Exposure</option>
-                            <option value="High Exposure">High Exposure</option>
-                            <option value="Consistent Exposure">Consistent Exposure</option>
-                        </select>
+                        <div className="form-group half-width">
+                            <label className="form-label"></label>
+                            <select
+                                name="min_lighting"
+                                value={formData.min_lighting}
+                                onChange={handleChange}
+                                className="form-select"
+                            >
+                                <option value="">Select Minimum Lighting Exposure</option>
+                                <option value="Low Exposure">Low Exposure</option>
+                                <option value="Moderate Exposure">Moderate Exposure</option>
+                                <option value="High Exposure">High Exposure</option>
+                                <option value="Consistent Exposure">Consistent Exposure</option>
+                            </select>
+                        </div>
                     </>
                 )}
                     {/* Conditional form fields for software */}
