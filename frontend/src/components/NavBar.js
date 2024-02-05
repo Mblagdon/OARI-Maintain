@@ -9,9 +9,22 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useMsal, useIsAuthenticated } from '@azure/msal-react';
 import '../App.css';
 
 function NavBar() {
+    const { instance } = useMsal();
+    const isAuthenticated = useIsAuthenticated();
+
+    const handleLogout = () => {
+        instance.logoutRedirect({
+            postLogoutRedirectUri: "/"
+        }).catch((error) => {
+            console.error(error);
+        });
+    };
+
+
     return (
         <nav className="nav-bar">
             <ul className="nav-ul">
@@ -84,6 +97,17 @@ function NavBar() {
                     >
                         Checkin/Checkout
                     </NavLink>
+                </li>
+                <li className="nav-li">
+                    {isAuthenticated ? (
+                        <button onClick={handleLogout} className="nav-link">
+                            Logout
+                        </button>
+                    ) : (
+                        <button onClick={() => instance.loginRedirect()} className="nav-link">
+                            Login
+                        </button>
+                    )}
                 </li>
             </ul>
         </nav>

@@ -14,7 +14,7 @@ import './App.css';
 import EditEquipment from "./pages/EditEquipment";
 import CheckoutCheckinPage from "./pages/CheckoutCheckinPage";
 import CheckedOutHistory from './components/CheckedOutHistory';
-
+import AuthHandler from "./components/oauth/AuthHandler";
 
 function App() {
     return (
@@ -37,6 +37,7 @@ function App() {
                         <Route path="/edit-equipment/:equipmentId" element={<EditEquipment />} />
                         <Route path="/checkout-checkin" element={<CheckoutCheckinPage />} />
                         <Route path="/checkedout-history" element={<CheckedOutHistory />} />
+                        <Route path="/auth-redirect" element={<AuthHandler />} />
                     </Routes>
                 </main>
                 <Footer />
@@ -46,5 +47,3 @@ function App() {
 }
 
 export default App;
-
-

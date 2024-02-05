@@ -15,14 +15,23 @@ import checkIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\s
 import checkinIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\checkin.png"
 import weatherIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\weather.png"
 import calenderIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\calender.png"
+import LoginButton from "../components/LoginButton";
+import {useMsal} from "@azure/msal-react";
 
 const HomePage = () => {
+
+    const { instance } = useMsal();
+
+    const handleLogin = () => {
+        instance.loginRedirect();
+    };
+
     return (
         <div className="home-container">
             <section className="hero">
                 <h1>Drone Equipment and Maintenance</h1>
                 <p>Streamlined management for drone enthusiasts and professionals.</p>
-                <Link to="/signup" className="btn btn-primary">Get Started</Link>
+                <p>Please login to manage your drones and equipment</p>
             </section>
 
             <section className="intended-users">
