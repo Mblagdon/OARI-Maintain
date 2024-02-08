@@ -1,4 +1,11 @@
 /**
+ * CheckinForm.js
+ *
+ * This component provides a form for users to check in equipment that they have used. It includes
+ * inputs for specifying the check-in date, usage duration, comments about the usage, and the location
+ * where the equipment was used. Additionally, it integrates with a weather API to fetch and display
+ * weather data based on the provided location.
+ *
  * Weather api plan needs to be upgraded in able to pull historic weather data(anything other than current data)
  */
 
@@ -6,6 +13,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function CheckinForm({ onCheckinSuccess }) {
+    // State hooks for various pieces of form data
     const [checkedOutEquipment, setCheckedOutEquipment] = useState([]);
     const [selectedEquipment, setSelectedEquipment] = useState('');
     const [checkinDate, setCheckinDate] = useState('');
@@ -16,7 +24,9 @@ function CheckinForm({ onCheckinSuccess }) {
     const [location, setLocation] = useState('');
     const [weatherData, setWeatherData] = useState(null); // Use this state to store fetched weather data
 
+    // Effect hook to fetch checked-out equipment data on component mount
     useEffect(() => {
+        // Function to fetch checked-out equipment from the server
         const fetchCheckedOutEquipment = async () => {
             setIsLoading(true);
             try {
@@ -37,15 +47,16 @@ function CheckinForm({ onCheckinSuccess }) {
         fetchCheckedOutEquipment();
     }, []);
 
+    // Function to handle form submission
     const handleSubmit = async (e) => {
+        // Prevent default form submission behavior
         e.preventDefault();
 
         if (!selectedEquipment || !checkinDate) {
             alert('Please select equipment and a check-in date.');
             return;
         }
-
-        // Fetch weather data only if location is provided
+        // Check required fields and fetch weather data if location is provided
         if (location) {
             setIsLoading(true);
             try {
@@ -101,12 +112,13 @@ function CheckinForm({ onCheckinSuccess }) {
 
     // Function to reset form fields after successful check-in
     const resetFormFields = () => {
+        // Reset all form fields to their initial state
         setSelectedEquipment('');
         setCheckinDate('');
         setUsageDuration('');
         setComments('');
         setLocation('');
-        setWeatherData(null); // Reset weather data state
+        setWeatherData(null);
     };
 
     if (isLoading) return <p>Loading...</p>;

@@ -1,3 +1,11 @@
+/**
+ * EditEquipment.js
+ *
+ * This component provides a form for editing the details of a specific piece of equipment.
+ * It pre-populates the form with existing data by fetching it from the API based on the equipment ID
+ * and allows the user to make changes and submit them.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../App.css';
@@ -24,12 +32,16 @@ function EditEquipment() {
         max_payload_weight: '',
         ip_rating: '',
     });
+    // Retrieve the equipment ID from URL parameters
     const { equipmentId } = useParams();
     const navigate = useNavigate();
 
+    // Flag to check if the type of equipment is software
     const isSoftware = formData.type === 'software';
 
+    // Fetch equipment details when the component is mounted or when equipmentId changes
     useEffect(() => {
+        // Fetch logic using equipmentId
         const fetchEquipmentDetails = async () => {
             try {
                 const response = await fetch(`/api/equipment/${equipmentId}`);
@@ -66,7 +78,7 @@ function EditEquipment() {
         fetchEquipmentDetails();
     }, [equipmentId]);
 
-
+    // Update form state when inputs change
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevFormData => ({
@@ -75,9 +87,11 @@ function EditEquipment() {
         }));
     };
 
+    // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Create a payload for updating, conditionally including or excluding fields based on equipment type
         const payload = {
             ...formData,
             weight_with_batteries: formData.type === 'drone' ? formData.weight_with_batteries : undefined,
@@ -87,10 +101,12 @@ function EditEquipment() {
             ip_rating: formData.type === 'drone' ? formData.ip_rating : undefined,
         };
 
+        // Perform validation checks specific to software type
         if (formData.type === 'software' && (!formData.date_bought || !formData.renewal_date || formData.price === '')) {
             console.error('For software, date_bought, renewal_date, and price cannot be empty');
             return;
         }
+        // Attempt to update equipment details on the server using a PUT request
         try {
             const response = await fetch(`/api/equipment/${equipmentId}`, {
                 method: 'PUT',

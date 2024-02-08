@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import footerLogo from 'C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\components\\CNAResearch.png';
+import footerLogo from './CNAResearch.png';
 
 function Footer() {
     return (

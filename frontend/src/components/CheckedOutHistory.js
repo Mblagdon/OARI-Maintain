@@ -1,10 +1,21 @@
+/**
+ * CheckedOutHistory.js
+ *
+ * A component that displays a list of previously checked out equipment. It fetches historical data
+ * of equipment usage including checkout and check-in dates, usage duration, location, and comments.
+ * It also integrates weather data to give context about the conditions during the equipment use.
+ */
+
 import React, { useState, useEffect } from 'react';
 import '../App.css';
 
 function CheckedOutHistory() {
+    // State hook to store the history of checked-out equipment
     const [history, setHistory] = useState([]);
 
+    // Effect hook to fetch history data on component mount
     useEffect(() => {
+        // Function to fetch history from the server
         const fetchHistory = async () => {
             try {
                 const response = await fetch('/api/checkedout-history');
@@ -21,6 +32,7 @@ function CheckedOutHistory() {
         fetchHistory();
     }, []);
 
+    // Function to format the weather data for display
     const formatWeatherData = (weatherData) => {
         if (!weatherData) return 'Weather data unavailable';
 

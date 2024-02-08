@@ -1,7 +1,14 @@
+/**
+ * graphService.js
+ *
+ * Service functions for interacting with Microsoft Graph API.
+ * Includes functions to create calendar events and fetch user profile data.
+ */
 
 import { msalInstance } from './msalService';
 import {graphConfig, loginRequest} from './authConfig';
 
+// Function to create a calendar event in the user's Outlook calendar
 export const createCalendarEvent = async (maintenanceDetails) => {
     try {
         const accounts = msalInstance.getAllAccounts();
@@ -64,6 +71,7 @@ export const createCalendarEvent = async (maintenanceDetails) => {
     }
 };
 
+// Function to call the Microsoft Graph API and get user profile information
 export const callGraphApi = async () => {
     try {
         const accounts = msalInstance.getAllAccounts();

@@ -1,4 +1,10 @@
-
+/**
+ * CheckoutCheckinPage.js
+ *
+ * This page component renders both checkout and checkin forms, allowing users to
+ * manage equipment transactions. It also displays currently checked-out equipment
+ * and provides navigation to the history of checked-out items.
+ */
 import React, { useState, useEffect } from 'react';
 import CheckoutForm from "./CheckoutForm";
 import CheckinForm from './CheckinForm';

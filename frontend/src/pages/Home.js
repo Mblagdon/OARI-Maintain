@@ -10,11 +10,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import '../App.css';
-import addIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\add.png"
-import checkIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\check.png"
-import checkinIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\checkin.png"
-import weatherIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\weather.png"
-import calenderIcon from "C:\\Users\\Marcu\\WebstormProjects\\workterm\\frontend\\src\\pages\\Home Pictures\\calender.png"
+import addIcon from './Home Pictures/add.png';
+import checkIcon from './Home Pictures/check.png';
+import checkinIcon from './Home Pictures/checkin.png';
+import weatherIcon from './Home Pictures/weather.png';
+import calenderIcon from './Home Pictures/calender.png'
 import LoginButton from "../components/LoginButton";
 import {useMsal} from "@azure/msal-react";
 

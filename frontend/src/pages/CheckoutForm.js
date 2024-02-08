@@ -1,3 +1,9 @@
+/**
+ * CheckoutForm.js
+ *
+ * This component presents a form for users to check out equipment. It fetches the list
+ * of available equipment and handles the submission of the form to the checkout API endpoint.
+ */
 import React, { useState, useEffect } from 'react';
 
 function CheckoutForm({onCheckoutSuccess}) {

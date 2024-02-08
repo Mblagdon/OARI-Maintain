@@ -1,4 +1,13 @@
-// MSAL configuration
+/**
+ * authConfig.js
+ *
+ * Configuration settings for Microsoft Authentication Library (MSAL).
+ * Defines the Azure Active Directory app registration details, token request scopes,
+ * and Graph API endpoint details for use in authentication and authorization processes
+ * throughout the application.
+ */
+
+// MSAL configuration for authenticating and authorizing the user
 export const msalConfig = {
     auth: {
         clientId: process.env.REACT_APP_AZURE_CLIENT_ID, // This is your application/client ID from Azure AD

@@ -145,7 +145,7 @@ const EquipmentController = {
 
 
     // Checkin/Checkout
-
+    // Checkout a piece of equipment
     checkoutEquipment: async (req, res) => {
         const { equipment_id, checkout_date } = req.body;
 
@@ -156,7 +156,7 @@ const EquipmentController = {
             res.status(500).json({ message: 'Error checking out equipment', error: error.message });
         }
     },
-
+    // Checkin a piece of equipment
     checkinEquipment: async (req, res) => {
         const { equipment_id, checkin_date, comments, usage_duration, weather, location } = req.body;
 
@@ -174,7 +174,7 @@ const EquipmentController = {
             res.status(500).json({ message: 'Error checking in equipment', error: error.message });
         }
     },
-
+    // View all checked out equipment
     getCurrentlyCheckedOutEquipment: async (req, res) => {
         try {
             const checkedOutEquipment = await EquipmentModel.getCurrentlyCheckedOutEquipment();

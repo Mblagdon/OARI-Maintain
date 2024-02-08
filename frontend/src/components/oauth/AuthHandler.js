@@ -1,3 +1,11 @@
+/**
+ * AuthHandler.js
+ *
+ * Component responsible for handling the authentication state of the user.
+ * It checks the current authentication status and performs sign-in or sign-out
+ * operations as necessary, redirecting the user based on their auth state.
+ */
+
 import React, { useEffect } from 'react';
 import { useMsal } from '@azure/msal-react';
 import { useNavigate } from 'react-router-dom';
@@ -7,11 +15,12 @@ const AuthHandler = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // Handle user authentication state when component mounts
         if (inProgress === "none") {
             const accounts = instance.getAllAccounts();
             if (accounts.length > 0) {
                 // User is logged in
-                navigate('/');
+                navigate('/');// Redirect to home if logged in
             } else {
                 // No user logged in, redirect to login page or attempt silent sign-in
                 instance.ssoSilent({

@@ -1,13 +1,25 @@
+/**
+ * EditMaintenanceForm.js
+ *
+ * This component renders a form for editing maintenance records. It fetches the
+ * maintenance data for a given task ID and allows the user to update and submit changes.
+ * The form pre-fills with existing data, which can be altered and saved.
+ */
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function EditMaintenanceForm() {
+    // State for maintaining the form data and errors
     const [maintenanceData, setMaintenanceData] = useState({});
     const [error, setError] = useState('');
+    // Accessing the taskId from the URL parameters
     const { taskId } = useParams();
     const navigate = useNavigate();
 
+    // Fetch the current maintenance data when the component mounts
     useEffect(() => {
+        // Function to fetch data for the maintenance task to be edited
         const fetchMaintenanceData = async () => {
             try {
                 const response = await fetch(`/api/maintenance/${taskId}`);
@@ -28,6 +40,7 @@ function EditMaintenanceForm() {
         fetchMaintenanceData();
     }, [taskId]);
 
+    // Function to handle form value changes
     const handleChange = (e) => {
         const { name, value } = e.target;
         setMaintenanceData(prevFormData => ({
@@ -35,7 +48,7 @@ function EditMaintenanceForm() {
             [name]: value
         }));
     };
-
+    // Function to handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
         fetch(`/api/maintenance/${taskId}`, {
