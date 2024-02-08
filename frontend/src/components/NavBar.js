@@ -11,21 +11,24 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useMsal, useIsAuthenticated } from '@azure/msal-react';
 import '../App.css';
+import { useUserProfile } from '../pages/UserProfileContext';
 
 function NavBar() {
     const { instance } = useMsal();
     const isAuthenticated = useIsAuthenticated();
+    const { profileData, loading, error } = useUserProfile();
 
     const handleLogout = () => {
-        instance.logoutRedirect({
-            postLogoutRedirectUri: "/"
-        }).catch((error) => {
-            console.error(error);
-        });
+        instance.logoutRedirect({ postLogoutRedirectUri: "/" })
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
+    // If there is no error and not loading, display the user's name
+    const userName = !loading && !error ? profileData?.displayName : '';
 
-    return (
+        return (
         <nav className="nav-bar">
             <ul className="nav-ul">
                 <li className="nav-li">
@@ -99,6 +102,9 @@ function NavBar() {
                     </NavLink>
                 </li>
                 <li className="nav-li">
+                    {isAuthenticated && userName && (
+                        <span className="nav-user-name">Welcome, {userName}</span>
+                    )}
                     {isAuthenticated ? (
                         <button onClick={handleLogout} className="nav-link">
                             Logout

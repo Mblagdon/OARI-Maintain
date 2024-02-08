@@ -13,7 +13,12 @@ export const msalConfig = {
 
 // Scopes you add here will be prompted for consent during login
 export const loginRequest = {
-    scopes: ["openid", "profile", "User.Read", "Calendars.ReadWrite", "Mail.ReadWrite"]
+    scopes: ["openid",
+        "profile",
+        "User.Read",
+        "Calendars.ReadWrite",
+        "Mail.ReadWrite"
+    ]
 };
 
 // Add here scopes for access token to be used at Microsoft Graph API endpoints.

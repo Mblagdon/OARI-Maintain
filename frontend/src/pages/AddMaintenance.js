@@ -8,6 +8,7 @@
 
 import React, { useState } from 'react';
 import '../App.css';
+import { createCalendarEvent } from '../components/oauth/graphService';
 
 function AddMaintenance() {
     const [maintenanceData, setMaintenanceData] = useState({
@@ -31,7 +32,7 @@ function AddMaintenance() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-
+        // Fetch call to API for posting maintenance data
         fetch('/api/maintenance', {
             method: 'POST',
             headers: {
@@ -45,9 +46,9 @@ function AddMaintenance() {
             })
             .then(data => {
                 console.log('Success:', data);
-                // Handle success, such as showing a message or redirecting
                 // Reset the form here
                 setMaintenanceData({
+                    type: '',
                     equipment_id: '',
                     status: '',
                     last_maintenance_date: '',
@@ -55,13 +56,25 @@ function AddMaintenance() {
                     maintenance_frequency: '',
                     maintenance_to_be_performed: '',
                 });
+
+                // Now create a calendar event using the newly added maintenance data
+                return createCalendarEvent({
+                    subject: `Maintenance for ${maintenanceData.equipment_id}`,
+                    content: `Scheduled maintenance: ${maintenanceData.maintenance_to_be_performed}`,
+                    startDateTime: new Date(maintenanceData.next_maintenance_date),
+                    endDateTime: new Date(maintenanceData.next_maintenance_date), // Adjust if you have an end time
+                    timeZone: "Newfoundland Standard Time"
+                });
+            })
+            .then(() => {
+                alert('Maintenance task added and scheduled in calendar.');
+                // Additional logic after successful event creation
             })
             .catch((error) => {
                 console.error('Error:', error);
                 // Handle errors, such as displaying a message to the user
             });
     };
-
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit} className="form-style">

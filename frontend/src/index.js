@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { PublicClientApplication } from '@azure/msal-browser';
 import { MsalProvider } from '@azure/msal-react';
-import { msalConfig } from './components/oauth/authConfig';
-
-const msalInstance = new PublicClientApplication(msalConfig);
+import { msalInstance } from './components/oauth/msalService';
+import { UserProfileProvider } from './pages/UserProfileContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <MsalProvider instance={msalInstance}>
-            <App />
+            <UserProfileProvider>
+                <App />
+            </UserProfileProvider>
         </MsalProvider>
     </React.StrictMode>
 );

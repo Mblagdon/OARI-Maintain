@@ -26,6 +26,8 @@ router.get('/', async (req, res) => {
     }
 });
 
+//Use same method for historic but replace .com/current with correct api end, e.g. .com/historic
+
 module.exports = router;
 
 

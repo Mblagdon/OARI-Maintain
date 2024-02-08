@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import EquipmentList from './pages/EquipmentList';
@@ -15,15 +15,21 @@ import EditEquipment from "./pages/EditEquipment";
 import CheckoutCheckinPage from "./pages/CheckoutCheckinPage";
 import CheckedOutHistory from './components/CheckedOutHistory';
 import AuthHandler from "./components/oauth/AuthHandler";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
+    const [userName, setUserName] = useState('');
+
+
     return (
         <Router>
             <div className="site-container">
                 <header className="App-header">
                     <h1>Drone Maintenance Web Application</h1>
                 </header>
-                <NavBar />
+                <NavBar userName={userName} />
+                <UserProfile onProfileLoaded={(name) => setUserName(name)} />
+
                 <main className="content">
                     <Routes>
                         <Route path="/" element={<Home />} />
