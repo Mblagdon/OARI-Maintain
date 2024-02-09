@@ -27,8 +27,8 @@ const EquipmentModel = {
                     min_temp, max_temp, max_wind_resistance, min_lighting,
                     date_bought, renewal_date, price,
                     weight_with_batteries, frame_weight, max_take_off_weight,
-                    max_payload_weight, ip_rating
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                    max_payload_weight, ip_rating, asset_number
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
                 db.query(query, [
                     data.type,
@@ -37,7 +37,7 @@ const EquipmentModel = {
                     data.min_temp, data.max_temp, data.max_wind_resistance, data.min_lighting,
                     data.date_bought, data.renewal_date, data.price, data.weight_with_batteries,
                     data.frame_weight, data.max_take_off_weight, data.max_payload_weight,
-                    data.ip_rating
+                    data.ip_rating, data.asset_number
                 ], (err, results) => {
                     if (err) {
                         return db.rollback(() => {
@@ -114,7 +114,7 @@ const EquipmentModel = {
     // Get all equipment descriptions
     getAllEquipment: () => {
         return new Promise((resolve, reject) => {
-            const query = `SELECT * FROM equipment_descriptions
+            const query = `SELECT *, asset_number FROM equipment_descriptions
                        ORDER BY CASE type
                          WHEN 'drone' THEN 1
                          WHEN 'equipment' THEN 2
@@ -135,7 +135,7 @@ const EquipmentModel = {
     // Get a single equipment description by ID
     getEquipmentById: (id) => {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT * FROM equipment_descriptions WHERE id = ?';
+            const query = 'SELECT *, asset_number FROM equipment_descriptions WHERE id = ?';
             db.query(query, [id], (err, results) => {
                 if (err) {
                     reject(err);
@@ -160,6 +160,7 @@ const EquipmentModel = {
             // Ensure null checks are performed for drone-related fields
             data.weight_with_batteries = data.type === 'drone' && data.weight_with_batteries !== '' ? data.weight_with_batteries : null;
             data.frame_weight = data.type === 'drone' && data.frame_weight !== '' ? data.frame_weight : null;
+            data.max_wind_resistance = data.max_wind_resistance !== '' ? data.max_wind_resistance : null;
             data.max_take_off_weight = data.type === 'drone' && data.max_take_off_weight !== '' ? data.max_take_off_weight : null;
             data.max_payload_weight = data.type === 'drone' && data.max_payload_weight !== '' ? data.max_payload_weight : null;
             data.ip_rating = data.type === 'drone' && data.ip_rating !== '' ? data.ip_rating : null;
@@ -170,7 +171,7 @@ const EquipmentModel = {
                 min_temp = ?, max_temp = ?, max_wind_resistance = ?,
                 min_lighting = ?, date_bought = ?, renewal_date = ?, price = ?,
                 weight_with_batteries = ?, frame_weight = ?, max_take_off_weight = ?,
-                max_payload_weight = ?, ip_rating = ?
+                max_payload_weight = ?, ip_rating = ?, asset_number = ?
                 WHERE id = ?`;
 
             db.query(query, [
@@ -193,6 +194,7 @@ const EquipmentModel = {
                 data.max_take_off_weight,
                 data.max_payload_weight,
                 data.ip_rating,
+                data.asset_number,
                 id
             ], (err, results) => {
                 if (err) {

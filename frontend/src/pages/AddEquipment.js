@@ -30,6 +30,7 @@ function AddEquipment() {
         max_take_off_weight: '',
         max_payload_weight: '',
         ip_rating: '',
+        asset_number: '',
     });
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -65,6 +66,7 @@ function AddEquipment() {
         let payload = {
             type: formData.type,
             equipment_name: formData.equipment_name,
+            asset_number: formData.asset_number,
             description: formData.description,
             use_case_examples: formData.use_case_examples,
         };
@@ -131,6 +133,7 @@ function AddEquipment() {
                     max_take_off_weight: '',
                     max_payload_weight: '',
                     ip_rating: '',
+                    asset_number: '',
                 });
                 // Optionally hide the confirmation message after some time
                 setTimeout(() => setShowConfirmation(false), 5000);
@@ -169,6 +172,10 @@ function AddEquipment() {
                         <label className="form-label">Equipment Name:</label>
                         <input type="text" name="equipment_name" value={formData.equipment_name} onChange={handleChange} className="form-input" />
                     </div>
+                </div>
+                <div className="form-group full-width">
+                    <label className="form-label">Asset Number:</label>
+                    <input type="text" name="asset_number" value={formData.asset_number} onChange={handleChange} className="form-input" placeholder="Enter Asset Number (optional)"/>
                 </div>
 
                 <div className="form-row">

@@ -31,6 +31,7 @@ function EditEquipment() {
         max_take_off_weight: '',
         max_payload_weight: '',
         ip_rating: '',
+        asset_number: '',
     });
     // Retrieve the equipment ID from URL parameters
     const { equipmentId } = useParams();
@@ -68,7 +69,7 @@ function EditEquipment() {
                     frame_weight: data.frame_weight !== null ? data.frame_weight : '',
                     max_take_off_weight: data.max_take_off_weight || '',
                     max_payload_weight: data.max_payload_weight || '',
-                    ip_rating: data.ip_rating || '',
+                    ip_rating: data.ip_rating || '', asset_number: data.asset_number || '',
                 });
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -91,6 +92,9 @@ function EditEquipment() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Ensure empty strings for numeric inputs are converted to null
+        const convertToNullIfEmpty = value => value !== '' ? value : null;
+
         // Create a payload for updating, conditionally including or excluding fields based on equipment type
         const payload = {
             ...formData,
@@ -99,6 +103,9 @@ function EditEquipment() {
             max_take_off_weight: formData.type === 'drone' ? formData.max_take_off_weight : undefined,
             max_payload_weight: formData.type === 'drone' ? formData.max_payload_weight : undefined,
             ip_rating: formData.type === 'drone' ? formData.ip_rating : undefined,
+            max_wind_resistance: formData.max_wind_resistance !== '' ? parseInt(formData.max_wind_resistance, 10) : null,
+            min_temp: convertToNullIfEmpty(formData.min_temp),
+            max_temp: convertToNullIfEmpty(formData.max_temp),
         };
 
         // Perform validation checks specific to software type
@@ -115,8 +122,11 @@ function EditEquipment() {
                 },
                 body: JSON.stringify(payload),
             });
+
+            const data = await response.json(); // Get the response data
+
             if (!response.ok) {
-                throw new Error('Could not update equipment details');
+                throw new Error(data.message || 'Could not update equipment details');
             }
             navigate('/equipment');
         } catch (error) {
@@ -145,6 +155,15 @@ function EditEquipment() {
                     type="text"
                     name="equipment_name"
                     value={formData.equipment_name}
+                    onChange={handleChange}
+                    className="form-input"
+                />
+
+                <label className="form-label">Asset Number:</label>
+                <input
+                    type="text"
+                    name="asset_number"
+                    value={formData.asset_number}
                     onChange={handleChange}
                     className="form-input"
                 />

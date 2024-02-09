@@ -12,33 +12,14 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 function EquipmentItem({ equipment, onEdit, onDelete }) {
-    const renderEquipmentDetails = () => {
-        switch (equipment.type) {
-            case 'drone':
-            case 'equipment':
-                return (
-                    <>
-                        <div>Type: {equipment.type}</div>
-                    </>
-                );
-            case 'software':
-                return (
-                    <>
-                        <div>Type: Software</div>
-                    </>
-                );
-            default:
-
-                return null; // or return some default JSX if needed
-        }
-    }
-
     return (
         <div className="equipment-card">
             <Link to={`/equipment/${equipment.id}`} className="equipment-name">
                 {equipment.equipment_name}
             </Link>
-            {renderEquipmentDetails()}
+            <div>Type: {equipment.type}</div>
+            {/* Conditionally render the asset number if it exists */}
+            {equipment.asset_number && <div>Asset#: {equipment.asset_number}</div>}
             <button onClick={() => onEdit(equipment.id)}>Edit</button>
             <button onClick={() => onDelete(equipment.id)}>Delete</button>
         </div>

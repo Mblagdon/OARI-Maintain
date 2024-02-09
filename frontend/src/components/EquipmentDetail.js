@@ -63,6 +63,11 @@ function EquipmentDetail() {
             {!isSoftware && (
                 <>
                 <div className="equipment-section">
+                    <div className="equipment-section-title">Asset Number:</div>
+                    <div className="equipment-section-content">{equipmentDetails.asset_number}</div>
+                </div>
+
+                <div className="equipment-section">
                     <div className="equipment-section-title">Location:</div>
                     <div className="equipment-section-content">{equipmentDetails.location}</div>
                 </div>
