@@ -12,27 +12,35 @@ import { useParams, useNavigate } from 'react-router-dom';
 function EditMaintenanceForm() {
     // State for maintaining the form data and errors
     const [maintenanceData, setMaintenanceData] = useState({});
+    const [equipmentOptions, setEquipmentOptions] = useState([])
     const [error, setError] = useState('');
     // Accessing the taskId from the URL parameters
     const { taskId } = useParams();
     const navigate = useNavigate();
 
-    // Fetch the current maintenance data when the component mounts
+    // Fetch equipment and current maintenance data when the component mounts
     useEffect(() => {
-        // Function to fetch data for the maintenance task to be edited
         const fetchMaintenanceData = async () => {
             try {
-                const response = await fetch(`/api/maintenance/${taskId}`);
-                if (!response.ok) throw new Error('Failed to fetch data');
-                const data = await response.json();
+                const responses = await Promise.all([
+                    fetch(`/api/maintenance/${taskId}`),
+                    fetch(`/api/equipment`)
+                ]);
+                if (!responses[0].ok) throw new Error('Failed to fetch maintenance data');
+                if (!responses[1].ok) throw new Error('Failed to fetch equipment data');
+
+                const maintenance = await responses[0].json();
+                const equipment = await responses[1].json();
+
                 setMaintenanceData({
-                    ...data,
-                    last_maintenance_date: data.last_maintenance_date.split('T')[0],
-                    next_maintenance_date: data.next_maintenance_date.split('T')[0],
-                    maintenance_to_be_performed: data.maintenance_to_be_performed || ''
+                    ...maintenance,
+                    last_maintenance_date: maintenance.last_maintenance_date.split('T')[0],
+                    next_maintenance_date: maintenance.next_maintenance_date.split('T')[0],
+                    maintenance_to_be_performed: maintenance.maintenance_to_be_performed || ''
                 });
+                setEquipmentOptions(equipment);
             } catch (error) {
-                console.error('Error fetching maintenance data:', error);
+                console.error('Error:', error);
                 setError(error.message);
             }
         };
@@ -72,14 +80,19 @@ function EditMaintenanceForm() {
                 {/* Equipment ID */}
                 <div className="form-group">
                     <label className="form-label">Equipment ID:</label>
-                    <input
-                        type="number"
+                    <select
                         name="equipment_id"
                         value={maintenanceData.equipment_id || ''}
                         onChange={handleChange}
-                        className="form-input"
-                        readOnly // Assuming equipment ID should not be editable
-                    />
+                        className="form-select"
+                    >
+                        <option value="">Select Equipment</option>
+                        {equipmentOptions.map(option => (
+                            <option key={option.id} value={option.id}>
+                                {`${option.equipment_name} - ${option.asset_number || 'N/A'}`}
+                            </option>
+                        ))}
+                    </select>
                 </div>
 
                 {/* Status */}

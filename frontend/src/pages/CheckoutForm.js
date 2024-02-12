@@ -29,6 +29,7 @@ function CheckoutForm({onCheckoutSuccess}) {
                 const equipmentWithDisabledState = equipmentData.map(equipment => ({
                     ...equipment,
                     isDisabled: checkedOutData.some(checkedOutItem => checkedOutItem.equipment_id === equipment.id),
+                    displayText: `${equipment.equipment_name} (${equipment.asset_number})`
                 }));
                 console.log(equipmentWithDisabledState);
                 setEquipmentList(equipmentWithDisabledState);
@@ -71,6 +72,7 @@ function CheckoutForm({onCheckoutSuccess}) {
             alert('Equipment checked out successfully');
             setSelectedEquipment(''); // Reset selected equipment
             setCheckoutDate(''); // Reset checkout date
+            console.log('Checkout successful, calling onCheckoutSuccess');
             onCheckoutSuccess(); // Notify parent component to refresh list
             setIsLoading(false);
         } catch (error) {
@@ -94,8 +96,12 @@ function CheckoutForm({onCheckoutSuccess}) {
                 >
                     <option value="">Select Equipment</option>
                     {equipmentList.map(equipment => (
-                        <option key={equipment.id} value={equipment.id} disabled={equipment.isDisabled}>
-                            {equipment.equipment_name}
+                        <option
+                            key={equipment.id}
+                            value={equipment.id}
+                            disabled={equipment.isDisabled}
+                        >
+                            {equipment.displayText}
                         </option>
                     ))}
                 </select>

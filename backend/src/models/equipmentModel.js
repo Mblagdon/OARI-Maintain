@@ -256,13 +256,13 @@ const EquipmentModel = {
         });
     },
 
-    // Get maintenance schedule
+    // Get all maintenance including equipment name and asset number
     getAllMaintenance: () => {
         return new Promise((resolve, reject) => {
             const query = `
-        SELECT em.*, eq.equipment_name
-        FROM equipment_management em
-        JOIN equipment_descriptions eq ON em.equipment_id = eq.id`;
+            SELECT em.*, eq.equipment_name, eq.asset_number
+            FROM equipment_management em
+            JOIN equipment_descriptions eq ON em.equipment_id = eq.id`;
 
             db.query(query, (err, results) => {
                 if (err) {
@@ -273,6 +273,7 @@ const EquipmentModel = {
             });
         });
     },
+
 
     // Get single maintenance schedule
     getMaintenanceById: (id) => {
@@ -401,11 +402,11 @@ const EquipmentModel = {
     getCurrentlyCheckedOutEquipment: () => {
         return new Promise((resolve, reject) => {
             const query = `
-            SELECT ec.*, ed.equipment_name 
-            FROM equipment_checkout AS ec
-            JOIN equipment_descriptions AS ed ON ec.equipment_id = ed.id
-            WHERE ec.checkin_date IS NULL
-        `;
+        SELECT ec.*, ed.equipment_name, ed.asset_number
+        FROM equipment_checkout AS ec
+        JOIN equipment_descriptions AS ed ON ec.equipment_id = ed.id
+        WHERE ec.checkin_date IS NULL
+    `;
             db.query(query, (err, results) => {
                 if (err) {
                     reject(err);
@@ -416,6 +417,7 @@ const EquipmentModel = {
         });
     },
 
+
     // Get the historical checked out equipment
     getCheckedOutHistory: () => {
         return new Promise((resolve, reject) => {
@@ -423,6 +425,7 @@ const EquipmentModel = {
         SELECT 
             ec.*, 
             ed.equipment_name,
+            ed.asset_number,
             ec.checkout_date, 
             ec.checkin_date, 
             ec.usage_duration, 
@@ -440,7 +443,6 @@ const EquipmentModel = {
                 } else {
                     const history = results.map(record => ({
                         ...record,
-                        // Check if weather_data is a string and parse it if necessary
                         weather_data: typeof record.weather_data === 'string' ? JSON.parse(record.weather_data) : record.weather_data
                     }));
                     resolve(history);
@@ -448,6 +450,7 @@ const EquipmentModel = {
             });
         });
     },
+
 };
 
 module.exports = EquipmentModel;

@@ -15,7 +15,6 @@ function CheckedOutHistory() {
 
     // Effect hook to fetch history data on component mount
     useEffect(() => {
-        // Function to fetch history from the server
         const fetchHistory = async () => {
             try {
                 const response = await fetch('/api/checkedout-history');
@@ -72,6 +71,7 @@ function CheckedOutHistory() {
                 <thead>
                 <tr>
                     <th>Equipment Name</th>
+                    <th>Asset Number</th>
                     <th>Checkout Date</th>
                     <th>Check-in Date</th>
                     <th>Usage Duration (min)</th>
@@ -84,6 +84,7 @@ function CheckedOutHistory() {
                 {history.map(item => (
                     <tr key={item.id}>
                         <td>{item.equipment_name}</td>
+                        <td>{item.asset_number}</td>
                         <td>{new Date(item.checkout_date).toLocaleString()}</td>
                         <td>{new Date(item.checkin_date).toLocaleString()}</td>
                         <td>{item.usage_duration}</td>

@@ -6,7 +6,7 @@
  * is posted to the server and recorded in the maintenance management system.
  */
 
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import '../App.css';
 import { createCalendarEvent } from '../components/oauth/graphService';
 
@@ -20,6 +20,28 @@ function AddMaintenance() {
         maintenance_frequency: '',
         maintenance_to_be_performed: '',
     });
+
+    const [equipmentOptions, setEquipmentOptions] = useState([]);
+
+    // Fetch equipment details when the component mounts
+    useEffect(() => {
+        // Fetch the equipment data when the component mounts
+        fetch('/api/equipment')
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                setEquipmentOptions(data.map(equipment => ({
+                    id: equipment.id,
+                    name: equipment.equipment_name,
+                    assetNumber: equipment.asset_number
+                })));
+            })
+            .catch(error => {
+                console.error('Error fetching equipment:', error);
+            });
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -80,13 +102,19 @@ function AddMaintenance() {
             <form onSubmit={handleSubmit} className="form-style">
                 <div className="form-group">
                     <label className="form-label">Equipment ID:</label>
-                    <input
-                        type="number"
+                    <select
                         name="equipment_id"
                         value={maintenanceData.equipment_id}
                         onChange={handleChange}
-                        className="form-input"
-                    />
+                        className="form-select"
+                    >
+                        <option value="">Select Equipment</option>
+                        {equipmentOptions.map(option => (
+                            <option key={option.id} value={option.id}>
+                                {`${option.name} - ${option.assetNumber || 'No Asset Number'}`}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div className="form-group">
                     <label className="form-label">Status:</label>

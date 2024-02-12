@@ -61,6 +61,7 @@ function MaintenanceSchedule() {
                 <tr>
                     <th>Equipment ID</th>
                     <th>Equipment Name</th>
+                    <th>Asset Number</th>
                     <th>Status</th>
                     <th>Last Maintenance Date</th>
                     <th>Next Maintenance Date</th>
@@ -74,6 +75,7 @@ function MaintenanceSchedule() {
                     <tr key={task.id}>
                         <td>{task.equipment_id}</td>
                         <td>{task.equipment_name}</td>
+                        <td>{task.asset_number || 'N/A'}</td>
                         <td>{task.status}</td>
                         <td>{new Date(task.last_maintenance_date).toLocaleDateString()}</td>
                         <td>{new Date(task.next_maintenance_date).toLocaleDateString()}</td>

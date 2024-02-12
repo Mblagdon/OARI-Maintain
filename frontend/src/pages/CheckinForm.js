@@ -35,7 +35,13 @@ function CheckinForm({ onCheckinSuccess }) {
                     throw new Error('Could not fetch checked out equipment');
                 }
                 const data = await response.json();
-                setCheckedOutEquipment(data);
+
+                // Now include asset_number in the modifiedData
+                const modifiedData = data.map(item => ({
+                    ...item,
+                    displayText: `${item.equipment_name} (${item.asset_number})` // Add display text here
+                }));
+                setCheckedOutEquipment(modifiedData); // Set the modified data with asset_number
                 setIsLoading(false);
             } catch (error) {
                 console.error('Error:', error);
@@ -101,7 +107,8 @@ function CheckinForm({ onCheckinSuccess }) {
 
             alert('Equipment checked in successfully');
             resetFormFields();
-            onCheckinSuccess(); // Refresh the currently checked out equipment list
+            console.log('Check-in successful, calling onCheckinSuccess');
+            onCheckinSuccess();
         } catch (error) {
             console.error('Check-in error:', error);
             alert('Failed to check in equipment');
@@ -109,7 +116,6 @@ function CheckinForm({ onCheckinSuccess }) {
             setIsLoading(false);
         }
     };
-
     // Function to reset form fields after successful check-in
     const resetFormFields = () => {
         // Reset all form fields to their initial state
@@ -136,8 +142,11 @@ function CheckinForm({ onCheckinSuccess }) {
                 >
                     <option value="">Select Equipment</option>
                     {checkedOutEquipment.map(item => (
-                        <option key={item.id} value={item.equipment_id}>
-                            {item.equipment_name}
+                        <option
+                            key={item.id}
+                            value={item.equipment_id}
+                        >
+                            {item.displayText}
                         </option>
                     ))}
                 </select>

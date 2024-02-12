@@ -12,10 +12,9 @@ import '../App.css';
 import { Link } from "react-router-dom";
 
 function CheckoutCheckinPage() {
-    // This state holds the currently checked-out equipment.
     const [checkedOutEquipment, setCheckedOutEquipment] = useState([]);
+    const [forceUpdate, setForceUpdate] = useState(0); // state to force re-render
 
-    // Function to fetch the currently checked-out equipment.
     const fetchCheckedOutEquipment = async () => {
         try {
             const response = await fetch('/api/checkedout-equipment');
@@ -23,27 +22,33 @@ function CheckoutCheckinPage() {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
+            console.log('Fetched checked-out equipment:', data);
             setCheckedOutEquipment(data);
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
         }
     };
 
-    // Fetch the currently checked-out equipment when the component mounts or updates.
     useEffect(() => {
+        console.log('useEffect running to fetch checked-out equipment');
         fetchCheckedOutEquipment();
-    }, []);
+    }, [forceUpdate]); // Depend on forceUpdate to refetch data
+
+    // Call this function after checkout or check-in success
+    const refreshCheckedOutList = () => {
+        setForceUpdate(prev => prev + 1); // Increment to force re-render
+    };
 
     return (
         <div className="checkout-checkin-container">
             <div className="forms-container">
                 <div className="form-section">
                     <h1>Equipment Checkout</h1>
-                    <CheckoutForm onCheckoutSuccess={fetchCheckedOutEquipment} />
+                    <CheckoutForm onCheckoutSuccess={refreshCheckedOutList} />
                 </div>
                 <div className="form-section">
                     <h1>Equipment Checkin</h1>
-                    <CheckinForm onCheckinSuccess={fetchCheckedOutEquipment} />
+                    <CheckinForm onCheckinSuccess={refreshCheckedOutList} />
                 </div>
             </div>
             <div className="currently-checked-out">
