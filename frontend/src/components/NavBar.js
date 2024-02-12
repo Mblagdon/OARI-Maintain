@@ -35,11 +35,11 @@ function NavBar() {
     const userName = !loading && !error ? profileData?.displayName : '';
 
     return (
-        <Navbar className="rebecca-purple-navbar" variant="dark" expand="lg">
-        <Container>
+        <Navbar className="purple-navbar" variant="dark" expand="lg">
+            <Container>
                 <Navbar.Brand as={NavLinkWrapper} to="/">Drone Management</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
                     <Nav className="me-auto">
                         <Nav.Link as={NavLinkWrapper} to="/" end>Home Page</Nav.Link>
                         <Nav.Link as={NavLinkWrapper} to="/equipment">Equipment List</Nav.Link>
@@ -49,18 +49,16 @@ function NavBar() {
                         <Nav.Link as={NavLinkWrapper} to="/weather">Weather</Nav.Link>
                         <Nav.Link as={NavLinkWrapper} to="/checkout-checkin">Checkin/Checkout</Nav.Link>
                     </Nav>
-                    <Nav>
-                        {isAuthenticated && userName && (
-                            <Navbar.Text className="nav-user-name">
-                                Welcome, {userName}
-                            </Navbar.Text>
-                        )}
-                        {isAuthenticated ? (
-                            <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
-                        ) : (
-                            <Button variant="outline-light" onClick={() => instance.loginRedirect()}>Login</Button>
-                        )}
-                    </Nav>
+                    {isAuthenticated && userName && (
+                        <Navbar.Text className="nav-user-name">
+                            Welcome, {userName}
+                        </Navbar.Text>
+                    )}
+                    {isAuthenticated ? (
+                        <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
+                    ) : (
+                        <Button variant="outline-light" onClick={() => instance.loginRedirect()}>Login</Button>
+                    )}
                 </Navbar.Collapse>
             </Container>
         </Navbar>
@@ -68,7 +66,6 @@ function NavBar() {
 }
 
 export default NavBar;
-
 
 
 
