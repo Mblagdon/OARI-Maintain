@@ -308,89 +308,10 @@ textarea {
 }
 
 
-/* Home Page css */
-.home-container {
-  color: #FFFFFF; /* White text for contrast */
-  background-color: #B19CD9; /* Light Purple */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  padding: 20px;
-}
 
-.home-container h1 {
-  color: #FAD0C4; /* Soft Pink */
-}
 
-.hero {
-  padding: 50px 20px;
-}
 
-.intended-users {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
 
-.intended-users h2 {
-  color: #FAD0C4;
-  margin-bottom: 20px;
-}
-
-.intended-users p {
-  color: #FFFFFF;
-  line-height: 1.6;
-}
-
-.features {
-  display: flex;
-  justify-content: space-around;
-  padding: 20px;
-}
-
-.features-overview {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
-  padding: 20px;
-}
-
-.feature-item {
-  padding: 20px;
-  background: #E6E6E6; /* Light Gray */
-  border-radius: 8px;
-}
-
-.feature-icon {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-}
-
-.feature-item h3 {
-  margin-top: 20px;
-  color: #505050; /* Dark Gray */
-}
-
-.feature-item p {
-  margin-top: 10px;
-  color: #666666; /* Darker Gray */
-}
-
-.btn-primary {
-  background-color: #FFD580; /* Creamy Yellow */
-  color: #1A1A1D; /* Dark Text */
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 20px;
-  transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #E6B800; /* Darker Yellow */
-}
 
 
 

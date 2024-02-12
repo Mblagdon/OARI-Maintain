@@ -1,0 +1,58 @@
+/* For centering text in a section */
+.section-text {
+    text-align: center;
+}
+
+/* For centering the button */
+.center-button {
+    display: block;
+    margin: auto;
+}
+
+/* For centering images inside a Card component */
+.feature-icon {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80px; /* adjust as necessary */
+}
+
+/* For making titles bold inside the Card component */
+.card-title-bold {
+    font-weight: bold;
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    object-fit: cover; /* Covers the area without stretching the image */
+    object-position: center; /* Center the image within the element */
+}
+
+.btn-primary {
+    background-color: #FFD580; /* Creamy Yellow */
+    color: #1A1A1D; /* Dark Text */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #E6B800; /* Darker Yellow */
+}
+
+.card {
+    display: flex;
+    flex-direction: column; /* Stacks the card image and card body on top of each other */
+}
+
+.card-body {
+    flex: 1; /* Allows the card body to fill the available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Positions the title and text at the top and bottom respectively */
+}
