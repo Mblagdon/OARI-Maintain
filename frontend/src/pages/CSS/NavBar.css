@@ -1,0 +1,31 @@
+.nav-link {
+    display: block;
+    position: relative;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #FAD0C4; /* Soft Pink */
+    transition: width 0.3s ease-in;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.active-link::after {
+    background-color: white;
+}
+
+.rebecca-purple-navbar {
+    background-color: #B19CD9;
+}

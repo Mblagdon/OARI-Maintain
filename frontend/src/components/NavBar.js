@@ -10,8 +10,14 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useMsal, useIsAuthenticated } from '@azure/msal-react';
-import '../App.css';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import { useUserProfile } from '../pages/UserProfileContext';
+import '../pages/CSS/NavBar.css';
+
+// Create a wrapper component for NavLink
+const NavLinkWrapper = ({ children, ...props }) => {
+    return <NavLink {...props}>{children}</NavLink>;
+};
 
 function NavBar() {
     const { instance } = useMsal();
@@ -28,99 +34,41 @@ function NavBar() {
     // If there is no error and not loading, display the user's name
     const userName = !loading && !error ? profileData?.displayName : '';
 
-        return (
-        <nav className="nav-bar">
-            <ul className="nav-ul">
-                <li className="nav-li">
-                    <NavLink
-                        to="/"
-                        className={({ isActive }) =>
-                            isActive ? 'nav-link active-link' : 'nav-link'
-                        }
-                    >
-                        Home Page
-                    </NavLink>
-                </li>
-                <li className="nav-li">
-                    <NavLink
-                        to="/equipment"
-                        className={({ isActive }) =>
-                            isActive ? 'nav-link active-link' : 'nav-link'
-                        }
-                    >
-                        Equipment List
-                    </NavLink>
-                </li>
-                <li className="nav-li">
-                    <NavLink
-                        to="/add-equipment"
-                        className={({ isActive }) =>
-                            isActive ? 'nav-link active-link' : 'nav-link'
-                        }
-                    >
-                        Add Equipment
-                    </NavLink>
-                </li>
-                <li className="nav-li">
-                    <NavLink
-                        to="/maintenance"
-                        className={({ isActive }) =>
-                            isActive ? 'nav-link active-link' : 'nav-link'
-                        }
-                    >
-                        Maintenance Schedule
-                    </NavLink>
-                </li>
-                <li className="nav-li">
-                    <NavLink
-                        to="/add-maintenance"
-                        className={({ isActive }) =>
-                            isActive ? 'nav-link active-link' : 'nav-link'
-                        }
-                    >
-                        Add Maintenance
-                    </NavLink>
-                </li>
-                <li className="nav-li">
-                    <NavLink
-                        to="/weather"
-                        className={({ isActive }) =>
-                            isActive ? 'nav-link active-link' : 'nav-link'
-                        }
-                    >
-                        Weather
-                    </NavLink>
-                </li>
-                <li className="nav-li">
-                    <NavLink
-                        to="/checkout-checkin"
-                        className={({ isActive }) =>
-                            isActive ? 'nav-link active-link' : 'nav-link'
-                        }
-                    >
-                        Checkin/Checkout
-                    </NavLink>
-                </li>
-                <li className="nav-li">
-                    {isAuthenticated && userName && (
-                        <span className="nav-user-name">Welcome, {userName}</span>
-                    )}
-                    {isAuthenticated ? (
-                        <button onClick={handleLogout} className="nav-link">
-                            Logout
-                        </button>
-                    ) : (
-                        <button onClick={() => instance.loginRedirect()} className="nav-link">
-                            Login
-                        </button>
-                    )}
-                </li>
-            </ul>
-        </nav>
+    return (
+        <Navbar className="rebecca-purple-navbar" variant="dark" expand="lg">
+        <Container>
+                <Navbar.Brand as={NavLinkWrapper} to="/">Drone Management</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link as={NavLinkWrapper} to="/" end>Home Page</Nav.Link>
+                        <Nav.Link as={NavLinkWrapper} to="/equipment">Equipment List</Nav.Link>
+                        <Nav.Link as={NavLinkWrapper} to="/add-equipment">Add Equipment</Nav.Link>
+                        <Nav.Link as={NavLinkWrapper} to="/maintenance">Maintenance Schedule</Nav.Link>
+                        <Nav.Link as={NavLinkWrapper} to="/add-maintenance">Add Maintenance</Nav.Link>
+                        <Nav.Link as={NavLinkWrapper} to="/weather">Weather</Nav.Link>
+                        <Nav.Link as={NavLinkWrapper} to="/checkout-checkin">Checkin/Checkout</Nav.Link>
+                    </Nav>
+                    <Nav>
+                        {isAuthenticated && userName && (
+                            <Navbar.Text className="nav-user-name">
+                                Welcome, {userName}
+                            </Navbar.Text>
+                        )}
+                        {isAuthenticated ? (
+                            <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
+                        ) : (
+                            <Button variant="outline-light" onClick={() => instance.loginRedirect()}>Login</Button>
+                        )}
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
     );
 }
 
 export default NavBar;
+
 
 
 
