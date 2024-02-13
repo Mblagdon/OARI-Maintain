@@ -30,8 +30,8 @@
 }
 
 .btn-primary {
-    background-color: #FFD580; /* Creamy Yellow */
-    color: #1A1A1D; /* Dark Text */
+    background-color: dodgerblue;
+    color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -42,7 +42,7 @@
 }
 
 .btn-primary:hover {
-    background-color: #E6B800; /* Darker Yellow */
+    background-color: deepskyblue;
 }
 
 .card {

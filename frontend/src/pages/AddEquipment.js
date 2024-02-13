@@ -7,7 +7,8 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import '../App.css';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import '../pages/CSS/AddEquipment.css';
 
 function AddEquipment() {
     const [formData, setFormData] = useState({
@@ -144,167 +145,298 @@ function AddEquipment() {
             });
     };
     return (
-        <div className="form-container">
-            {submitSuccess && <div className="success-message">Equipment added successfully!</div>}
-            {submitError && <div className="error-message">{submitError}</div>}
+        <Container className="pt-4">
+            <Row>
+                <Col md={12} lg={10} xl={8} className="mx-auto">
+                    <Form onSubmit={handleSubmit}>
+                        {submitSuccess && <div className="alert alert-success">Equipment added successfully!</div>}
+                        {submitError && <div className="alert alert-danger">{submitError}</div>}
 
-            {/* Confirmation message */}
-            {showConfirmation && (
-                <div className="confirmation-message">
-                    Equipment has been added successfully!
-                </div>
-            )}
+                        {/* Type Selection */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Type</Form.Label>
+                            <Col sm={9}>
+                                <Form.Select name="type" value={formData.type} onChange={handleChange}>
+                                    <option value="equipment">Equipment</option>
+                                    <option value="drone">Drone</option>
+                                    <option value="software">Software</option>
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
 
-            <form onSubmit={handleSubmit}>
-                <div className="form-row">
-                    <div className="form-group full-width">
-                        <label className="form-label">Type:</label>
-                        <select name="type" value={formData.type} onChange={handleChange} className="form-input">
-                            <option value="equipment">Equipment</option>
-                            <option value="drone">Drone</option>
-                            <option value="software">Software</option>
-                        </select>
-                    </div>
-                </div>
+                        {/* Equipment Name */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Equipment Name</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="text"
+                                    name="equipment_name"
+                                    value={formData.equipment_name}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
+                        {/* Asset Number */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Asset Number</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="text"
+                                    name="asset_number"
+                                    value={formData.asset_number}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                <div className="form-row">
-                    <div className="form-group full-width">
-                        <label className="form-label">Equipment Name:</label>
-                        <input type="text" name="equipment_name" value={formData.equipment_name} onChange={handleChange} className="form-input" />
-                    </div>
-                </div>
-                <div className="form-group full-width">
-                    <label className="form-label">Asset Number:</label>
-                    <input type="text" name="asset_number" value={formData.asset_number} onChange={handleChange} className="form-input" placeholder="Enter Asset Number (optional)"/>
-                </div>
-
-                <div className="form-row">
-                    <div className="form-group full-width">
-                        <label className="form-label">Description:</label>
-                        <input type="text" name="description" value={formData.description} onChange={handleChange} className="form-input" />
-                    </div>
-                </div>
-
-                <div className="form-row">
-                    <div className="form-group full-width">
-                        <label className="form-label">Use Case Examples:</label>
-                        <input type="text" name="use_case_examples" value={formData.use_case_examples} onChange={handleChange} className="form-input" />
-                    </div>
-                </div>
+                        {/* Description */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Description</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    as="textarea"
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
+                        {/*Use Case Example*/}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Use Case Example</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    as="textarea"
+                                    name="use_case_example"
+                                    value={formData.use_case_examples}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
                 {/* Conditional input for payload info if type is drone */}
                 {formData.type === 'drone' && (
                     <>
-                        <div className="form-row">
-                            <div className="form-group half-width">
-                                <label className="form-label">Weight (with batteries) (kg):</label>
-                                <input type="number" name="weight_with_batteries" value={formData.weight_with_batteries} onChange={handleChange} className="form-input" />
-                            </div>
+                        {/* Weight (with batteries) (kg) */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Weight (with batteries) (kg):</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="number"
+                                    name="weight_with_batteries"
+                                    value={formData.weight_with_batteries}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                            <div className="form-group half-width">
-                                <label className="form-label">Frame Weight (no batteries) (kg):</label>
-                                <input type="number" name="frame_weight" value={formData.frame_weight} onChange={handleChange} className="form-input" />
-                            </div>
+                        {/* Frame Weight (no batteries) (kg) */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Frame Weight (no batteries) (kg):</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="number"
+                                    name="frame_weight"
+                                    value={formData.frame_weight}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                            <div className="form-group half-width">
-                                <label className="form-label">Max Take-Off Weight (kg):</label>
-                                <input type="number" name="max_take_off_weight" value={formData.max_take_off_weight} onChange={handleChange} className="form-input" />
-                            </div>
+                        {/* Max Take-Off Weight (kg) */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Max Take-Off Weight (kg):</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="number"
+                                    name="max_take_off_weight"
+                                    value={formData.max_take_off_weight}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                            <div className="form-group half-width">
-                                <label className="form-label">Max Payload Weight (kg):</label>
-                                <input type="number" name="max_payload_weight" value={formData.max_payload_weight} onChange={handleChange} className="form-input" />
-                            </div>
+                        {/* Max Payload Weight (kg) */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Max Payload Weight (kg):</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="number"
+                                    name="max_payload_weight"
+                                    value={formData.max_payload_weight}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                            <div className="form-group half-width">
-                                <label className="form-label">IP Rating:</label>
-                                <input type="text" name="ip_rating" value={formData.ip_rating} onChange={handleChange} className="form-input" />
-                            </div>
-
-                        </div>
+                        {/* IP Rating */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>IP Rating:</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    as="textarea"
+                                    name="ip_rating"
+                                    value={formData.ip_rating}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
                     </>
                 )}
                 {/* Conditional fields for drones and equipment */}
                 {!isSoftware && (
                     <>
-                        <div className="form-group half-width">
-                            <label className="form-label">Location:</label>
-                            <input type="text" name="location" value={formData.location} onChange={handleChange} className="form-input"/>
-                        </div>
+                        {/* Location */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Location:</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    as="textarea"
+                                    name="location"
+                                    value={formData.location}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                        <div className="form-group half-width">
-                            <label className="form-label">Basic Specifications:</label>
-                            <input type="text" name="basic_specifications" value={formData.basic_specifications} onChange={handleChange} className="form-input"/>
-                        </div>
+                        {/* Basic Specifications */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Basic Specifications:</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    as="textarea"
+                                    name="basic_specifications"
+                                    value={formData.basic_specifications}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                        <div className="form-group half-width">
-                            <label className="form-label">Storage Dimensions:</label>
-                            <input type="text" name="storage_dimensions" value={formData.storage_dimensions} onChange={handleChange} className="form-input"/>
-                        </div>
+                        {/* Storage Dimensions: */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Storage Dimensions:</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    as="textarea"
+                                    name="storage_dimensions"
+                                    value={formData.storage_dimensions}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
 
-                        <div className="form-group half-width">
-                            <input type="number" name="min_temp" value={formData.min_temp} onChange={handleChange} placeholder="Minimum Temperature" className="form-input"/>
-                        </div>
+                        {/* Minimum Temperature */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Minimum Temperature (°C)</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="number"
+                                    name="min_temp"
+                                    value={formData.min_temp}
+                                    onChange={handleChange}
+                                    placeholder="Minimum Temperature"
+                                />
+                            </Col>
+                        </Form.Group>
 
-                        <div className="form-group half-width">
-                            <input type="number" name="max_temp" value={formData.max_temp} onChange={handleChange} placeholder="Maximum Temperature" className="form-input"/>
-                        </div>
+                        {/* Maximum Temperature */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Maximum Temperature (°C)</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="number"
+                                    name="max_temp"
+                                    value={formData.max_temp}
+                                    onChange={handleChange}
+                                    placeholder="Maximum Temperature"
+                                />
+                            </Col>
+                        </Form.Group>
 
-                        <div className="form-group half-width">
-                            <input type="number" name="max_wind_resistance" value={formData.max_wind_resistance} onChange={handleChange} placeholder="Max Wind Resistance" className="form-input" />
-                        </div>
+                        {/* Maximum Wind Resistance */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Max Wind Resistance (km/h)</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="number"
+                                    name="max_wind_resistance"
+                                    value={formData.max_wind_resistance}
+                                    onChange={handleChange}
+                                    placeholder="Max Wind Resistance"
+                                />
+                            </Col>
+                        </Form.Group>
 
-                        <div className="form-group half-width">
-                            <label className="form-label"></label>
-                            <select
-                                name="min_lighting"
-                                value={formData.min_lighting}
-                                onChange={handleChange}
-                                className="form-select"
-                            >
-                                <option value="">Select Minimum Lighting Exposure</option>
-                                <option value="Low Exposure">Low Exposure</option>
-                                <option value="Moderate Exposure">Moderate Exposure</option>
-                                <option value="High Exposure">High Exposure</option>
-                                <option value="Consistent Exposure">Consistent Exposure</option>
-                            </select>
-                        </div>
+                        {/* Minimum Lighting */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Minimum Lighting Required</Form.Label>
+                            <Col sm={9}>
+                                <Form.Select
+                                    name="min_lighting"
+                                    value={formData.min_lighting}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select Minimum Lighting Exposure</option>
+                                    <option value="Low Exposure">Low Exposure</option>
+                                    <option value="Moderate Exposure">Moderate Exposure</option>
+                                    <option value="High Exposure">High Exposure</option>
+                                    <option value="Consistent Exposure">Consistent Exposure</option>
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
+
                     </>
                 )}
                     {/* Conditional form fields for software */}
                     {isSoftware && (
                         <>
-                            <label className="form-label">Date Bought:</label>
-                            <input
-                                type="date"
-                                name="date_bought"
-                                value={formData.date_bought}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
+                            {/* Date Bought */}
+                            <Form.Group as={Row} className="mb-3">
+                                <Form.Label column sm={3}>Date Bought:</Form.Label>
+                                <Col sm={9}>
+                                    <Form.Control
+                                        as="textarea"
+                                        name="date_bought"
+                                        value={formData.date_bought}
+                                        onChange={handleChange}
+                                    />
+                                </Col>
+                            </Form.Group>
 
-                            <label className="form-label">Renewal Date:</label>
-                            <input
-                                type="date"
-                                name="renewal_date"
-                                value={formData.renewal_date}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
+                            {/* Renewal Date */}
+                            <Form.Group as={Row} className="mb-3">
+                                <Form.Label column sm={3}>Renewal Date:</Form.Label>
+                                <Col sm={9}>
+                                    <Form.Control
+                                        as="textarea"
+                                        name="renewal_date"
+                                        value={formData.renewal_date}
+                                        onChange={handleChange}
+                                    />
+                                </Col>
+                            </Form.Group>
 
-                            <label className="form-label">Price:</label>
-                            <input
-                                type="number"
-                                name="price"
-                                value={formData.price}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
+                            {/* Price */}
+                            <Form.Group as={Row} className="mb-3">
+                                <Form.Label column sm={3}>Price:</Form.Label>
+                                <Col sm={9}>
+                                    <Form.Control
+                                        as="textarea"
+                                        name="price"
+                                        value={formData.price}
+                                        onChange={handleChange}
+                                    />
+                                </Col>
+                            </Form.Group>
+
                         </>
                     )}
-                <button type="submit" className="submit-button">Add Equipment</button>
-            </form>
-        </div>
+                        {/* Submit Button */}
+                        <Button variant="primary" type="submit">Add Equipment</Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

@@ -1,0 +1,46 @@
+/* Center the card title */
+.card-title {
+    text-align: center;
+}
+
+/* Position the buttons at the bottom right of the card */
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* footer for the card */
+.card-footer {
+    background-color:lightsteelblue;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* button for edit */
+.btn-edit {
+    background-color: dodgerblue;
+    border: none; /* Remove default border */
+    color: white; /* White text color */
+}
+
+.btn-edit:hover {
+    background-color: deepskyblue; /* A lighter  color for hover effect */
+    color: white; /* White text color */
+}
+
+/*  button for delete, on hover, it will lighten */
+.btn-delete {
+    background-color: darkblue; /* Bootstrap's purple color */
+    border: none; /* Remove default border */
+    color: white; /* White text color */
+}
+
+.btn-delete:hover {
+    background-color: royalblue; /* A lighter  color for hover effect */
+    color: white; /* White text color */
+}
+
+.clickable {
+    cursor: pointer;
+}
+

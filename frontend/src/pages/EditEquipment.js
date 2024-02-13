@@ -8,7 +8,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import '../App.css';
+import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import '../pages/CSS/EquipmentList.css';
 
 function EditEquipment() {
     const [formData, setFormData] = useState({
@@ -134,224 +135,168 @@ function EditEquipment() {
         }
     };
 
+
     return (
-        <div className="form-container">
-            <h2>Edit Equipment</h2>
-            <form onSubmit={handleSubmit}>
-                <label className="form-label">Type:</label>
-                <select
-                    name="type"
-                    value={formData.type}
-                    onChange={handleChange}
-                    className="form-input"
-                >
-                    <option value="equipment">Equipment</option>
-                    <option value="drone">Drone</option>
-                    <option value="software">Software</option>
-                </select>
+        <Container className="pt-4">
+            <Row>
+                <Col lg={8} className="mx-auto">
+                    <Card>
+                        <Card.Header>Edit Equipment Details</Card.Header>
+                        <Card.Body>
+                            <Form onSubmit={handleSubmit}>
+                                {/* Form Group for Type */}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Type</Form.Label>
+                                    <Form.Select name="type" value={formData.type} onChange={handleChange}>
+                                        <option value="equipment">Equipment</option>
+                                        <option value="drone">Drone</option>
+                                        <option value="software">Software</option>
+                                    </Form.Select>
+                                </Form.Group>
 
-                <label className="form-label">Equipment Name:</label>
-                <input
-                    type="text"
-                    name="equipment_name"
-                    value={formData.equipment_name}
-                    onChange={handleChange}
-                    className="form-input"
-                />
+                                {/* Form Group for Equipment Name */}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Equipment Name</Form.Label>
+                                    <Form.Control type="text" name="equipment_name" value={formData.equipment_name} onChange={handleChange} />
+                                </Form.Group>
 
-                <label className="form-label">Asset Number:</label>
-                <input
-                    type="text"
-                    name="asset_number"
-                    value={formData.asset_number}
-                    onChange={handleChange}
-                    className="form-input"
-                />
+                                {/* Form Group for Asset Number */}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Asset Number</Form.Label>
+                                    <Form.Control type="text" name="asset_number" value={formData.asset_number} onChange={handleChange} />
+                                </Form.Group>
 
-                <label className="form-label">Description:</label>
-                <input
-                    type="text"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    className="form-input"
-                />
+                                {/* Form Group for Description */}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Description</Form.Label>
+                                    <Form.Control as="textarea" name="description" value={formData.description} onChange={handleChange} />
+                                </Form.Group>
 
-                <label className="form-label">Use Case Examples:</label>
-                <input
-                    type="text"
-                    name="use_case_examples"
-                    value={formData.use_case_examples}
-                    onChange={handleChange}
-                    className="form-input"
-                />
+                                {/* Form Group for Use Case Examples */}
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Use Case Examples</Form.Label>
+                                    <Form.Control type="text" name="use_case_examples" value={formData.use_case_examples} onChange={handleChange} />
+                                </Form.Group>
 
-                {/* Conditional input for payload info if type is drone */}
-                {formData.type === 'drone' && (
-                    <>
-                        <div className="form-group">
-                            <label className="form-label">Weight (with batteries) (kg):</label>
-                            <input
-                                type="number"
-                                name="weight_with_batteries"
-                                value={formData.weight_with_batteries}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                                {/* Conditional Form Groups for Drone */}
+                                {formData.type === 'drone' && (
+                                    <>
+                                        {/* Form Group for Weight with batteries */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Weight with Batteries (kg)</Form.Label>
+                                            <Form.Control type="number" name="weight_with_batteries" value={formData.weight_with_batteries} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <div className="form-group">
-                            <label className="form-label">Frame Weight (no batteries) (kg):</label>
-                            <input
-                                type="number"
-                                name="frame_weight"
-                                value={formData.frame_weight}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                                        {/* Form Group for Frame Weight */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Frame Weight (kg)</Form.Label>
+                                            <Form.Control type="number" name="frame_weight" value={formData.frame_weight} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <div className="form-group">
-                            <label className="form-label">Max Take-Off Weight (kg):</label>
-                            <input
-                                type="number"
-                                name="max_take_off_weight"
-                                value={formData.max_take_off_weight}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                                        {/* Form Group for Max Take-Off Weight */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Max Take-Off Weight (kg)</Form.Label>
+                                            <Form.Control type="number" name="max_take_off_weight" value={formData.max_take_off_weight} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <div className="form-group">
-                            <label className="form-label">Max Payload Weight (kg):</label>
-                            <input
-                                type="number"
-                                name="max_payload_weight"
-                                value={formData.max_payload_weight}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
+                                        {/* Form Group for Max Payload Weight */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Max Payload Weight (kg)</Form.Label>
+                                            <Form.Control type="number" name="max_payload_weight" value={formData.max_payload_weight} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <div className="form-group">
-                            <label className="form-label">IP Rating:</label>
-                            <input
-                                type="text"
-                                name="ip_rating"
-                                value={formData.ip_rating}
-                                onChange={handleChange}
-                                className="form-input"
-                            />
-                        </div>
-                    </>
-                )}
+                                        {/* Form Group for IP Rating */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>IP Rating</Form.Label>
+                                            <Form.Control type="text" name="ip_rating" value={formData.ip_rating} onChange={handleChange} />
+                                        </Form.Group>
+                                    </>
+                                )}
 
-                {/* Conditional fields for drones and equipment */}
-                {!isSoftware && (
-                    <>
-                        <label className="form-label">Location:</label>
-                        <input
-                            type="text"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                                {/* Conditional Form Groups for Equipment and Software */}
+                                {!isSoftware && (
+                                    <>
+                                        {/* Form Group for Location */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Location</Form.Label>
+                                            <Form.Control type="text" name="location" value={formData.location} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <label className="form-label">Basic Specifications:</label>
-                        <input
-                            type="text"
-                            name="basic_specifications"
-                            value={formData.basic_specifications}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                                        {/* Form Group for Basic Specifications */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Basic Specifications</Form.Label>
+                                            <Form.Control type="text" name="basic_specifications" value={formData.basic_specifications} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <label className="form-label">Storage Dimensions:</label>
-                        <input
-                            type="text"
-                            name="storage_dimensions"
-                            value={formData.storage_dimensions}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                                        {/* Form Group for Storage Dimensions */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Storage Dimensions</Form.Label>
+                                            <Form.Control type="text" name="storage_dimensions" value={formData.storage_dimensions} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <input
-                            type="number"
-                            name="min_temp"
-                            value={formData.min_temp}
-                            onChange={handleChange}
-                            placeholder="Minimum Temperature"
-                            className="form-input"
-                        />
+                                        {/* Form Group for Min Temp */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Minimum Temperature (°C)</Form.Label>
+                                            <Form.Control type="number" name="min_temp" value={formData.min_temp} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <input
-                            type="number"
-                            name="max_temp"
-                            value={formData.max_temp}
-                            onChange={handleChange}
-                            placeholder="Maximum Temperature"
-                            className="form-input"
-                        />
+                                        {/* Form Group for Max Temp */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Maximum Temperature (°C)</Form.Label>
+                                            <Form.Control type="number" name="max_temp" value={formData.max_temp} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <input
-                            type="number"
-                            name="max_wind_resistance"
-                            value={formData.max_wind_resistance}
-                            onChange={handleChange}
-                            placeholder="Max Wind Resistance"
-                            className="form-input"
-                        />
+                                        {/* Form Group for Max Wind Resistance */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Maximum Wind Resistance (km/h)</Form.Label>
+                                            <Form.Control type="number" name="max_wind_resistance" value={formData.max_wind_resistance} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <label className="form-label"></label>
-                        <select
-                            name="min_lighting"
-                            value={formData.min_lighting}
-                            onChange={handleChange}
-                            className="form-select"
-                        >
-                            <option value="">Select Minimum Lighting Exposure</option>
-                            <option value="Low Exposure">Low Exposure</option>
-                            <option value="Moderate Exposure">Moderate Exposure</option>
-                            <option value="High Exposure">High Exposure</option>
-                            <option value="Consistent Exposure">Consistent Exposure</option>
-                        </select>
-                    </>
-                )}
-                {/* Conditional form fields for software */}
-                {isSoftware && (
-                    <>
-                        <label className="form-label">Date Bought:</label>
-                        <input
-                            type="date"
-                            name="date_bought"
-                            value={formData.date_bought}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                                        {/* Form Group for Min Lighting */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Minimum Lighting Required</Form.Label>
+                                            <Form.Select name="min_lighting" value={formData.min_lighting} onChange={handleChange}>
+                                                <option value="">Select Lighting Condition</option>
+                                                <option value="Low">Low</option>
+                                                <option value="Moderate">Moderate</option>
+                                                <option value="High">High</option>
+                                            </Form.Select>
+                                        </Form.Group>
+                                    </>
+                                )}
 
-                        <label className="form-label">Renewal Date:</label>
-                        <input
-                            type="date"
-                            name="renewal_date"
-                            value={formData.renewal_date}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
+                                {isSoftware && (
+                                    <>
+                                        {/* Form Group for Date Bought */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Date Bought</Form.Label>
+                                            <Form.Control type="date" name="date_bought" value={formData.date_bought} onChange={handleChange} />
+                                        </Form.Group>
 
-                        <label className="form-label">Price:</label>
-                        <input
-                            type="number"
-                            name="price"
-                            value={formData.price}
-                            onChange={handleChange}
-                            className="form-input"
-                        />
-                    </>
-                )}
-                <button type="submit" className="submit-button">Save Changes</button>
-            </form>
-        </div>
+                                        {/* Form Group for Renewal Date */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Renewal Date</Form.Label>
+                                            <Form.Control type="date" name="renewal_date" value={formData.renewal_date} onChange={handleChange} />
+                                        </Form.Group>
+
+                                        {/* Form Group for Price */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Price ($)</Form.Label>
+                                            <Form.Control type="number" name="price" value={formData.price} onChange={handleChange} />
+                                        </Form.Group>
+                                    </>
+                                )}
+
+                                {/* Submit Button */}
+                                <Button variant="primary" type="submit">
+                                    Save Changes
+                                </Button>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 
