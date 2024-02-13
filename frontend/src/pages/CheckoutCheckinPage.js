@@ -6,9 +6,10 @@
  * and provides navigation to the history of checked-out items.
  */
 import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, ListGroup} from 'react-bootstrap';
 import CheckoutForm from "./CheckoutForm";
 import CheckinForm from './CheckinForm';
-import '../App.css';
+import '../pages/CSS/CheckoutCheckinPage.css';
 import { Link } from "react-router-dom";
 
 function CheckoutCheckinPage() {
@@ -40,31 +41,44 @@ function CheckoutCheckinPage() {
     };
 
     return (
-        <div className="checkout-checkin-container">
-            <div className="forms-container">
-                <div className="form-section">
-                    <h1>Equipment Checkout</h1>
-                    <CheckoutForm onCheckoutSuccess={refreshCheckedOutList} />
-                </div>
-                <div className="form-section">
-                    <h1>Equipment Checkin</h1>
-                    <CheckinForm onCheckinSuccess={refreshCheckedOutList} />
-                </div>
-            </div>
-            <div className="currently-checked-out">
-                <h2>Currently Checked Out Equipment</h2>
-                <Link to="/checkedout-history">View Previously Checked Out Equipment</Link>
-                <ul>
-                    {checkedOutEquipment.map(item => (
-                        <li key={item.id}>
-                            {item.equipment_name} - Checked out on: {new Date(item.checkout_date).toLocaleString()}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
+        <Container className="my-4">
+            <Row className="mb-3">
+                <Col md={6}>
+                    <Card>
+                        <Card.Header>Equipment Checkout</Card.Header>
+                        <Card.Body>
+                            <CheckoutForm onCheckoutSuccess={refreshCheckedOutList} />
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={6}>
+                    <Card>
+                        <Card.Header>Equipment Checkin</Card.Header>
+                        <Card.Body>
+                            <CheckinForm onCheckinSuccess={refreshCheckedOutList} />
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Card>
+                        <Card.Header>Currently Checked Out Equipment</Card.Header>
+                        <ListGroup variant="flush">
+                            {checkedOutEquipment.map(item => (
+                                <ListGroup.Item key={item.id}>
+                                    {item.equipment_name} - Checked out on: {new Date(item.checkout_date).toLocaleString()}
+                                </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                        <Card.Footer>
+                            <Link to="/checkedout-history">View Previously Checked Out Equipment</Link>
+                        </Card.Footer>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 
 export default CheckoutCheckinPage;
-

@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Container, Row, Col, Card, ListGroup } from 'react-bootstrap';
 
 function EquipmentDetail() {
     const [equipmentDetails, setEquipmentDetails] = useState(null);
@@ -41,120 +42,53 @@ function EquipmentDetail() {
     const isDrone = equipmentDetails.type === 'drone';
 
     return (
-        <div className="equipment-detail-container">
-            <div className="equipment-header">{equipmentDetails.equipment_name}</div>
-
-            <div className="equipment-section">
-                <div className="equipment-section-title">Equipment ID:</div>
-                <div className="equipment-section-content">{equipmentDetails.id}</div>
-            </div>
-
-            <div className="equipment-section">
-                <div className="equipment-section-title">Description:</div>
-                <div className="equipment-section-content">{equipmentDetails.description}</div>
-            </div>
-
-            <div className="equipment-section">
-                <div className="equipment-section-title">Use Case Examples:</div>
-                <div className="equipment-section-content">{equipmentDetails.use_case_examples}</div>
-            </div>
-
-            {/* Render these fields only for non-software types */}
-            {!isSoftware && (
-                <>
-                <div className="equipment-section">
-                    <div className="equipment-section-title">Asset Number:</div>
-                    <div className="equipment-section-content">{equipmentDetails.asset_number}</div>
-                </div>
-
-                <div className="equipment-section">
-                    <div className="equipment-section-title">Location:</div>
-                    <div className="equipment-section-content">{equipmentDetails.location}</div>
-                </div>
-
-                <div className="equipment-section">
-                    <div className="equipment-section-title">Basic Specifications:</div>
-                    <div className="equipment-section-content">{equipmentDetails.basic_specifications}</div>
-                </div>
-                <div className="equipment-section">
-                    <div className="equipment-section-title">Storage Dimensions:</div>
-                    <div className="equipment-section-content">{equipmentDetails.storage_dimensions}</div>
-                </div>
-
-                <div className="equipment-section">
-                    <div className="equipment-section-title">Minimum Temperature:</div>
-                    <div className="equipment-section-content">{equipmentDetails.min_temp}°C</div>
-                </div>
-
-                <div className="equipment-section">
-                    <div className="equipment-section-title">Maximum Temperature:</div>
-                    <div className="equipment-section-content">{equipmentDetails.max_temp}°C</div>
-                </div>
-
-                <div className="equipment-section">
-                    <div className="equipment-section-title">Max Wind Resistance:</div>
-                    <div className="equipment-section-content">{equipmentDetails.max_wind_resistance} km/h</div>
-                </div>
-
-                <div className="equipment-section">
-                    <div className="equipment-section-title">Minimum Lighting:</div>
-                    <div className="equipment-section-content">{equipmentDetails.min_lighting}</div>
-                </div>
-                </>
-            )}
-
-            {/* Conditional rendering for drone-specific fields */}
-            {isDrone && (
-                <>
-                    <div className="equipment-section">
-                        <div className="equipment-section-title">Weight (with batteries):</div>
-                        <div className="equipment-section-content">{equipmentDetails.weight_with_batteries} kg</div>
-                    </div>
-
-                    <div className="equipment-section">
-                        <div className="equipment-section-title">Frame Weight (no batteries):</div>
-                        <div className="equipment-section-content">{equipmentDetails.frame_weight} kg</div>
-                    </div>
-
-                    <div className="equipment-section">
-                        <div className="equipment-section-title">Max Take-Off Weight:</div>
-                        <div className="equipment-section-content">{equipmentDetails.max_take_off_weight} kg</div>
-                    </div>
-
-                    <div className="equipment-section">
-                        <div className="equipment-section-title">Max Payload Weight:</div>
-                        <div className="equipment-section-content">{equipmentDetails.max_payload_weight} kg</div>
-                    </div>
-
-                    <div className="equipment-section">
-                        <div className="equipment-section-title">IP Rating:</div>
-                        <div className="equipment-section-content">{equipmentDetails.ip_rating}</div>
-                    </div>
-                </>
-            )}
-
-            {/* Conditional rendering for software-specific fields */}
-            {isSoftware && (
-                <>
-
-                    <div className="equipment-section">
-                        <div className="equipment-section-title">Date Bought:</div>
-                        <div className="equipment-section-content">{equipmentDetails.date_bought}</div>
-                    </div>
-
-                    <div className="equipment-section">
-                        <div className="equipment-section-title">Renewal Date:</div>
-                        <div className="equipment-section-content">{equipmentDetails.renewal_date}</div>
-                    </div>
-
-                    <div className="equipment-section">
-                        <div className="equipment-section-title">Price:</div>
-                        <div className="equipment-section-content">{equipmentDetails.price}</div>
-                    </div>
-                </>
-            )}
-
-        </div>
+        <Container className="pt-4">
+            <Row>
+                <Col lg={8} className="mx-auto">
+                    <Card>
+                        <Card.Header as="h5">{equipmentDetails.equipment_name}</Card.Header>
+                        <Card.Body>
+                            <ListGroup variant="flush">
+                                <ListGroup.Item><strong>ID:</strong> {equipmentDetails.id}</ListGroup.Item>
+                                <ListGroup.Item><strong>Description:</strong> {equipmentDetails.description}</ListGroup.Item>
+                                <ListGroup.Item><strong>Use Cases:</strong> {equipmentDetails.use_case_examples}</ListGroup.Item>
+                                {/* Render these fields only for non-software types */}
+                                {!isSoftware && (
+                                    <>
+                                        <ListGroup.Item><strong>Asset Number:</strong> {equipmentDetails.asset_number}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Location:</strong> {equipmentDetails.location}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Specifications:</strong> {equipmentDetails.basic_specifications}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Storage Dimensions:</strong> {equipmentDetails.storage_dimensions}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Min Temp:</strong> {equipmentDetails.min_temp}°C</ListGroup.Item>
+                                        <ListGroup.Item><strong>Max Temp:</strong> {equipmentDetails.max_temp}°C</ListGroup.Item>
+                                        <ListGroup.Item><strong>Max Wind Resistance:</strong> {equipmentDetails.max_wind_resistance} km/h</ListGroup.Item>
+                                        <ListGroup.Item><strong>Min Lighting:</strong> {equipmentDetails.min_lighting}</ListGroup.Item>
+                                    </>
+                                )}
+                                {/* Conditional rendering for drone-specific fields */}
+                                {isDrone && (
+                                    <>
+                                        <ListGroup.Item><strong>Weight with Batteries:</strong> {equipmentDetails.weight_with_batteries} kg</ListGroup.Item>
+                                        <ListGroup.Item><strong>Frame Weight:</strong> {equipmentDetails.frame_weight} kg</ListGroup.Item>
+                                        <ListGroup.Item><strong>Max Takeoff Weight:</strong> {equipmentDetails.max_take_off_weight} kg</ListGroup.Item>
+                                        <ListGroup.Item><strong>Max Payload Weight: </strong>{equipmentDetails.max_payload_weight} kg</ListGroup.Item>
+                                        <ListGroup.Item><strong>IP Rating:</strong> {equipmentDetails.ip_rating}</ListGroup.Item>
+                                    </>
+                                )}
+                                {/* Conditional rendering for software-specific fields */}
+                                {isSoftware && (
+                                    <>
+                                        <ListGroup.Item><strong>Date Bought:</strong> {equipmentDetails.date_bought}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Renewal Date:</strong> {equipmentDetails.renewal_date}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Price:</strong> ${equipmentDetails.price}</ListGroup.Item>
+                                    </>
+                                )}
+                            </ListGroup>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

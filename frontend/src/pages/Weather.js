@@ -9,7 +9,8 @@
  */
 
 import React, {useState, useEffect, useCallback} from 'react';
-import '../App.css';
+import { Container, Row, Col, Form, Button, Card, Alert, Image } from 'react-bootstrap';
+import '../pages/CSS/Weather.css';
 
 function Weather() {
     const [location, setLocation] = useState('');
@@ -77,49 +78,64 @@ function Weather() {
     }, [selectedEquipmentId, checkEquipmentUsage]);
 
     return (
-        <div className="weather-container">
-            <div className="weather-section">
-                <input
-                    type="text"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    placeholder="Enter Location"
-                />
-                <button onClick={fetchWeather}>Get Weather</button>
-                {weatherData && (
-                    <div>
-                    <h2>Weather in {weatherData.location.name}</h2>
-                    <p><strong>Temperature:</strong> {weatherData.current.temperature}°C</p>
-                    <p><strong>Weather Conditions:</strong> {weatherData.current.weather_descriptions.join(', ')}</p>
-                    <p><strong>Wind Speed:</strong> {weatherData.current.wind_speed} km/h</p>
-                    <p><strong>Wind Direction:</strong> {weatherData.current.wind_dir}</p>
-                    <p><strong>Pressure:</strong> {weatherData.current.pressure} mb</p>
-                    <p><strong>Precipitation:</strong> {weatherData.current.precip} mm</p>
-                    <p><strong>Humidity:</strong> {weatherData.current.humidity}%</p>
-                    <p><strong>Cloud Cover:</strong> {weatherData.current.cloudcover}%</p>
-                    <p><strong>Feels Like:</strong> {weatherData.current.feelslike}°C</p>
-                    <p><strong>UV Index:</strong> {weatherData.current.uv_index}</p>
-                    <p><strong>Visibility:</strong> {weatherData.current.visibility} km</p>
-                    {weatherData.current.weather_icons.map((icon, index) => (
-                        <img key={index} src={icon} alt="Weather icon" />
-                    ))}
-                </div>
-            )}
-            </div>
-            <div className="equipment-section">
-                <select value={selectedEquipmentId} onChange={e => setSelectedEquipmentId(e.target.value)}>
-                    <option value="">Select Equipment</option>
-                    {equipmentList.map(equipment => (
-                        <option key={equipment.id} value={equipment.id}>
-                            {equipment.equipment_name}
-                        </option>
-                    ))}
-                </select>
-                <button onClick={() => checkEquipmentUsage(selectedEquipmentId)}>Check Equipment Usage</button>
-                {equipmentUsageMessage && <p>{equipmentUsageMessage}</p>}
-            </div>
-            {error && <div className="error-message">{error}</div>}
-        </div>
+        <Container className="pt-4">
+            <Row>
+                <Col md={6}>
+                    <Card className="equal-height-card">
+                        <Card.Body>
+                            <Form.Group className="mb-3">
+                                <Form.Control
+                                    type="text"
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    placeholder="Enter Location"
+                                />
+                            </Form.Group>
+                            <Button onClick={fetchWeather}>Get Weather</Button>
+                            {weatherData && (
+                                <div className="mt-3">
+                                    <Card.Title>Weather in {weatherData.location.name}</Card.Title>
+                                    <Card.Text><strong>Temperature:</strong> {weatherData.current.temperature}°C</Card.Text>
+                                    <Card.Text><strong>Temperature:</strong> {weatherData.current.temperature}°C</Card.Text>
+                                    <Card.Text><strong>Weather Conditions:</strong> {weatherData.current.weather_descriptions.join(', ')}</Card.Text>
+                                    <Card.Text><strong>Wind Speed:</strong> {weatherData.current.wind_speed} km/h</Card.Text>
+                                    <Card.Text><strong>Wind Direction:</strong> {weatherData.current.wind_dir}</Card.Text>
+                                    <Card.Text><strong>Pressure:</strong> {weatherData.current.pressure} mb</Card.Text>
+                                    <Card.Text><strong>Precipitation:</strong> {weatherData.current.precip} mm</Card.Text>
+                                    <Card.Text><strong>Humidity:</strong> {weatherData.current.humidity}%</Card.Text>
+                                    <Card.Text><strong>Cloud Cover:</strong> {weatherData.current.cloudcover}%</Card.Text>
+                                    <Card.Text><strong>Feels Like:</strong> {weatherData.current.feelslike}°C</Card.Text>
+                                    <Card.Text><strong>UV Index:</strong> {weatherData.current.uv_index}</Card.Text>
+                                    <Card.Text><strong>Visibility:</strong> {weatherData.current.visibility} km</Card.Text>
+                                    {weatherData.current.weather_icons.map((icon, index) => (
+                                        <Image key={index} src={icon} alt="Weather icon" thumbnail />
+                                    ))}
+                                </div>
+                            )}
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={6}>
+                    <Card className="equal-height-card">
+                        <Card.Body>
+                            <Form.Group className="mb-3">
+                                <Form.Select value={selectedEquipmentId} onChange={e => setSelectedEquipmentId(e.target.value)}>
+                                    <option value="">Select Equipment</option>
+                                    {equipmentList.map(equipment => (
+                                        <option key={equipment.id} value={equipment.id}>
+                                            {equipment.equipment_name}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                            </Form.Group>
+                            <Button onClick={() => checkEquipmentUsage(selectedEquipmentId)}>Check Equipment Usage</Button>
+                            {equipmentUsageMessage && <Card.Text className="mt-3">{equipmentUsageMessage}</Card.Text>}
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+            {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
+        </Container>
     );
 }
 

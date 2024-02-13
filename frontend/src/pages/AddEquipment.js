@@ -7,7 +7,7 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import {Container, Row, Col, Form, Button, Card} from 'react-bootstrap';
 import '../pages/CSS/AddEquipment.css';
 
 function AddEquipment() {
@@ -147,8 +147,11 @@ function AddEquipment() {
     return (
         <Container className="pt-4">
             <Row>
-                <Col md={12} lg={10} xl={8} className="mx-auto">
-                    <Form onSubmit={handleSubmit}>
+                <Col lg={8} className="mx-auto">
+                    <Card>
+                        <Card.Header>Add New Equipment</Card.Header>
+                        <Card.Body>
+                            <Form onSubmit={handleSubmit}>
                         {submitSuccess && <div className="alert alert-success">Equipment added successfully!</div>}
                         {submitError && <div className="alert alert-danger">{submitError}</div>}
 
@@ -431,9 +434,17 @@ function AddEquipment() {
 
                         </>
                     )}
-                        {/* Submit Button */}
-                        <Button variant="primary" type="submit">Add Equipment</Button>
-                    </Form>
+                                {/* Submit Button */}
+                                <Form.Group as={Row} className="mb-3">
+                                    <Col sm={{ span: 8, offset: 4 }}>
+                                        <Button type="submit" className="btn btn-primary">
+                                            Add Equipment
+                                        </Button>
+                                    </Col>
+                                </Form.Group>
+                            </Form>
+                        </Card.Body>
+                    </Card>
                 </Col>
             </Row>
         </Container>

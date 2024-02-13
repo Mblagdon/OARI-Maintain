@@ -1,0 +1,77 @@
+/* Custom button styles */
+.btn-edit {
+    background-color: dodgerblue;
+    border: none; /* Remove default border */
+    color: white; /* White text color */
+}
+
+.btn-edit:hover {
+    background-color: deepskyblue; /* A lighter color for hover effect */
+    color: white; /* White text color */
+}
+
+.btn-delete {
+    background-color: darkblue; /* Dark blue color */
+    border: none; /* Remove default border */
+    color: white; /* White text color */
+}
+
+.btn-delete:hover {
+    background-color: royalblue; /* A lighter blue color for hover effect */
+    color: white; /* White text color */
+}
+
+/* Table styling */
+.maintenance-table .table-header {
+    background-color: lightblue; /* Light blue header */
+    font-weight: bold; /* Bold header text */
+}
+
+.maintenance-table th, .maintenance-table td {
+    border: 2px solid #dee2e6 !important; /* Bold outline for cells */
+}
+
+.maintenance-table {
+    border-radius: 0.25rem;
+    overflow: hidden; /* Hide overflow to apply border-radius */
+}
+
+/* Table header styling */
+.maintenance-table thead th {
+    background-color: cornflowerblue; /* Light blue color */
+    text-align: center; /* Center align table headers */
+    border-bottom: 2px solid #000; /* Bold bottom border */
+    color: white;
+}
+
+/* Table body styling */
+.maintenance-table tbody td {
+    text-align: center; /* Center align table cells */
+    border: 2px solid #000; /* Bold table lines */
+}
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.body-flex-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-static {
+    margin-top: auto; /* Pushes the footer to the bottom */
+}
+
+.maintenance-schedule-header {
+    text-align: center;
+    margin-bottom: 20px;
+}

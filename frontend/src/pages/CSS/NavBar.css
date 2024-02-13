@@ -14,7 +14,7 @@
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #FAD0C4; /* Soft Pink */
+    background-color: #FAD0C4;
     transition: width 0.3s ease-in;
 }
 

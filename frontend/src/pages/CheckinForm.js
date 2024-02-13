@@ -10,7 +10,9 @@
  */
 
 import React, { useState, useEffect } from 'react';
+import { Form, Button, Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
 import axios from 'axios';
+import '../pages/CSS/CheckinForm.css';
 
 function CheckinForm({ onCheckinSuccess }) {
     // State hooks for various pieces of form data
@@ -131,76 +133,74 @@ function CheckinForm({ onCheckinSuccess }) {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <form onSubmit={handleSubmit}>
-            {/* Select Equipment Dropdown */}
-            <label>
-                Equipment:
-                <select
-                    value={selectedEquipment}
-                    onChange={e => setSelectedEquipment(e.target.value)}
-                    disabled={isLoading}
-                >
-                    <option value="">Select Equipment</option>
-                    {checkedOutEquipment.map(item => (
-                        <option
-                            key={item.id}
-                            value={item.equipment_id}
-                        >
-                            {item.displayText}
-                        </option>
-                    ))}
-                </select>
-            </label>
+        <Container className="mt-4">
+            <Row>
+                <Col md={6} className="mx-auto checkin-form">
+                    <Form onSubmit={handleSubmit}>
+                        <div className="custom-form-group">
+                            <Form.Label>Equipment:</Form.Label>
+                            <Form.Select
+                                value={selectedEquipment}
+                                onChange={e => setSelectedEquipment(e.target.value)}
+                                disabled={isLoading}
+                            >
+                                <option value="">Select Equipment</option>
+                                {checkedOutEquipment.map(item => (
+                                    <option key={item.id} value={item.equipment_id} disabled={item.isDisabled}>
+                                        {item.displayText}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </div>
 
-            {/* Usage Duration Input */}
-            <label>
-                Usage Duration (minutes):
-                <input
-                    type="number"
-                    value={usageDuration}
-                    onChange={e => setUsageDuration(e.target.value)}
-                    disabled={isLoading}
-                />
-            </label>
+                        <div className="custom-form-group">
+                            <Form.Label>Usage Duration (minutes):</Form.Label>
+                            <Form.Control
+                                type="number"
+                                value={usageDuration}
+                                onChange={e => setUsageDuration(e.target.value)}
+                                disabled={isLoading}
+                            />
+                        </div>
 
-            {/* Check-in Date Input */}
-            <label>
-                Check-in Date:
-                <input
-                    type="datetime-local"
-                    value={checkinDate}
-                    onChange={e => setCheckinDate(e.target.value)}
-                    disabled={isLoading}
-                />
-            </label>
+                        <div className="custom-form-group">
+                            <Form.Label>Check-in Date:</Form.Label>
+                            <Form.Control
+                                type="datetime-local"
+                                value={checkinDate}
+                                onChange={e => setCheckinDate(e.target.value)}
+                                disabled={isLoading}
+                            />
+                        </div>
 
-            {/* Comments Input */}
-            <label>
-                Comments:
-                <textarea
-                    value={comments}
-                    onChange={e => setComments(e.target.value)}
-                    disabled={isLoading}
-                />
-            </label>
+                        <div className="custom-form-group">
+                            <Form.Label>Comments:</Form.Label>
+                            <Form.Control
+                                as="textarea"
+                                value={comments}
+                                onChange={e => setComments(e.target.value)}
+                                disabled={isLoading}
+                            />
+                        </div>
 
-            {/* New Location Input */}
-            <label>
-                Location:
-                <input
-                    type="text"
-                    value={location}
-                    onChange={e => setLocation(e.target.value)}
-                    disabled={isLoading}
-                    placeholder="Enter the location"
-                />
-            </label>
+                        <div className="custom-form-group">
+                            <Form.Label>Location:</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={location}
+                                onChange={e => setLocation(e.target.value)}
+                                disabled={isLoading}
+                                placeholder="Enter the location"
+                            />
+                        </div>
 
-            {error && <p className="error-message">{error}</p>}
-            <button type="submit" disabled={isLoading || !location}>
-                Check In
-            </button>
-        </form>
+                        <Button variant="primary" type="submit" className="custom-form-button" disabled={isLoading}>
+                            {isLoading ? 'Checking In...' : 'Check In'}
+                        </Button>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

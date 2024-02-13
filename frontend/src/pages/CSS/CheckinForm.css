@@ -1,0 +1,30 @@
+/* Custom CSS for the Checkin form */
+.checkin-form {
+    padding-left: 0; /* Remove padding on the left */
+}
+
+.checkin-form .form-group {
+    margin-bottom: 0; /* Remove default margin-bottom */
+}
+
+.checkin-form .form-group label {
+    white-space: nowrap; /* Ensure the label is on a single line */
+    padding-right: 1rem; /* Add some padding to the right of the label */
+}
+
+.checkin-form .form-control,
+.checkin-form .form-select {
+    max-width: none; /* Ensure controls can take up available space */
+}
+
+.checkin-form .btn {
+    width: auto; /* Adjust button width as necessary */
+}
+
+/* Adjust label alignment for smaller screens */
+@media (max-width: 576px) {
+    .checkin-form .form-group label {
+        padding-right: 0.5rem;
+    }
+}
+

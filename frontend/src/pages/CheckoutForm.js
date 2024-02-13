@@ -5,6 +5,7 @@
  * of available equipment and handles the submission of the form to the checkout API endpoint.
  */
 import React, { useState, useEffect } from 'react';
+import { Form, Button, Spinner, Alert, Row, Col } from 'react-bootstrap';
 
 function CheckoutForm({onCheckoutSuccess}) {
     const [equipmentList, setEquipmentList] = useState([]);
@@ -86,39 +87,61 @@ function CheckoutForm({onCheckoutSuccess}) {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Equipment:
-                <select
-                    value={selectedEquipment}
-                    onChange={e => setSelectedEquipment(e.target.value)}
-                    disabled={isLoading}
-                >
-                    <option value="">Select Equipment</option>
-                    {equipmentList.map(equipment => (
-                        <option
-                            key={equipment.id}
-                            value={equipment.id}
-                            disabled={equipment.isDisabled}
-                        >
-                            {equipment.displayText}
-                        </option>
-                    ))}
-                </select>
-            </label>
-            <label>
-                Checkout Date:
-                <input
-                    type="datetime-local"
-                    value={checkoutDate}
-                    onChange={e => setCheckoutDate(e.target.value)}
-                    disabled={isLoading}
-                />
-            </label>
-            <button type="submit" disabled={isLoading}>
-                {isLoading ? 'Checking Out...' : 'Check Out'}
-            </button>
-        </form>
+        <Form onSubmit={handleSubmit}>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form.Group as={Row} className="align-items-center">
+                <Form.Label column sm="auto">Equipment:</Form.Label>
+                <Col>
+                    <Form.Control
+                        as="select"
+                        value={selectedEquipment}
+                        onChange={e => setSelectedEquipment(e.target.value)}
+                        disabled={isLoading}
+                        className="custom-select"
+                    >
+                        <option value="">Select Equipment</option>
+                        {equipmentList.map(equipment => (
+                            <option
+                                key={equipment.id}
+                                value={equipment.id}
+                                disabled={equipment.isDisabled}
+                            >
+                                {equipment.displayText}
+                            </option>
+                        ))}
+                    </Form.Control>
+                </Col>
+            </Form.Group>
+            <Form.Group as={Row} controlId="formCheckoutDate">
+                <Form.Label column sm={2}>
+                    Checkout Date:
+                </Form.Label>
+                <Col sm={10}>
+                    <Form.Control
+                        type="datetime-local"
+                        value={checkoutDate}
+                        onChange={e => setCheckoutDate(e.target.value)}
+                        disabled={isLoading}
+                    />
+                </Col>
+            </Form.Group>
+            <Button variant="primary" type="submit" disabled={isLoading}>
+                {isLoading ? (
+                    <>
+                        <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                        />
+                        Checking Out...
+                    </>
+                ) : (
+                    'Check Out'
+                )}
+            </Button>
+        </Form>
     );
 }
 

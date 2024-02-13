@@ -1,14 +1,7 @@
-body {
-    font-family: 'Arial', sans-serif; /* Use a font-family that you prefer */
-    line-height: 1.6;
-    color: #333;
-    background: #f4f4f4; /* A light grey background for the overall page */
-}
-
-.form-container {
+.equipment-detail-container, .maintenance-schedule-container {
     max-width: 800px;
     margin: 20px auto;
-    padding: 30px;
+    padding: 20px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -20,11 +13,7 @@ form {
     gap: 20px;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
-}
+
 
 .form-group.half-width {
     flex-basis: calc(50% - 10px);
@@ -79,4 +68,12 @@ textarea {
 
 .submit-button:hover {
     background-color: #E6B800; /* Darker Yellow */
+}
+
+.edit-button {
+    background-color: #75B9BE; /* Teal */
+}
+
+.delete-button {
+    background-color: #FF6E6E; /* Light Coral */
 }

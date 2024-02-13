@@ -7,7 +7,8 @@
  */
 
 import React, {useEffect, useState} from 'react';
-import '../App.css';
+import {Container, Row, Col, Form, Button, Alert, Card} from 'react-bootstrap';
+import '../pages/CSS/AddMaintenance.css';
 import { createCalendarEvent } from '../components/oauth/graphService';
 
 function AddMaintenance() {
@@ -98,99 +99,120 @@ function AddMaintenance() {
             });
     };
     return (
-        <div className="form-container">
-            <form onSubmit={handleSubmit} className="form-style">
-                <div className="form-group">
-                    <label className="form-label">Equipment ID:</label>
-                    <select
-                        name="equipment_id"
-                        value={maintenanceData.equipment_id}
-                        onChange={handleChange}
-                        className="form-select"
-                    >
-                        <option value="">Select Equipment</option>
-                        {equipmentOptions.map(option => (
-                            <option key={option.id} value={option.id}>
-                                {`${option.name} - ${option.assetNumber || 'No Asset Number'}`}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Status:</label>
-                    <select
-                        name="status"
-                        value={maintenanceData.status}
-                        onChange={handleChange}
-                        className="form-select"
-                    >
-                        <option value="">Select Status</option>
-                        <option value="Pending">Pending</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
-                        <option value="Overdue">Overdue</option>
-                        <option value="Cancelled">Cancelled</option>
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Type:</label>
-                    <select
-                        name="type"
-                        value={maintenanceData.type}
-                        onChange={handleChange}
-                        className="form-select"
-                    >
-                        <option value="">Select Type</option>
-                        <option value="drone">Drone</option>
-                        <option value="equipment">Equipment</option>
-                        <option value="software">Software</option>
-                    </select>
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Last Maintenance Date:</label>
-                    <input
-                        type="date"
-                        name="last_maintenance_date"
-                        value={maintenanceData.last_maintenance_date}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Next Maintenance Date:</label>
-                    <input
-                        type="date"
-                        name="next_maintenance_date"
-                        value={maintenanceData.next_maintenance_date}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group
-">
-                    <label className="form-label">Maintenance Frequency:</label>
-                    <input
-                        type="text"
-                        name="maintenance_frequency"
-                        value={maintenanceData.maintenance_frequency}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <label className="form-label">Maintenance to be Performed:</label>
-                    <textarea
-                        name="maintenance_to_be_performed"
-                        value={maintenanceData.maintenance_to_be_performed}
-                        onChange={handleChange}
-                        className="form-input"
-                    />
-                </div>
-                <div className="form-group">
-                    <button type="submit" className="submit-button">Add Maintenance</button>
-                </div>
-            </form>
-        </div>
+        <Container className="pt-4">
+            <Row>
+                <Col lg={8} className="mx-auto">
+                    <Card>
+                        <Card.Header>Add Maintenance Record</Card.Header>
+                        <Card.Body>
+                            <Form onSubmit={handleSubmit}>
+                        {/* Equipment ID Selection */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Equipment ID</Form.Label>
+                            <Col sm={9}>
+                                <Form.Select name="equipment_id" value={maintenanceData.equipment_id} onChange={handleChange}>
+                                    <option value="">Select Equipment</option>
+                                    {equipmentOptions.map(option => (
+                                        <option key={option.id} value={option.id}>
+                                            {`${option.name} - ${option.assetNumber || 'No Asset Number'}`}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
+
+                        {/* Status Selection */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Status</Form.Label>
+                            <Col sm={9}>
+                                <Form.Select name="status" value={maintenanceData.status} onChange={handleChange}>
+                                    <option value="">Select Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Overdue">Overdue</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
+
+                        {/* Type Selection */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Type</Form.Label>
+                            <Col sm={9}>
+                                <Form.Select name="type" value={maintenanceData.type} onChange={handleChange}>
+                                    <option value="">Select Type</option>
+                                    <option value="drone">Drone</option>
+                                    <option value="equipment">Equipment</option>
+                                    <option value="software">Software</option>
+                                </Form.Select>
+                            </Col>
+                        </Form.Group>
+
+                        {/* Last Maintenance Date */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Last Maintenance Date</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="date"
+                                    name="last_maintenance_date"
+                                    value={maintenanceData.last_maintenance_date}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
+
+                        {/* Next Maintenance Date */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Next Maintenance Date</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="date"
+                                    name="next_maintenance_date"
+                                    value={maintenanceData.next_maintenance_date}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
+
+                        {/* Maintenance Frequency */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Maintenance Frequency</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    type="text"
+                                    name="maintenance_frequency"
+                                    value={maintenanceData.maintenance_frequency}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
+
+                        {/* Maintenance To Be Performed */}
+                        <Form.Group as={Row} className="mb-3">
+                            <Form.Label column sm={3}>Maintenance to be Performed</Form.Label>
+                            <Col sm={9}>
+                                <Form.Control
+                                    as="textarea"
+                                    name="maintenance_to_be_performed"
+                                    value={maintenanceData.maintenance_to_be_performed}
+                                    onChange={handleChange}
+                                />
+                            </Col>
+                        </Form.Group>
+
+                        {/* Submit Button */}
+                        <Row>
+                            <Col className="text-center">
+                                <Button variant="primary" type="submit">Add Maintenance</Button>
+                            </Col>
+                        </Row>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 

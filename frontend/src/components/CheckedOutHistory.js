@@ -7,7 +7,8 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import '../App.css';
+import { Container, Table, Card } from 'react-bootstrap';
+import '../pages/CSS/CheckedOutHistory.css';
 
 function CheckedOutHistory() {
     // State hook to store the history of checked-out equipment
@@ -65,37 +66,43 @@ function CheckedOutHistory() {
     };
 
     return (
-        <div className="checked-out-history-container">
-            <h2 className="checked-out-history-header">Previously Checked Out Equipment</h2>
-            <table className="checked-out-history-table">
-                <thead>
-                <tr>
-                    <th>Equipment Name</th>
-                    <th>Asset Number</th>
-                    <th>Checkout Date</th>
-                    <th>Check-in Date</th>
-                    <th>Usage Duration (min)</th>
-                    <th>Location Used</th>
-                    <th>Comments</th>
-                    <th>Weather</th>
-                </tr>
-                </thead>
-                <tbody>
-                {history.map(item => (
-                    <tr key={item.id}>
-                        <td>{item.equipment_name}</td>
-                        <td>{item.asset_number}</td>
-                        <td>{new Date(item.checkout_date).toLocaleString()}</td>
-                        <td>{new Date(item.checkin_date).toLocaleString()}</td>
-                        <td>{item.usage_duration}</td>
-                        <td>{item.location}</td>
-                        <td>{item.comments}</td>
-                        <td className="weather-cell">{formatWeatherData(item.weather_data)}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
-        </div>
+        <Container className="mt-4">
+            <Card>
+                <Card.Header>Previously Checked Out Equipment</Card.Header>
+                <Card.Body>
+                    <div className="checked-out-history-table-container">
+                        <Table striped bordered hover responsive>
+                            <thead className="lightblue-header">
+                            <tr>
+                                <th>Equipment Name</th>
+                                <th>Asset Number</th>
+                                <th>Checkout Date</th>
+                                <th>Check-in Date</th>
+                                <th>Usage Duration (min)</th>
+                                <th>Location Used</th>
+                                <th>Comments</th>
+                                <th>Weather</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {history.map(item => (
+                                <tr key={item.id}>
+                                    <td>{item.equipment_name}</td>
+                                    <td>{item.asset_number}</td>
+                                    <td>{new Date(item.checkout_date).toLocaleString()}</td>
+                                    <td>{new Date(item.checkin_date).toLocaleString()}</td>
+                                    <td>{item.usage_duration}</td>
+                                    <td>{item.location}</td>
+                                    <td>{item.comments}</td>
+                                    <td className="weather-cell">{formatWeatherData(item.weather_data)}</td>
+                                </tr>
+                            ))}
+                            </tbody>
+                        </Table>
+                    </div>
+                </Card.Body>
+            </Card>
+        </Container>
     );
 }
 

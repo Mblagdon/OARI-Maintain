@@ -8,7 +8,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../App.css';
+import { Table, Button, Container, Alert } from 'react-bootstrap';
+import '../pages/CSS/MaintenanceSchedule.css';
 
 function MaintenanceSchedule() {
     const [maintenanceTasks, setMaintenanceTasks] = useState([]);
@@ -23,8 +24,6 @@ function MaintenanceSchedule() {
                 return response.json();
             })
             .then(data => {
-                // Log the data to see if it includes `equipment_name`
-                console.log(data);
                 setMaintenanceTasks(data);
                 setLoading(false);
             })
@@ -50,48 +49,57 @@ function MaintenanceSchedule() {
         }
     };
 
-    if (loading) return <div>Loading maintenance tasks...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return <Alert variant="info">Loading maintenance tasks...</Alert>;
+    if (error) return <Alert variant="danger">Error: {error}</Alert>;
 
     return (
-        <div className="maintenance-schedule-container">
-            <h2 className="maintenance-schedule-header">Upcoming Maintenance Tasks</h2>
-            <table className="maintenance-schedule-table">
-                <thead>
-                <tr>
-                    <th>Equipment ID</th>
-                    <th>Equipment Name</th>
-                    <th>Asset Number</th>
-                    <th>Status</th>
-                    <th>Last Maintenance Date</th>
-                    <th>Next Maintenance Date</th>
-                    <th>Maintenance Frequency</th>
-                    <th>Maintenance To Be Performed</th>
-                    <th>Modify</th>
-                </tr>
-                </thead>
-                <tbody>
-                {maintenanceTasks.map(task => (
-                    <tr key={task.id}>
-                        <td>{task.equipment_id}</td>
-                        <td>{task.equipment_name}</td>
-                        <td>{task.asset_number || 'N/A'}</td>
-                        <td>{task.status}</td>
-                        <td>{new Date(task.last_maintenance_date).toLocaleDateString()}</td>
-                        <td>{new Date(task.next_maintenance_date).toLocaleDateString()}</td>
-                        <td>{task.maintenance_frequency}</td>
-                        <td>{task.maintenance_to_be_performed}</td>
-                        <td>
-                            <button onClick={() => handleEdit(task.id)}>Edit</button>
-                            <button onClick={() => handleDelete(task.id)}>Delete</button>
-                        </td>
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+        <div className="body-flex-container">
+            <div className="content-wrapper">
+                <Container className="pt-4">
+                    <h2 className="maintenance-schedule-header">Upcoming Maintenance Tasks</h2>
+                    <Table striped bordered hover responsive className="maintenance-table">
+                        <thead className="table-header">
+                        <tr>
+                            <th>Equipment ID</th>
+                            <th>Equipment Name</th>
+                            <th>Asset Number</th>
+                            <th>Status</th>
+                            <th>Last Maintenance Date</th>
+                            <th>Next Maintenance Date</th>
+                            <th>Maintenance Frequency</th>
+                            <th>Maintenance To Be Performed</th>
+                            <th>Modify</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {maintenanceTasks.map(task => (
+                            <tr key={task.id}>
+                                <td>{task.equipment_id}</td>
+                                <td>{task.equipment_name}</td>
+                                <td>{task.asset_number || 'N/A'}</td>
+                                <td>{task.status}</td>
+                                <td>{new Date(task.last_maintenance_date).toLocaleDateString()}</td>
+                                <td>{new Date(task.next_maintenance_date).toLocaleDateString()}</td>
+                                <td>{task.maintenance_frequency}</td>
+                                <td>{task.maintenance_to_be_performed}</td>
+                                <td>
+                                    <Button variant="edit btn-edit" onClick={() => handleEdit(task.id)} className="me-2">Edit</Button>
+                                    <Button variant="delete btn-delete" onClick={() => handleDelete(task.id)}>Delete</Button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </Table>
+                </Container>
+            </div>
+            <footer className="footer-static">
+                {/* Footer Content */}
+            </footer>
         </div>
     );
 }
 
 export default MaintenanceSchedule;
+
+
 
