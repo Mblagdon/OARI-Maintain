@@ -9,6 +9,7 @@
  */
 
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const app = express();
 const equipmentRoutes = require('./routes/equipmentRoutes');
@@ -23,6 +24,16 @@ app.use('/api', equipmentRoutes);
 const weatherRoutes = require('./routes/weatherRoutes'); // Import weather routes
 // Use the weather route
 app.use('/api/weather', weatherRoutes);
+
+// Serve static assets if in production (e.g., on AWS)
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder to the build folder in backend directory
+    app.use(express.static(path.join(__dirname, 'build')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+    });
+}
 
 // Start the server
 const PORT = process.env.PORT || 3006;
