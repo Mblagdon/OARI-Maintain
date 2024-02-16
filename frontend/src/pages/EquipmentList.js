@@ -68,6 +68,7 @@ function EquipmentList() {
                                     {item.equipment_name}
                                 </Card.Title>
                                 <Card.Title className="text-center">{item.type}</Card.Title>
+                                <Card.Title className="text-center">{item.asset_number && <div>Asset#: {item.asset_number}</div>}</Card.Title>
                             </Card.Body>
                             <Card.Footer className="text-end">
                                 <Button variant="edit" className="btn-edit me-2" onClick={() => handleEdit(item.id)}>Edit</Button>
