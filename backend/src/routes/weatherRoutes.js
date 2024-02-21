@@ -8,8 +8,13 @@
  * to the client or handles any errors that occur during the request.
  */
 
-const express = require('express');
-const axios = require('axios');
+
+import express from 'express';
+import axios from 'axios';
+import dotenv from 'dotenv';
+
+dotenv.config(); // Load environment variables from .env file
+
 const router = express.Router();
 
 // Endpoint to get current weather
@@ -26,8 +31,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-//Use same method for historic but replace .com/current with correct api end, e.g. .com/historic
+// Use the same method for historic but replace .com/current with the correct API endpoint, e.g., .com/historic
 
-module.exports = router;
-
-
+export default router;

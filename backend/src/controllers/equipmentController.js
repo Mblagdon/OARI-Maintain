@@ -7,7 +7,7 @@
  * route's logic.
  */
 
-const EquipmentModel = require('../models/equipmentModel');
+import EquipmentModel from '../models/equipmentModel.js';
 
 const EquipmentController = {
     // Equipment Description
@@ -195,5 +195,5 @@ const EquipmentController = {
     },
 };
 
-
-module.exports = EquipmentController;
+// Export the controller methods
+export default EquipmentController;

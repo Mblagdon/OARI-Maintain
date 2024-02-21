@@ -7,10 +7,10 @@
  * requests for equipment data management.
  */
 
-const express = require('express');
-const router = express.Router();
-const EquipmentController = require('../controllers/equipmentController');
+import express from 'express';
+import EquipmentController from '../controllers/equipmentController.js'; // Adjust the import as necessary
 
+const router = express.Router();
 // Routes for equipment
 // Create new equipment description
 router.post('/equipment', EquipmentController.createEquipment);
@@ -59,4 +59,5 @@ router.get('/checkedout-history', EquipmentController.getCheckedOutHistory);
 
 
 // Export the router
-module.exports = router;
+export default router;
+

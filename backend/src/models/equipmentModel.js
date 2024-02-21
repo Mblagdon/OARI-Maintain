@@ -7,7 +7,7 @@
  * library to execute SQL queries.
  */
 
-const db = require('../database');
+import db from '../database.js';
 
 const EquipmentModel = {
     // Equipment Description
@@ -453,6 +453,6 @@ const EquipmentModel = {
 
 };
 
-module.exports = EquipmentModel;
+export default EquipmentModel;
 
 

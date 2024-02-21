@@ -7,9 +7,10 @@
  * with the database using credentials and configuration from environment variables.
  */
 
-require('dotenv').config();
+import mysql from 'mysql2';
+import { config } from 'dotenv';
 
-const mysql = require('mysql2');
+config(); // Loads .env file contents into process.env
 
 const dbConnection = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -18,8 +19,7 @@ const dbConnection = mysql.createConnection({
     database: process.env.DB_NAME,
 });
 
-// Connect to the database
-dbConnection.connect((err) => {
+dbConnection.connect(err => {
     if (err) {
         console.error('Error connecting to the database: ' + err.stack);
         return;
@@ -27,7 +27,7 @@ dbConnection.connect((err) => {
     console.log('Connected to database with ID: ' + dbConnection.threadId);
 });
 
+export default dbConnection;
 
-module.exports = dbConnection;
 
 

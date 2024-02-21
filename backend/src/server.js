@@ -7,12 +7,14 @@
  * integrating CORS, JSON body parsing, and URL-encoded data handling. It is responsible for
  * orchestrating the application's backend services.
  */
+import express from "express";
+import path from "path";
+import { fileURLToPath } from 'url';
+import cors from 'cors';
+import equipmentRoutes from './routes/equipmentRoutes.js';
+import weatherRoutes from './routes/weatherRoutes.js';
 
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
 const app = express();
-const equipmentRoutes = require('./routes/equipmentRoutes');
 
 // Middlewares
 app.use(cors());
@@ -21,23 +23,20 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api', equipmentRoutes);
-const weatherRoutes = require('./routes/weatherRoutes'); // Import weather routes
-// Use the weather route
 app.use('/api/weather', weatherRoutes);
 
-// Serve static assets if in production (e.g., on AWS)
-if (process.env.NODE_ENV === 'production') {
-    // Set static folder to the build folder in backend directory
-    app.use(express.static(path.join(__dirname, 'build')));
+// Derive the directory name of the current module
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
-    });
-}
+// Set static folder to the build folder in backend directory
+app.use(express.static(path.join(__dirname, '../build')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../build', 'index.html'));
+});
 
 // Start the server
 const PORT = process.env.PORT || 3006;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
