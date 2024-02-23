@@ -13,12 +13,12 @@ import { config } from 'dotenv';
 config(); // Loads .env file contents into process.env
 
 const dbConnection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
+    host: process.env.RDS_HOSTNAME,
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    database: process.env.RDS_DB_NAME,
+    port: process.env.RDS_PORT,
 });
-
 dbConnection.connect(err => {
     if (err) {
         console.error('Error connecting to the database: ' + err.stack);
