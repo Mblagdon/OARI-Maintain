@@ -10,7 +10,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Form, Button, Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import '../pages/CSS/CheckinForm.css';
 
@@ -135,7 +135,7 @@ function CheckinForm({ onCheckinSuccess }) {
     return (
         <Container className="mt-4">
             <Row>
-                <Col md={6} className="mx-auto checkin-form">
+                <Col md={9} className="mx-auto checkin-form">
                     <Form onSubmit={handleSubmit}>
                         <div className="custom-form-group">
                             <Form.Label>Equipment:</Form.Label>
