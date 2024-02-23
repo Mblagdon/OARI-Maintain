@@ -47,7 +47,7 @@ function NavBar() {
                         <Nav.Link as={NavLinkWrapper} to="/maintenance">Maintenance Schedule</Nav.Link>
                         <Nav.Link as={NavLinkWrapper} to="/add-maintenance">Add Maintenance</Nav.Link>
                         <Nav.Link as={NavLinkWrapper} to="/weather">Weather</Nav.Link>
-                        <Nav.Link as={NavLinkWrapper} to="/checkout-checkin">Checkin/Checkout</Nav.Link>
+                        <Nav.Link as={NavLinkWrapper} to="/checkout-checkin">Check-in/Check-out</Nav.Link>
                     </Nav>
                     {isAuthenticated && userName && (
                         <Navbar.Text className="nav-user-name">

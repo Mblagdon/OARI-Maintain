@@ -45,7 +45,7 @@ function CheckoutCheckinPage() {
             <Row className="mb-3">
                 <Col md={6}>
                     <Card>
-                        <Card.Header>Equipment Checkout</Card.Header>
+                        <Card.Header>Equipment Check-out</Card.Header>
                         <Card.Body>
                             <CheckoutForm onCheckoutSuccess={refreshCheckedOutList} />
                         </Card.Body>
@@ -53,7 +53,7 @@ function CheckoutCheckinPage() {
                 </Col>
                 <Col md={6}>
                     <Card>
-                        <Card.Header>Equipment Checkin</Card.Header>
+                        <Card.Header>Equipment Check-in</Card.Header>
                         <Card.Body>
                             <CheckinForm onCheckinSuccess={refreshCheckedOutList} />
                         </Card.Body>
