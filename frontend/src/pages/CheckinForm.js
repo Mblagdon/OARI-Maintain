@@ -57,14 +57,35 @@ function CheckinForm({ onCheckinSuccess }) {
 
     // Function to handle form submission
     const handleSubmit = async (e) => {
-        // Prevent default form submission behavior
         e.preventDefault();
 
         if (!selectedEquipment || !checkinDate) {
             alert('Please select equipment and a check-in date.');
             return;
         }
-        // Check required fields and fetch weather data if location is provided
+
+        // Find the checkout date for the selected equipment
+        const equipmentToCheckIn = checkedOutEquipment.find(
+            (item) => item.equipment_id.toString() === selectedEquipment
+        );
+
+        if (!equipmentToCheckIn) {
+            console.error('Selected equipment not found in checkedOutEquipment');
+            alert('Selected equipment not found. Please try again.');
+            return; // Exit the function to avoid trying to access properties of undefined
+        }
+
+        // Use checkout_date from your database
+        const checkoutDate = new Date(equipmentToCheckIn.checkout_date);
+        const inputCheckinDate = new Date(checkinDate);
+
+        // Check if check-in date is before checkout date
+        if (inputCheckinDate < checkoutDate) {
+            alert('You cannot check in equipment before the checkout date and time.');
+            return;
+        }
+
+        // Your existing logic to handle location and weather data fetching
         if (location) {
             setIsLoading(true);
             try {

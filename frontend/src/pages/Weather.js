@@ -62,13 +62,29 @@ function Weather() {
         const { max_temp, min_temp, max_wind_resistance } = selectedEquipment;
         const { temperature, wind_speed } = weatherData.current;
 
-        if (temperature > max_temp || temperature < min_temp) {
-            setEquipmentUsageMessage('Temperature is out of operational range for this equipment.');
-        } else if (wind_speed > max_wind_resistance) {
-            setEquipmentUsageMessage('Wind speed is too high for this equipment.');
-        } else {
-            setEquipmentUsageMessage('Equipment can be used in current conditions.');
+        let messages = [];
+
+        if (max_temp !== null && temperature > max_temp) {
+            messages.push(`Temperature is above the operational range (${max_temp}°C).`);
+        } else if (min_temp !== null && temperature < min_temp) {
+            messages.push(`Temperature is below the operational range (${min_temp}°C).`);
         }
+
+        if (max_wind_resistance !== null && wind_speed > max_wind_resistance) {
+            messages.push(`Wind speed is above the operational range (${max_wind_resistance} km/h).`);
+        }
+
+        // Messages for null values
+        if (max_temp === null || min_temp === null) {
+            messages.push("The database does not have a temp range for this piece of equipment, please refer to the owner's manual for exact specifications.");
+        }
+
+        if (max_wind_resistance === null) {
+            messages.push("The database does not have wind resistance data for this piece of equipment, please refer to the owner's manual for exact specifications.");
+        }
+
+        // Set the appropriate message or default to equipment being usable
+        setEquipmentUsageMessage(messages.length > 0 ? messages.join(' ') : 'Equipment can be used in current conditions.');
     }, [weatherData, equipmentList]);
 
     useEffect(() => {
