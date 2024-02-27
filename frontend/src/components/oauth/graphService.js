@@ -6,45 +6,77 @@
  */
 
 import { msalInstance } from './msalService';
-import {graphConfig, loginRequest} from './authConfig';
+import { graphConfig, loginRequest, tokenRequest } from './authConfig';
+
+// Helper method to fetch equipment details by ID
+async function fetchEquipmentDetails(equipmentId) {
+    console.log("fetchEquipmentDetails called with ID:", equipmentId);
+    try {
+        const response = await fetch(`/api/equipment/${equipmentId}`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch equipment details with status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("Fetched equipment details:", data); // Added log
+        return data;
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching equipment details:', error);
+        throw error;
+    }
+}
 
 // Function to create a calendar event in the user's Outlook calendar
 export const createCalendarEvent = async (maintenanceDetails) => {
     try {
         const accounts = msalInstance.getAllAccounts();
+        console.log("createCalendarEvent called with:", maintenanceDetails); // Added log
         if (accounts.length <= 0) {
             throw new Error('No accounts found');
         }
 
+        console.log("Attempting to fetch details for equipment ID:", maintenanceDetails.equipment_id); // Added log
+        if (!maintenanceDetails.equipment_id) {
+            console.error("No equipment_id provided in maintenanceDetails", maintenanceDetails);
+            throw new Error("No equipment_id provided in maintenanceDetails");
+        }
+
+        // Fetch equipment details
+        const equipmentDetails = await fetchEquipmentDetails(maintenanceDetails.equipment_id);
+        const equipmentName = equipmentDetails.equipment_name;
+        const assetNumber = equipmentDetails.asset_number;
+
         const request = {
-            ...loginRequest,
+            ...tokenRequest,
             account: accounts[0]
         };
 
         const response = await msalInstance.acquireTokenSilent(request);
         const accessToken = response.accessToken;
 
+        const attendees = maintenanceDetails.attendees ? maintenanceDetails.attendees.map(email => ({
+            emailAddress: { address: email },
+            type: "required"
+        })) : [];
+
         const event = {
-            subject: maintenanceDetails.subject,
+            subject: `Maintenance for ${equipmentName} (${assetNumber})`,
             body: {
                 contentType: "HTML",
                 content: maintenanceDetails.content
             },
             start: {
                 dateTime: maintenanceDetails.startDateTime,
-                timeZone: "Newfoundland Standard Time"
+                timeZone: "Pacific Standard Time"
             },
             end: {
                 dateTime: maintenanceDetails.endDateTime,
-                timeZone: "Newfoundland Standard Time"
+                timeZone: "Pacific Standard Time"
             },
             location: {
                 displayName: maintenanceDetails.location
             },
-            attendees: maintenanceDetails.attendees.map(email => ({
-                emailAddress: { address: email },
-                type: "required"
-            }))
+            attendees: attendees
         };
 
         const headers = new Headers({
@@ -52,7 +84,7 @@ export const createCalendarEvent = async (maintenanceDetails) => {
             'Content-Type': 'application/json'
         });
 
-        const createEventRequest = await fetch(`https://graph.microsoft.com/v1.0/me/events`, {
+        const createEventRequest = await fetch(`${graphConfig.graphMeEndpoint}/events`, {
             method: 'POST',
             headers: headers,
             body: JSON.stringify(event)
@@ -67,7 +99,23 @@ export const createCalendarEvent = async (maintenanceDetails) => {
         return result;
     } catch (error) {
         console.error('Error creating calendar event:', error);
-        throw error;
+
+        // Handle InteractionRequiredAuthError
+        if (error.errorCode === "interaction_required" || error.name === "InteractionRequiredAuthError") {
+            try {
+                const interactiveResponse = await msalInstance.acquireTokenPopup(tokenRequest);
+                if (interactiveResponse) {
+                    return await createCalendarEvent(maintenanceDetails);
+                }
+            } catch (interactiveError) {
+                console.error('Error acquiring token interactively:', interactiveError);
+                throw interactiveError;
+            }
+        } else {
+            throw error;
+        }
+        console.log("Maintenance Details:", maintenanceDetails);
+        console.log("Equipment ID:", maintenanceDetails.equipment_id);
     }
 };
 
@@ -78,10 +126,12 @@ export const callGraphApi = async () => {
         if (accounts.length <= 0) {
             throw new Error('No accounts found');
         }
+
         const request = {
-            ...loginRequest,
+            ...tokenRequest,
             account: accounts[0]
         };
+
         const response = await msalInstance.acquireTokenSilent(request);
         const accessToken = response.accessToken;
 
@@ -91,7 +141,6 @@ export const callGraphApi = async () => {
         });
 
         const graphResponse = await fetch(graphConfig.graphMeEndpoint, {
-            method: 'GET',
             headers: headers
         });
 

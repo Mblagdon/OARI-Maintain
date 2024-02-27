@@ -30,7 +30,6 @@ const HomePage = () => {
                 <Col>
                     <h1>Drone Equipment and Maintenance</h1>
                     <p>Streamlined management for drone enthusiasts and professionals.</p>
-                    <Button onClick={handleLogin}>Login to Manage Your Equipment</Button>
                 </Col>
             </Row>
 

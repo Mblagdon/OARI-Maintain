@@ -46,29 +46,33 @@ function AddMaintenance() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(`Form Change - Name: ${name}, Value: ${value}`); // Tracks every change
         setMaintenanceData(prevData => ({
             ...prevData,
-            [name]: value
+            [name]: value,
         }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        console.log("Submitting Maintenance Data:", maintenanceData); // Verify maintenanceData before sending
+
         // Fetch call to API for posting maintenance data
         fetch('/api/maintenance', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(maintenanceData)
+            body: JSON.stringify(maintenanceData),
         })
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
             })
             .then(data => {
-                console.log('Success:', data);
+                console.log('Success from API:', data);
+                console.log('Equipment ID for Calendar Event:', maintenanceData.equipment_id); // Verify this is correct
                 // Reset the form here
                 setMaintenanceData({
                     type: '',
@@ -82,18 +86,19 @@ function AddMaintenance() {
 
                 // Now create a calendar event using the newly added maintenance data
                 return createCalendarEvent({
-                    subject: `Maintenance for ${maintenanceData.equipment_id}`,
+                    ...maintenanceData, // Assuming this object already includes equipment_id correctly
+                    subject: `Maintenance for ${maintenanceData.equipment_id}`, // This needs to be updated to use equipment name
                     content: `Scheduled maintenance: ${maintenanceData.maintenance_to_be_performed}`,
                     startDateTime: new Date(maintenanceData.next_maintenance_date),
                     endDateTime: new Date(maintenanceData.next_maintenance_date), // Adjust if you have an end time
-                    timeZone: "Newfoundland Standard Time"
+                    timeZone: "Newfoundland Standard Time", // Ensure this is correct for your needs
                 });
             })
-            .then(() => {
+            .then(calendarEventResult => {
+                console.log('Calendar Event Created:', calendarEventResult);
                 alert('Maintenance task added and scheduled in calendar.');
-                // Additional logic after successful event creation
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('Error:', error);
                 // Handle errors, such as displaying a message to the user
             });
