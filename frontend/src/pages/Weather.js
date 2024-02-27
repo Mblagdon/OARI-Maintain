@@ -6,6 +6,8 @@
  * weather API. The component manages the input state for the location, handles the submission
  * of the form, and upon a successful API call, displays the weather information. It also handles
  * error states and provides appropriate user feedback.
+ *
+ * The historical weather code is implemented, but currently commented out until the weatherstack api plan is upgraded.
  */
 
 import React, {useState, useEffect, useCallback} from 'react';
@@ -15,6 +17,10 @@ import '../pages/CSS/Weather.css';
 function Weather() {
     const [location, setLocation] = useState('');
     const [weatherData, setWeatherData] = useState(null);
+    // State for historical weather data
+    // const [historicalWeatherData, setHistoricalWeatherData] = useState(null);
+    // State for selecting a date
+    // const [date, setDate] = useState('');
     const [equipmentList, setEquipmentList] = useState([]);
     const [selectedEquipmentId, setSelectedEquipmentId] = useState('');
     const [equipmentUsageMessage, setEquipmentUsageMessage] = useState('');
@@ -34,6 +40,27 @@ function Weather() {
             setWeatherData(null); // Clear previous weather data
         }
     };
+
+    // Function to fetch historical weather data
+    // const fetchHistoricalWeather = async () => {
+    //     if (!date) {
+    //         alert("Please select a date.");
+    //         return;
+    //     }
+    //
+    //     try {
+    //         const response = await fetch(`/api/weather/historical?query=${encodeURIComponent(location)}&historical_date=${date}`);
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         const data = await response.json();
+    //         setHistoricalWeatherData(data);
+    //         setError(''); // Clear any previous errors
+    //     } catch (error) {
+    //         setError(error.message);
+    //         setHistoricalWeatherData(null); // Clear previous historical weather data
+    //     }
+    // };
 
     const fetchEquipment = async () => {
         try {
@@ -108,10 +135,20 @@ function Weather() {
                                 />
                             </Form.Group>
                             <Button onClick={fetchWeather}>Get Weather</Button>
+                            {/* Date selection input for historical weather
+                            <Form.Group className="mb-3">
+                                <Form.Control
+                                    type="date"
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}
+                                    placeholder="Select Date"
+                                />
+                            </Form.Group>
+                            <Button onClick={fetchHistoricalWeather}>Get Historical Weather</Button>
+                            */}
                             {weatherData && (
                                 <div className="mt-3">
                                     <Card.Title>Weather in {weatherData.location.name}</Card.Title>
-                                    <Card.Text><strong>Temperature:</strong> {weatherData.current.temperature}°C</Card.Text>
                                     <Card.Text><strong>Temperature:</strong> {weatherData.current.temperature}°C</Card.Text>
                                     <Card.Text><strong>Weather Conditions:</strong> {weatherData.current.weather_descriptions.join(', ')}</Card.Text>
                                     <Card.Text><strong>Wind Speed:</strong> {weatherData.current.wind_speed} km/h</Card.Text>
@@ -128,6 +165,14 @@ function Weather() {
                                     ))}
                                 </div>
                             )}
+                            {/* Display historical weather data if available
+                            {historicalWeatherData && (
+                                <div className="mt-3">
+                                    <Card.Title>Historical Weather in {historicalWeatherData.location.name} for {date}</Card.Title>
+                                    {/* Similar display for historical weather data as for current weather data
+                                </div>
+                            )}
+                            */}
                         </Card.Body>
                     </Card>
                 </Col>

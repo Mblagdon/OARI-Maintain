@@ -32,5 +32,20 @@ router.get('/', async (req, res) => {
 });
 
 // Use the same method for historic but replace .com/current with the correct API endpoint, e.g., .com/historic
-
+// Example of how historic weather would look, only small changes, note this has not been tested due to the weather plan
+// currently on, but should work as expected
+/**
+ * router.get('/historical', async (req, res) => {
+ *     try {
+ *         const { query, historical_date } = req.query; // Get location and historical date from query parameters
+ *         const weatherApiUrl = `http://api.weatherstack.com/historical?access_key=${process.env.WEATHER_API_KEY}&query=${query}&historical_date=${historical_date}`;
+ *
+ *         const weatherResponse = await axios.get(weatherApiUrl);
+ *         res.json(weatherResponse.data);
+ *     } catch (error) {
+ *         console.error('Error in fetching historical weather:', error);
+ *         res.status(500).json({ message: 'Error fetching historical weather data', error: error.message });
+ *     }
+ * });
+ */
 export default router;
