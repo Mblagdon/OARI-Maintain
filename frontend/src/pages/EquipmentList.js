@@ -16,28 +16,45 @@ function EquipmentList() {
     const [equipment, setEquipment] = useState([]);
     const navigate = useNavigate();
     const [error, setError] = useState(null);
+    const [retryCount, setRetryCount] = useState(0);
 
     useEffect(() => {
-        fetch('/api/equipment')
-            .then(response => {
-                if (!response.ok) {
-                    // Enhanced error message with status code and text
-                    throw new Error(`Error: ${response.status} ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                setEquipment(data);
-                setError(null); // Clear any previous error on successful fetch
-            })
-            .catch(error => {
-                // More detailed error logging
-                console.error('There was a problem with the fetch operation:', error);
+        const fetchEquipment = () => {
+            fetch('/api/equipment')
+                .then(async response => {
+                    // Try to get response body which may include error message from the server
+                    const body = await response.text();
+                    if (!response.ok) {
+                        // If response is not okay, parse the text as JSON if possible, or use text directly
+                        let errorMessage = "Error fetching equipment.";
+                        try {
+                            const parsed = JSON.parse(body);
+                            errorMessage += ` Message: ${parsed.message || parsed.error || body}`;
+                        } catch {
+                            errorMessage += ` Message: ${body}`;
+                        }
+                        throw new Error(`Error: ${response.status} ${response.statusText}. ${errorMessage}`);
+                    }
+                    return JSON.parse(body);
+                })
+                .then(data => {
+                    setEquipment(data);
+                    setError(null);
+                    setRetryCount(0);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                    setError(`Failed to load equipment: ${error.message}`);
+                    if (retryCount < 3) {
+                        setTimeout(() => {
+                            setRetryCount(retryCount + 1);
+                        }, 3000);
+                    }
+                });
+        };
 
-                // Update error state with detailed message
-                setError(`Failed to load equipment: ${error.message}`);
-            });
-    }, []);
+        fetchEquipment();
+    }, [retryCount]);
 
     if (error) {
         return <div>Error: {error}</div>;
@@ -90,7 +107,3 @@ function EquipmentList() {
 }
 
 export default EquipmentList;
-
-
-
-
