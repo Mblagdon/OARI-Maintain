@@ -47,10 +47,21 @@ function AddMaintenance() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         console.log(`Form Change - Name: ${name}, Value: ${value}`); // Tracks every change
-        setMaintenanceData(prevData => ({
-            ...prevData,
-            [name]: value,
-        }));
+
+        // Check if the 'next_maintenance_date' is being changed
+        if (name === "next_maintenance_date") {
+            // 'T09:00' to set the time to 9 AM
+            const newValueWithTime = `${value}T09:00`;
+            setMaintenanceData(prevData => ({
+                ...prevData,
+                [name]: newValueWithTime,
+            }));
+        } else {
+            setMaintenanceData(prevData => ({
+                ...prevData,
+                [name]: value,
+            }));
+        }
     };
 
     const handleSubmit = (e) => {
@@ -87,7 +98,7 @@ function AddMaintenance() {
                 // Now create a calendar event using the newly added maintenance data
                 return createCalendarEvent({
                     ...maintenanceData, // Assuming this object already includes equipment_id correctly
-                    subject: `Maintenance for ${maintenanceData.equipment_id}`, // This needs to be updated to use equipment name
+                    subject: `Maintenance for ${maintenanceData.equipment_id}`,
                     content: `Scheduled maintenance: ${maintenanceData.maintenance_to_be_performed}`,
                     startDateTime: new Date(maintenanceData.next_maintenance_date),
                     endDateTime: new Date(maintenanceData.next_maintenance_date), // Adjust if you have an end time

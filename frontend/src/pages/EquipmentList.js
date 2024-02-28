@@ -21,14 +21,21 @@ function EquipmentList() {
         fetch('/api/equipment')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    // Enhanced error message with status code and text
+                    throw new Error(`Error: ${response.status} ${response.statusText}`);
                 }
                 return response.json();
             })
-            .then(data => setEquipment(data))
+            .then(data => {
+                setEquipment(data);
+                setError(null); // Clear any previous error on successful fetch
+            })
             .catch(error => {
-                setError(error.message);
+                // More detailed error logging
                 console.error('There was a problem with the fetch operation:', error);
+
+                // Update error state with detailed message
+                setError(`Failed to load equipment: ${error.message}`);
             });
     }, []);
 
