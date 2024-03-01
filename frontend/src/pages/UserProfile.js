@@ -6,8 +6,9 @@
  * It is designed to be used as part of the user authentication flow to provide a personalized experience.
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { callGraphApi } from '../components/oauth/graphService';
+import { useAuth } from '../components/oauth/AuthContext'; // Import the useAuth hook
 
 const UserProfile = ({ onProfileLoaded }) => {
     // State hooks for user profile data
@@ -15,36 +16,37 @@ const UserProfile = ({ onProfileLoaded }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const { isAuthenticated } = useAuth(); // Use the useAuth hook to check if the user is authenticated
+
     useEffect(() => {
         // Function to fetch user profile from Microsoft Graph API
         const fetchData = async () => {
-            try {
-                const userData = await callGraphApi();
-                setProfileData(userData);
-                onProfileLoaded(userData.displayName); // This is the new line
-            } catch (error) {
-                console.error(error);
+            if (isAuthenticated) { // Only fetch data if the user is authenticated
+                try {
+                    const userData = await callGraphApi();
+                    setProfileData(userData);
+                    onProfileLoaded(userData.displayName);
+                    setLoading(false); // Set loading to false after data is fetched
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                    setError(error);
+                    setLoading(false); // Set loading to false even if there's an error
+                }
             }
         };
 
         fetchData();
-    }, [onProfileLoaded]); // Add dependency to rerun the effect if onProfileLoaded changes
+    }, [isAuthenticated, onProfileLoaded]); // Add isAuthenticated to the dependency array
 
-
-    // Render logic based on error state, and profile data availability
     if (error) {
-        return <div>{error}</div>; // Display a user-friendly error message
+        return <div>{error.toString()}</div>; // Display a user-friendly error message
     }
 
     if (!profileData) {
-        return null; // Or handle this case in a user-friendly way
+        return null;
     }
 
-    return (
-        <div>
-            <h1>Welcome {profileData.displayName}</h1>
-        </div>
-    );
 };
 
 export default UserProfile;
+

@@ -7,6 +7,7 @@
 
 import { msalInstance } from './msalService';
 import { graphConfig, loginRequest, tokenRequest } from './authConfig';
+import {InteractionRequiredAuthError} from "@azure/msal-browser";
 
 // Helper method to fetch equipment details by ID
 async function fetchEquipmentDetails(equipmentId) {
@@ -123,34 +124,43 @@ export const createCalendarEvent = async (maintenanceDetails) => {
 export const callGraphApi = async () => {
     try {
         const accounts = msalInstance.getAllAccounts();
-        if (accounts.length <= 0) {
-            throw new Error('No accounts found');
-        }
+        if (accounts.length <= 0) throw new Error('No accounts found');
 
-        const request = {
+        const silentRequest = {
             ...tokenRequest,
             account: accounts[0]
         };
 
-        const response = await msalInstance.acquireTokenSilent(request);
+        // Attempt to acquire token silently
+        const response = await msalInstance.acquireTokenSilent(silentRequest);
         const accessToken = response.accessToken;
 
+        // Use the access token to call Microsoft Graph API
         const headers = new Headers({
             'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json'
         });
+        const graphResponse = await fetch(graphConfig.graphMeEndpoint, { headers });
 
-        const graphResponse = await fetch(graphConfig.graphMeEndpoint, {
-            headers: headers
-        });
-
-        if (!graphResponse.ok) {
-            throw new Error(`Error getting user data: ${graphResponse.statusText}`);
-        }
 
         return await graphResponse.json();
     } catch (error) {
-        console.error('Error fetching user data:', error);
-        throw error;
+        console.error('Error during token acquisition or fetching user data:', error);
+        // Check if interaction is required
+        if (error instanceof InteractionRequiredAuthError) {
+            try {
+                // Fallback to interactive sign-in method
+                const interactiveResponse = await msalInstance.acquireTokenPopup(tokenRequest);
+                // Optionally, you can recall callGraphApi() or continue your logic with the newly acquired token
+                return interactiveResponse; // or callGraphApi()
+            } catch (interactiveError) {
+                console.error('Error acquiring token interactively:', interactiveError);
+                throw interactiveError;
+            }
+        } else {
+            // Handle other types of errors (e.g., network errors)
+            throw error;
+        }
     }
 };
+

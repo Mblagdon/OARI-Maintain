@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="equipment_db" uuid="c9e92ee8-cd07-411f-89e2-375732bb2ec9">
+    <data-source source="LOCAL" name="@cna-rds-mysql.cx8u0qguq1do.us-east-1.rds.amazonaws.com" uuid="7948fcb2-99eb-44a2-928f-385fe1618ee0">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://cna-rds-mysql.cx8u0qguq1do.us-east-1.rds.amazonaws.com:3306/CNADroneDB</jdbc-url>
+      <jdbc-url>jdbc:mysql://cna-rds-mysql.cx8u0qguq1do.us-east-1.rds.amazonaws.com:3306</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

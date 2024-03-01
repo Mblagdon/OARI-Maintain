@@ -6,6 +6,7 @@ import App from './App';
 import { MsalProvider } from '@azure/msal-react';
 import { msalInstance } from './components/oauth/msalService';
 import { UserProfileProvider } from './pages/UserProfileContext';
+import {AuthProvider} from "./components/oauth/AuthContext";
 
 // Polyfill for window.crypto.randomUUID
 if (!window.crypto.randomUUID) {
@@ -23,9 +24,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <MsalProvider instance={msalInstance}>
-            <UserProfileProvider>
+            <AuthProvider>
                 <App />
-            </UserProfileProvider>
+            </AuthProvider>
         </MsalProvider>
     </React.StrictMode>
 );

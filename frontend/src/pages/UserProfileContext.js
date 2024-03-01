@@ -8,6 +8,7 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { callGraphApi } from '../components/oauth/graphService';
+import { useAuth } from '../components/oauth/AuthContext'
 
 // Create a context for the user profile
 const UserProfileContext = createContext(null);
@@ -20,27 +21,35 @@ const UserProfileContext = createContext(null);
  */
 export const UserProfileProvider = ({ children }) => {
     // State to store user profile data, loading status, and any errors
+    const { isAuthenticated } = useAuth(); // Use the useAuth hook to get the current authentication status
     const [profileData, setProfileData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
     // Effect to fetch user profile data when the component is mounted
     useEffect(() => {
-        // Function to fetch user data from Microsoft Graph API
         const fetchData = async () => {
-            try {
-                const userData = await callGraphApi();
-                setProfileData(userData); // Set the user data in state
-                setLoading(false); // Set loading to false after data is fetched
-            } catch (error) {
-                console.error(error);
-                setError(error); // Set any errors that occur during fetch
-                setLoading(false); // Ensure loading is set to false even if there's an error
+            if (isAuthenticated) {
+                try {
+                    console.log("Attempting to fetch user data in UserProfileProvider"); // Log attempt
+                    const userData = await callGraphApi();
+                    console.log("User data fetched:", userData); // Log fetched data
+                    setProfileData(userData);
+                    setLoading(false);
+                } catch (error) {
+                    console.error("Error fetching user data in UserProfileProvider:", error); // Log any errors
+                    setError(error);
+                    setLoading(false);
+                }
+            } else {
+                setProfileData(null);
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, []);
+    }, [isAuthenticated]);// Re-run the effect if the authentication status changes
 
     // Provide the user profile data, loading status, and error to children
     return (
