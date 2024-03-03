@@ -8,7 +8,7 @@
  */
 
 import express from 'express';
-import EquipmentController from '../controllers/equipmentController.js'; // Adjust the import as necessary
+import EquipmentController from '../controllers/equipmentController.js';
 
 const router = express.Router();
 // Routes for equipment
