@@ -23,13 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.enable('trust proxy');
 
-// Redirect HTTP to HTTPS
-app.use((req, res, next) => {
-    if (req.protocol === 'http') {
-        return res.redirect(`https://${req.headers.host}${req.url}`);
-    }
-    next();
-});
+
 
 // Routes
 app.use('/api', equipmentRoutes);
