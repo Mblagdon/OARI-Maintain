@@ -11,6 +11,7 @@ import db from '../database.js';
 
 const EquipmentModel = {
     // Equipment Description
+
     // Create a new equipment description
     createEquipment: (data) => {
         return new Promise((resolve, reject) => {
