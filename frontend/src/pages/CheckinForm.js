@@ -6,7 +6,7 @@
  * where the equipment was used. Additionally, it integrates with a weather API to fetch and display
  * weather data based on the provided location.
  *
- * Weather api plan needs to be upgraded in able to pull historic weather data(anything other than current data)
+ * Weather api plan needs to be upgraded to pull historic weather data (current data is stored now)
  */
 
 import React, { useState, useEffect } from 'react';
@@ -85,7 +85,7 @@ function CheckinForm({ onCheckinSuccess }) {
             return;
         }
 
-        // Your existing logic to handle location and weather data fetching
+        // Logic to handle location and weather data fetching
         if (location) {
             setIsLoading(true);
             try {

@@ -3,7 +3,7 @@
  *
  * A component that displays a list of previously checked out equipment. It fetches historical data
  * of equipment usage including checkout and check-in dates, usage duration, location, and comments.
- * It also integrates weather data to give context about the conditions during the equipment use.
+ * It also integrates weather data to give context about the conditions during equipment use.
  */
 
 import React, { useState, useEffect } from 'react';
