@@ -19,7 +19,7 @@ function MaintenanceSchedule() {
     const navigate = useNavigate();
     const { accounts } = useMsal(); // Use the useMsal hook to get accounts
     const user = accounts[0] || {}; // Assuming the first account is the logged-in user
-    const userEmail = user.username; // Assuming email is stored in username field
+    const userEmail = user.username;
     const allowedEmails = ['marcus_blagdon@hotmail.com']; // Define allowed emails for edit/delete
     const canEditOrDelete = allowedEmails.includes(userEmail);
 
@@ -42,17 +42,25 @@ function MaintenanceSchedule() {
     }, []);
 
     const handleEdit = (taskId) => {
-        navigate(`/edit-maintenance/${taskId}`);
+        if (canEditOrDelete) {
+            navigate(`/edit-maintenance/${taskId}`);
+        } else {
+            alert("You do not have permission to edit this maintenance schedule.");
+        }
     };
 
     const handleDelete = (taskId) => {
-        if (window.confirm('Are you sure you want to delete this task?')) {
-            fetch(`/api/maintenance/${taskId}`, { method: 'DELETE' })
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    setMaintenanceTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
-                })
-                .catch(error => console.error('Error:', error));
+        if (canEditOrDelete) {
+            if (window.confirm('Are you sure you want to delete this task?')) {
+                fetch(`/api/maintenance/${taskId}`, { method: 'DELETE' })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        setMaintenanceTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        } else {
+            alert("You do not have permission to delete this maintenance schedule.");
         }
     };
 
@@ -90,12 +98,19 @@ function MaintenanceSchedule() {
                                 <td>{task.maintenance_frequency}</td>
                                 <td>{task.maintenance_to_be_performed}</td>
                                 <td>
-                                    {canEditOrDelete && (
-                                        <>
-                                            <Button variant="edit btn-edit" onClick={() => handleEdit(task.id)} className="me-2">Edit</Button>
-                                            <Button variant="delete btn-delete" onClick={() => handleDelete(task.id)}>Delete</Button>
-                                        </>
-                                    )}
+                                    <Button
+                                        variant="edit btn-edit"
+                                        onClick={() => handleEdit(task.id)}
+                                        className="me-2"
+                                    >
+                                        Edit
+                                    </Button>
+                                    <Button
+                                        variant="delete btn-delete"
+                                        onClick={() => handleDelete(task.id)}
+                                    >
+                                        Delete
+                                    </Button>
                                 </td>
                             </tr>
                         ))}

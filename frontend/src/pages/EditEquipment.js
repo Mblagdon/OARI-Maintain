@@ -33,6 +33,9 @@ function EditEquipment() {
         max_payload_weight: '',
         ip_rating: '',
         asset_number: '',
+        software_type: '',
+        account_code: '',
+        purchased_with: '',
     });
     // Retrieve the equipment ID from URL parameters
     const { equipmentId } = useParams();
@@ -71,6 +74,8 @@ function EditEquipment() {
                     max_take_off_weight: data.max_take_off_weight || '',
                     max_payload_weight: data.max_payload_weight || '',
                     ip_rating: data.ip_rating || '', asset_number: data.asset_number || '',
+                    software_type: data.software_type || '', account_code: data.account_code || '',
+                    purchased_with: data.purchased_with || '',
                 });
             } catch (error) {
                 console.error('Fetch error:', error);
@@ -283,6 +288,24 @@ function EditEquipment() {
                                         <Form.Group className="mb-3">
                                             <Form.Label>Price ($)</Form.Label>
                                             <Form.Control type="number" name="price" value={formData.price} onChange={handleChange} />
+                                        </Form.Group>
+
+                                        {/* Form Group for Software Type */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Software Type</Form.Label>
+                                            <Form.Control type="text" name="software_type" value={formData.software_type} onChange={handleChange} />
+                                        </Form.Group>
+
+                                        {/* Form Group for Account Code */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Account Code</Form.Label>
+                                            <Form.Control type="text" name="account_code" value={formData.account_code} onChange={handleChange} />
+                                        </Form.Group>
+
+                                        {/* Form Group for Purchased With */}
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Purchased With</Form.Label>
+                                            <Form.Control type="text" name="purchased_with" value={formData.purchased_with} onChange={handleChange} />
                                         </Form.Group>
                                     </>
                                 )}

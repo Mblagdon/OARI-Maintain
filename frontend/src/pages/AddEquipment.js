@@ -32,6 +32,9 @@ function AddEquipment() {
         max_payload_weight: '',
         ip_rating: '',
         asset_number: '',
+        software_type: '',
+        account_code: '',
+        purchased_with: '',
     });
     const [submitSuccess, setSubmitSuccess] = useState(false);
     const [submitError, setSubmitError] = useState('');
@@ -78,6 +81,9 @@ function AddEquipment() {
             payload.date_bought = formData.date_bought;
             payload.renewal_date = formData.renewal_date;
             payload.price = formData.price;
+            payload.software_type = formData.software_type;
+            payload.account_code = formData.account_code;
+            payload.purchased_with = formData.purchased_with;
         } else {
             // Add equipment or drone specific properties
             payload.location = formData.location;
@@ -135,6 +141,9 @@ function AddEquipment() {
                     max_payload_weight: '',
                     ip_rating: '',
                     asset_number: '',
+                    software_type: '',
+                    account_code: '',
+                    purchased_with: '',
                 });
                 // Optionally hide the confirmation message after some time
                 setTimeout(() => setShowConfirmation(false), 5000);
@@ -169,7 +178,7 @@ function AddEquipment() {
 
                         {/* Equipment Name */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Equipment Name</Form.Label>
+                            <Form.Label column sm={3}>Equipment Name:</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="text"
@@ -181,7 +190,7 @@ function AddEquipment() {
                         </Form.Group>
                         {/* Asset Number */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Asset Number</Form.Label>
+                            <Form.Label column sm={3}>Asset Number:</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="text"
@@ -194,7 +203,7 @@ function AddEquipment() {
 
                         {/* Description */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Description</Form.Label>
+                            <Form.Label column sm={3}>Description:</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     as="textarea"
@@ -206,11 +215,11 @@ function AddEquipment() {
                         </Form.Group>
                         {/*Use Case Example*/}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Use Case Example</Form.Label>
+                            <Form.Label column sm={3}>Use Case Example:</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     as="textarea"
-                                    name="use_case_example"
+                                    name="use_case_examples"
                                     value={formData.use_case_examples}
                                     onChange={handleChange}
                                 />
@@ -330,7 +339,7 @@ function AddEquipment() {
 
                         {/* Minimum Temperature */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Minimum Temperature (°C)</Form.Label>
+                            <Form.Label column sm={3}>Minimum Temperature (°C):</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="number"
@@ -344,7 +353,7 @@ function AddEquipment() {
 
                         {/* Maximum Temperature */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Maximum Temperature (°C)</Form.Label>
+                            <Form.Label column sm={3}>Maximum Temperature (°C):</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="number"
@@ -358,7 +367,7 @@ function AddEquipment() {
 
                         {/* Maximum Wind Resistance */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Max Wind Resistance (km/h)</Form.Label>
+                            <Form.Label column sm={3}>Max Wind Resistance (km/h):</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="number"
@@ -372,14 +381,14 @@ function AddEquipment() {
 
                         {/* Minimum Lighting */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Minimum Lighting Required</Form.Label>
+                            <Form.Label column sm={3}>Minimum Lighting Required:</Form.Label>
                             <Col sm={9}>
                                 <Form.Select
                                     name="min_lighting"
                                     value={formData.min_lighting}
                                     onChange={handleChange}
                                 >
-                                    <option value="">Select Minimum Lighting Exposure</option>
+                                    <option value="">Select Minimum Lighting Exposure:</option>
                                     <option value="Low Exposure">Low Exposure</option>
                                     <option value="Moderate Exposure">Moderate Exposure</option>
                                     <option value="High Exposure">High Exposure</option>
@@ -427,6 +436,44 @@ function AddEquipment() {
                                         as="textarea"
                                         name="price"
                                         value={formData.price}
+                                        onChange={handleChange}
+                                    />
+                                </Col>
+                            </Form.Group>
+
+                            <Form.Group as={Row} className="mb-3">
+                                <Form.Label column sm={3}>Software Type:</Form.Label>
+                                <Col sm={9}>
+                                    <Form.Control
+                                        type="text"
+                                        name="software_type"
+                                        value={formData.software_type}
+                                        onChange={handleChange}
+                                    />
+                                </Col>
+                            </Form.Group>
+
+                            {/* Account Code */}
+                            <Form.Group as={Row} className="mb-3">
+                                <Form.Label column sm={3}>Account Code:</Form.Label>
+                                <Col sm={9}>
+                                    <Form.Control
+                                        type="text"
+                                        name="account_code"
+                                        value={formData.account_code}
+                                        onChange={handleChange}
+                                    />
+                                </Col>
+                            </Form.Group>
+
+                            {/* Purchased With */}
+                            <Form.Group as={Row} className="mb-3">
+                                <Form.Label column sm={3}>Purchased With:</Form.Label>
+                                <Col sm={9}>
+                                    <Form.Control
+                                        type="text"
+                                        name="purchased_with"
+                                        value={formData.purchased_with}
                                         onChange={handleChange}
                                     />
                                 </Col>

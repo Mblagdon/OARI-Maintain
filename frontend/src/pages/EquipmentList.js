@@ -81,19 +81,19 @@ function EquipmentList() {
                     <Col key={item.id}>
                         <Card className="h-100 d-flex flex-column justify-content-between">
                             <Card.Body>
-                                <Card.Title className="text-center clickable" onClick={() => navigate(`/equipment/${item.id}`)}>
+                                <Card.Title className="text-center clickable equipment-card-title" onClick={() => navigate(`/equipment/${item.id}`)}>
                                     {item.equipment_name}
                                 </Card.Title>
                                 <Card.Title className="text-center">{item.type}</Card.Title>
                                 <Card.Title className="text-center">{item.asset_number && <div>Asset#: {item.asset_number}</div>}</Card.Title>
                             </Card.Body>
                             <Card.Footer className="text-end">
-                                {canEditOrDelete && (
+
                                     <>
                                         <Button variant="edit" className="btn-edit me-2" onClick={() => handleEdit(item.id)}>Edit</Button>
                                         <Button variant="delete" className="btn-delete" onClick={() => handleDelete(item.id)}>Delete</Button>
                                     </>
-                                )}
+
                             </Card.Footer>
                         </Card>
                     </Col>

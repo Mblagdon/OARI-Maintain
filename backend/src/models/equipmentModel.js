@@ -28,8 +28,9 @@ const EquipmentModel = {
                     min_temp, max_temp, max_wind_resistance, min_lighting,
                     date_bought, renewal_date, price,
                     weight_with_batteries, frame_weight, max_take_off_weight,
-                    max_payload_weight, ip_rating, asset_number
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                    max_payload_weight, ip_rating, asset_number,
+                    software_type, account_code, purchased_with
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
                 db.query(query, [
                     data.type,
@@ -38,7 +39,8 @@ const EquipmentModel = {
                     data.min_temp, data.max_temp, data.max_wind_resistance, data.min_lighting,
                     data.date_bought, data.renewal_date, data.price, data.weight_with_batteries,
                     data.frame_weight, data.max_take_off_weight, data.max_payload_weight,
-                    data.ip_rating, data.asset_number
+                    data.ip_rating, data.asset_number, data.software_type || null,
+                    data.account_code || null, data.purchased_with || null,
                 ], (err, results) => {
                     if (err) {
                         return db.rollback(() => {
@@ -172,7 +174,8 @@ const EquipmentModel = {
                 min_temp = ?, max_temp = ?, max_wind_resistance = ?,
                 min_lighting = ?, date_bought = ?, renewal_date = ?, price = ?,
                 weight_with_batteries = ?, frame_weight = ?, max_take_off_weight = ?,
-                max_payload_weight = ?, ip_rating = ?, asset_number = ?
+                max_payload_weight = ?, ip_rating = ?, asset_number = ?,
+                software_type = ?, account_code = ?, purchased_with = ?
                 WHERE id = ?`;
 
             db.query(query, [
@@ -196,6 +199,9 @@ const EquipmentModel = {
                 data.max_payload_weight,
                 data.ip_rating,
                 data.asset_number,
+                data.software_type !== undefined ? data.software_type : null,
+                data.account_code !== undefined ? data.account_code : null,
+                data.purchased_with !== undefined ? data.purchased_with : null,
                 id
             ], (err, results) => {
                 if (err) {

@@ -9,7 +9,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import '../pages/CSS/EquipmentItem.css';
 
 function EquipmentItem({ equipment, onEdit, onDelete }) {
     return (

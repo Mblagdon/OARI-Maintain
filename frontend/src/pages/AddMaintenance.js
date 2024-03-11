@@ -101,8 +101,8 @@ function AddMaintenance() {
                     subject: `Maintenance for ${maintenanceData.equipment_id}`,
                     content: `Scheduled maintenance: ${maintenanceData.maintenance_to_be_performed}`,
                     startDateTime: new Date(maintenanceData.next_maintenance_date),
-                    endDateTime: new Date(maintenanceData.next_maintenance_date), // Adjust if you have an end time
-                    timeZone: "Newfoundland Standard Time", // Ensure this is correct for your needs
+                    endDateTime: new Date(maintenanceData.next_maintenance_date),
+                    timeZone: "Newfoundland Standard Time",
                 });
             })
             .then(calendarEventResult => {
@@ -124,7 +124,7 @@ function AddMaintenance() {
                             <Form onSubmit={handleSubmit}>
                         {/* Equipment ID Selection */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Equipment ID</Form.Label>
+                            <Form.Label column sm={3}>Equipment ID:</Form.Label>
                             <Col sm={9}>
                                 <Form.Select name="equipment_id" value={maintenanceData.equipment_id} onChange={handleChange}>
                                     <option value="">Select Equipment</option>
@@ -139,7 +139,7 @@ function AddMaintenance() {
 
                         {/* Status Selection */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Status</Form.Label>
+                            <Form.Label column sm={3}>Status:</Form.Label>
                             <Col sm={9}>
                                 <Form.Select name="status" value={maintenanceData.status} onChange={handleChange}>
                                     <option value="">Select Status</option>
@@ -154,7 +154,7 @@ function AddMaintenance() {
 
                         {/* Type Selection */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Type</Form.Label>
+                            <Form.Label column sm={3}>Type:</Form.Label>
                             <Col sm={9}>
                                 <Form.Select name="type" value={maintenanceData.type} onChange={handleChange}>
                                     <option value="">Select Type</option>
@@ -167,7 +167,7 @@ function AddMaintenance() {
 
                         {/* Last Maintenance Date */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Last Maintenance Date</Form.Label>
+                            <Form.Label column sm={3}>Last Maintenance Date:</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="date"
@@ -180,7 +180,7 @@ function AddMaintenance() {
 
                         {/* Next Maintenance Date */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Next Maintenance Date</Form.Label>
+                            <Form.Label column sm={3}>Next Maintenance Date:</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="date"
@@ -193,7 +193,7 @@ function AddMaintenance() {
 
                         {/* Maintenance Frequency */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Maintenance Frequency</Form.Label>
+                            <Form.Label column sm={3}>Maintenance Frequency:</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     type="text"
@@ -206,7 +206,7 @@ function AddMaintenance() {
 
                         {/* Maintenance To Be Performed */}
                         <Form.Group as={Row} className="mb-3">
-                            <Form.Label column sm={3}>Maintenance to be Performed</Form.Label>
+                            <Form.Label column sm={3}>Maintenance to be Performed:</Form.Label>
                             <Col sm={9}>
                                 <Form.Control
                                     as="textarea"

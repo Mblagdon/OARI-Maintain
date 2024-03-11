@@ -38,8 +38,8 @@ function EquipmentDetail() {
     if (!equipmentDetails) return <div>Equipment not found</div>;
 
     // Determine if the equipment is of type 'software' or 'drone' to conditionally render the new fields
-    const isSoftware = equipmentDetails.type === 'software';
-    const isDrone = equipmentDetails.type === 'drone';
+    const isSoftware = equipmentDetails.type === 'Software';
+    const isDrone = equipmentDetails.type === 'Drone';
 
     return (
         <Container className="pt-4">
@@ -81,6 +81,9 @@ function EquipmentDetail() {
                                         <ListGroup.Item><strong>Date Bought:</strong> {equipmentDetails.date_bought}</ListGroup.Item>
                                         <ListGroup.Item><strong>Renewal Date:</strong> {equipmentDetails.renewal_date}</ListGroup.Item>
                                         <ListGroup.Item><strong>Price:</strong> ${equipmentDetails.price}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Software Type:</strong> {equipmentDetails.software_type}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Account Code:</strong> {equipmentDetails.account_code}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Purchased With:</strong> {equipmentDetails.purchased_with}</ListGroup.Item>
                                     </>
                                 )}
                             </ListGroup>
