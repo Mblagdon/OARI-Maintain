@@ -59,17 +59,19 @@ html, body {
 .body-flex-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .content-wrapper {
     display: flex;
     flex-direction: column;
+    flex-grow: 1; /* This will allow the content wrapper to grow and fill the available space */
 }
 
 .footer-static {
-    margin-top: auto; /* Pushes the footer to the bottom */
+    margin-top: auto; /* Keeps the footer at the bottom */
 }
+
 
 .maintenance-schedule-header {
     text-align: center;
