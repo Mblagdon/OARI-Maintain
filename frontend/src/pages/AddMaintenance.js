@@ -64,6 +64,11 @@ function AddMaintenance() {
         }
     };
 
+    // Validation function to check if all form fields are filled
+    const isFormComplete = () => {
+        return Object.values(maintenanceData).every(value => value.trim() !== '');
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -224,7 +229,8 @@ function AddMaintenance() {
                         {/* Submit Button */}
                         <Row>
                             <Col className="text-center">
-                                <Button variant="primary" type="submit">Add Maintenance</Button>
+                                {/* Disable the button if the form is not complete */}
+                                <Button variant="primary" type="submit" disabled={!isFormComplete()}>Add Maintenance</Button>
                             </Col>
                         </Row>
                             </Form>

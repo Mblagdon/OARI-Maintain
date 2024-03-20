@@ -43,6 +43,17 @@ function AddEquipment() {
 
     const [showConfirmation, setShowConfirmation] = useState(false);
 
+    const isFormComplete = () => {
+        if (formData.type === 'software') {
+            return formData.equipment_name && formData.description && formData.date_bought && formData.renewal_date && formData.price && formData.software_type && formData.account_code && formData.purchased_with;
+        } else if (formData.type === 'drone') {
+            return formData.equipment_name && formData.description && formData.location && formData.basic_specifications && formData.storage_dimensions && formData.min_temp && formData.max_temp && formData.max_wind_resistance && formData.min_lighting && formData.weight_with_batteries && formData.frame_weight && formData.max_take_off_weight && formData.max_payload_weight && formData.ip_rating;
+        } else { // Assuming 'equipment' type
+            return formData.equipment_name && formData.description && formData.location && formData.basic_specifications && formData.storage_dimensions && formData.min_temp && formData.max_temp && formData.max_wind_resistance && formData.min_lighting;
+        }
+    };
+
+
     // Reset success and error messages on component unmount
     useEffect(() => {
         return () => {
@@ -484,7 +495,7 @@ function AddEquipment() {
                                 {/* Submit Button */}
                                 <Form.Group as={Row} className="mb-3">
                                     <Col sm={{ span: 8, offset: 4 }}>
-                                        <Button type="submit" className="btn btn-primary">
+                                        <Button type="submit" className="btn btn-primary" disabled={!isFormComplete()}>
                                             Add Equipment
                                         </Button>
                                     </Col>
