@@ -20,7 +20,8 @@ function MaintenanceSchedule() {
     const { accounts } = useMsal(); // Use the useMsal hook to get accounts
     const user = accounts[0] || {}; // Assuming the first account is the logged-in user
     const userEmail = user.username;
-    const allowedEmails = ['marcus_blagdon@hotmail.com']; // Define allowed emails for edit/delete
+    // Parse the allowed emails environment variable into an array
+    const allowedEmails = process.env.REACT_APP_ALLOWED_EMAILS.split(',');
     const canEditOrDelete = allowedEmails.includes(userEmail);
 
 
