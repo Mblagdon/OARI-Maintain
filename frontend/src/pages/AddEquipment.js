@@ -407,7 +407,7 @@ function AddEquipment() {
                                 <Form.Label column sm={3}>Date Bought:</Form.Label>
                                 <Col sm={9}>
                                     <Form.Control
-                                        as="textarea"
+                                        type="date"
                                         name="date_bought"
                                         value={formData.date_bought}
                                         onChange={handleChange}
@@ -420,7 +420,7 @@ function AddEquipment() {
                                 <Form.Label column sm={3}>Renewal Date:</Form.Label>
                                 <Col sm={9}>
                                     <Form.Control
-                                        as="textarea"
+                                        type="date"
                                         name="renewal_date"
                                         value={formData.renewal_date}
                                         onChange={handleChange}

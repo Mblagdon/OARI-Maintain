@@ -54,7 +54,7 @@ function AddMaintenance() {
             const newValueWithTime = `${value}T09:00`;
             setMaintenanceData(prevData => ({
                 ...prevData,
-                [name]: newValueWithTime,
+                [name]: value,
             }));
         } else {
             setMaintenanceData(prevData => ({
@@ -195,12 +195,16 @@ function AddMaintenance() {
                         <Form.Group as={Row} className="mb-3">
                             <Form.Label column sm={3}>Maintenance Frequency:</Form.Label>
                             <Col sm={9}>
-                                <Form.Control
-                                    type="text"
+                                <Form.Select
                                     name="maintenance_frequency"
                                     value={maintenanceData.maintenance_frequency}
                                     onChange={handleChange}
-                                />
+                                >
+                                    <option value="">Select Frequency</option>
+                                    <option value="Daily">Daily</option>
+                                    <option value="Monthly">Monthly</option>
+                                    <option value="Yearly">Yearly</option>
+                                </Form.Select>
                             </Col>
                         </Form.Group>
 

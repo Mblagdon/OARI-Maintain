@@ -77,6 +77,7 @@ function EditEquipment() {
                     software_type: data.software_type || '', account_code: data.account_code || '',
                     purchased_with: data.purchased_with || '',
                 });
+
             } catch (error) {
                 console.error('Fetch error:', error);
             }

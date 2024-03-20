@@ -78,8 +78,8 @@ function EquipmentDetail() {
                                 {/* Conditional rendering for software-specific fields */}
                                 {isSoftware && (
                                     <>
-                                        <ListGroup.Item><strong>Date Bought:</strong> {equipmentDetails.date_bought}</ListGroup.Item>
-                                        <ListGroup.Item><strong>Renewal Date:</strong> {equipmentDetails.renewal_date}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Date Bought:</strong> {new Date(equipmentDetails.date_bought).toISOString().slice(0, 10)}</ListGroup.Item>
+                                        <ListGroup.Item><strong>Renewal Date:</strong> {new Date(equipmentDetails.renewal_date).toISOString().slice(0, 10)}</ListGroup.Item>
                                         <ListGroup.Item><strong>Price:</strong> ${equipmentDetails.price}</ListGroup.Item>
                                         <ListGroup.Item><strong>Software Type:</strong> {equipmentDetails.software_type}</ListGroup.Item>
                                         <ListGroup.Item><strong>Account Code:</strong> {equipmentDetails.account_code}</ListGroup.Item>

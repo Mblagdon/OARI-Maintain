@@ -122,9 +122,19 @@ function EditMaintenanceForm() {
                                 <Form.Group as={Row} className="mb-3">
                                     <Form.Label column sm={4}>Maintenance Frequency:</Form.Label>
                                     <Col sm={8}>
-                                        <Form.Control type="text" name="maintenance_frequency" value={maintenanceData.maintenance_frequency || ''} onChange={handleChange} />
+                                        <Form.Select
+                                            name="maintenance_frequency"
+                                            value={maintenanceData.maintenance_frequency || ''}
+                                            onChange={handleChange}
+                                        >
+                                            <option value="">Select Frequency</option>
+                                            <option value="Daily">Daily</option>
+                                            <option value="Monthly">Monthly</option>
+                                            <option value="Yearly">Yearly</option>
+                                        </Form.Select>
                                     </Col>
                                 </Form.Group>
+
 
                                 {/* Maintenance to be performed */}
                                 <Form.Group as={Row} className="mb-3">
