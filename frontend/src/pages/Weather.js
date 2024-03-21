@@ -131,10 +131,10 @@ function Weather() {
                                     type="text"
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
-                                    placeholder="Enter Location"
+                                    placeholder="Enter Location, Ex: Marystown,NL"
                                 />
                             </Form.Group>
-                            <Button onClick={fetchWeather}>Get Weather</Button>
+                            <Button onClick={fetchWeather} disabled={!location.trim()}>Get Weather</Button>
                             {/* Date selection input for historical weather
                             <Form.Group className="mb-3">
                                 <Form.Control
